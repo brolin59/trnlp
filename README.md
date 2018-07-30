@@ -52,3 +52,6 @@ Nihai amacım ***cümle analizi*** yapabilmek olacaktır.
 - Cümle analizi yapılması ve cümlenin öğelerine ayrılması.
 
 ### Fikirler :
+
+### İletişim :
+esatmahmutbayol@gmail.com
