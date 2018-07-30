@@ -1,4 +1,4 @@
-# PHYTON TURKÇE DOĞAL DİL İŞLEME - TURKISH NLP
+# PYTHON TURKÇE DOĞAL DİL İŞLEME - TURKISH NLP
 ## TÜRKÇE İÇİN DOĞAL DİL İŞLEME ARAÇLARI
 
 *** Ne Python ne de Türkçe dilbigim çok iyi olmamasına rağmen hobi olarak yazdığım birkaç kodu sizlerle paylaşmak istedim.
