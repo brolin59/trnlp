@@ -1,7 +1,7 @@
 # PYTHON TURKÇE DOĞAL DİL İŞLEME - TURKISH NLP
 ## TÜRKÇE İÇİN DOĞAL DİL İŞLEME ARAÇLARI
 
-*** Ne Python ne de Türkçe dilbigim çok iyi olmamasına rağmen ***hobi*** olarak yazdığım birkaç kodu sizlerle paylaşmak istedim.
+*** Ne Python ne de Türkçe dilbigim çok iyi olmamasına rağmen ***hobi*** olarak yazdığım birkaç kodu sizlerle paylaşmak istedim. Aslında ilk başta ilgim bir yazılım dili öğrenmek üzerineydi. Biraz araştırmadan sonra Python öğrenmeye karar verdim. Doğal dil işleme konusuna merakım ise makine öğrenmesi çalışmalarını araştırırken oluştu. Yazılım dili öğrenirken bir projeye başlamanın faydalı olacağı fikrini benimsediğim için böyle bir projeye başladım. Aslında bu konuda yapılmış çalışmalar var. Az önce de belirttiğim gibi benim niyetim kendimi geliştirmek. Yanında az da olsa birkaç kişiye faydam dokunursa ne ala...
 Eminim bu konulardaki bilgisi benden çok daha iyi olan arkadaşlar bu paylaşımları bir üst seviyeye çıkarmada bana yardımcı olabilirler. 
 Hobi olarak başladığım bu işin faydalı olması dileği ile...
 
