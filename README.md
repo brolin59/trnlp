@@ -11,7 +11,7 @@ Hobi olarak başladığım bu işin faydalı olması dileği ile...
 Halen test aşamasında olduğum için ***eksikleri yada hataları*** olabilir. Henüz işin başındayız diyebiliriz.
   
 Şu an için yapım eklerini tanımlamadım. Sözlüğü oluşturmak baya bir meşakkatli oldu ve çok zamanımı aldı. Halen eksikleri 
-ve yanlışları olmasına rağmen yine de iş görür durumda sözlük dosyası. Sözlük dosyasını **Data/sozluk_tekli.txt** içinde 
+ve yanlışları olmasına rağmen yine de iş görür durumda sözlük dosyası. Sözlük dosyasını **Data/tr_NLP.sqlite** içinde 
 bulabilirsiniz.
   
 ***Kelime kök/gövde ve eklerini*** bulmak için yazdığım algoritmanın örnek kullanımı şu şekildedir:
