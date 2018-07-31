@@ -46,12 +46,34 @@ Nihai amacım ***cümle analizi*** yapabilmek olacaktır.
 - Heceleme algoritması (Yapıldı. Auxiliary/TurkishGrammer.py içinde spellword fonksiyonu kullanılabilir durumda.)
 - Türkçe ses uyumları kontrolü (Yapıldı. Auxiliary/TurkishGrammer.py içinde ses uyumu fonksiyonları var.)
 - Kelime bazlı kök/gövde ve eklerin bulunması (Yapıldı. Morphological/MorphologicalLR.py ClsEkBul klası kullanılabilir durumda.)
-- Cümle ayırma. (Basit bir şey yaptım fakat daha yayınlamadım. Bir kaç testten sonra paylaşacağım.)
-- Yazı istatistiği (Bu kısımla da ilgili bir çalışmam var. Biraz düzenledikten sonra yayınlayacağım.)
+- Cümle ayırma. (Basit bir şey yaptım fakat daha yayınlamadım. Bir kaç testten sonra paylaşacağım.) - Eklendi.
+- Yazı istatistiği (Bu kısımla da ilgili bir çalışmam var. Biraz düzenledikten sonra yayınlayacağım.) - Eklendi.
 - Yanlış yazılan kelimelerin bulunması ve doğru yazımına dair öneride bulunulması yada otomatik olarak düzeltilmesi.
 - Cümle analizi yapılması ve cümlenin öğelerine ayrılması.
 
 ### Fikirler :
+
+* Cümle ayırma için yazdığım SentenceTokenization.py dosyası kural tabanlı ve basit bir mantık ile çalışır durumda. Cümle analizi ile cümle ayırma algoritmasının entegre çalışması gerektiğini düşünüyorum. Yani cümle analizi ile bir yazı metni içerisindeki yan cümleler de tespit edilerek her birinin ayrılması daha mantıklı geliyor. Bir nevi karmaşık cümle yapılarını birden fazla cümleler haline getirerek basitleştirmek diyebileriz.
+
+* Yanlış yazılan kelimelerin bulunması:
+Durum Analizi:
+Bir kelimeyi kök/gövde ve ekler olarak iki kısımda incelersek, yazım hatası kök/gövde yada ekler kısmında olabilir. Yada her iki kısımda da yazım yanlışı olabilir. Bu durumda yapmamız gereken kök ve ekler kısmını ayrı değerlendirmek gibi görünüyor. Bu durumda da şu soru akla geliyor: 
+"Peki yanlış yazılmış bir kelimenin kök ve ekler kısmını nasıl ayırt edeceğiz?"
+Şu anda yazmış olduğum MorphologicalLR.py algoritması büyük oranda doğru sonuç veriyor fakat kelimenin tam olarak doğru yazılması şartıyla. Yanlış yazılmış bir kelimeyi aynı algoritma ile kök ve eklerine ayıramam. Bu algoritma sonucunda bir geri dönüş alamazsak kelime yanlış yazılmış diyebiliriz sadece. 
+
+* Yanlış yazılan kelimelerin düzeltilmesi için çözüm fikirleri: 
+İlk sorunumuzun yanlış yazılmış bir kelimenin kök ve eklerinin tahmin edilmesi olacağı ortada. Belki makine öğrenmesi yada istatistik ile bu şekilde bir tahmin yapılabilir. Bu iki konu hakkında da temel düzeyde bilgim var. Daha profesyönel arkadaşlardan yardım alabilirim.
+
+Yanlış yazılmış olsa da bir kelimeyi yanlış yazılmış haldeki kökü ve eklerine ayırabilirsek bu aşamadan sonrasında yakınlık algoritması ile kökü, kural tabanlı bir yaklaşım ile ekleri doğru dizilime getirerek "doğru kelime"ye ulaşabiliriz.
+
+Örneğin "buzdolabından" kelimesinin "bzdolabıdan" şeklinde yazıldığını düşünelim.
+
+Tahmin edilen kök kısmı : "bzdolabı"
+Tahmin edilen ek kısmı : "dan"
+
+Yukarıdaki tahminleri yapabildiysek ve yakınlık algoritması ile "buzdolabı" köküne ulaştıysak ****Devamı gelecek
+
+
 
 ### İletişim :
 esatmahmutbayol@gmail.com
