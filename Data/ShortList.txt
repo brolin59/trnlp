@@ -1,0 +1,169 @@
+age.,Adı geçen eser
+agm.,Adı geçen makale
+agy.,Adı geçen yayın
+alb.,Albay
+alm.,Almanca
+anat.,Anatomi
+ant.,Antropoloji
+apt.,Apartman, apartmanı
+ar.,Arapça
+ark.,Arkeoloji
+arş. gör.,Araştırma Görevlisi
+as.,Asker, askerî, askerlik
+as. iz.,Askerî İnzibat
+asb.,Astsubay
+astr.,Astronomi
+astrol.,Astroloji
+atğm.,Asteğmen
+atm.,Atmosfer
+av.,Avukat
+bağ.,Bağlaç
+bçvş.,Başçavuş
+bit. b.,Bitki bilimi
+biy.,Biyoloji
+bk.,Bakınız
+bl.,Bilişim
+bl.,Bölük
+bn.,Bayan
+bnb.,Binbaşı
+bot.,bk. bit. b.
+böl.,Bölüm
+bs.,Baskı, basım
+bşk.,Başkan, başkanlık, başkanı, başkanlığı
+bul.,Bulvar, bulvarı
+bulg.,Bulgarca
+cad.,Cadde, caddesi
+coğ.,Coğrafya
+cum. bşk.,Cumhurbaşkanı, Cumhurbaşkanlığı
+çev.,Çeviren
+çvş.,Çavuş
+db.,Dil bilgisi
+dil b.,Dil bilimi
+dk.,Dakika
+doç.,Doçent
+doğ.,Doğum tarihi
+dr.,Doktor
+drl.,Derleyen
+dz. kuv.,Deniz Kuvvetleri
+dz. kuv. k.,Deniz Kuvvetleri Komutanı, Komutanlığı
+dzl.,Düzenleyen
+ecz.,Eczacı
+ed.,1. Edebiyat 2. Editör
+e.,Edat
+ekon.,Ekonomi
+ens.,Enstitü, enstitüsü
+erm.,Ermenice
+f.,Fiil
+fak.,Fakülte
+far.,Farsça
+fel.,Felsefe
+fil.,Filoloji, filolojisi
+fiz.,Fizik
+fizy.,Fizyoloji
+fr.,Fransızca
+gen.,General
+geom.,Geometri
+gn.,Genel
+gnkur.,Genelkurmay
+gön.,Gönderen
+gr.,Gramer
+hay. b.,Hayvan bilimi
+haz.,Hazırlayan
+hek.,Hekimlik, hekim, hekimi
+hlk.,Halk ağzı
+hs. uzm.,Hesap Uzmanı
+huk.,Hukuk
+hv. kuv.,Hava Kuvvetleri
+hv. kuv. k.,Hava Kuvvetleri Komutanı, Komutanlığı
+hz. öz.,Hizmete özel
+hz.,1. Hazret, Hazreti 2. Hizmet, hizmette
+ibr.,İbranice
+ing.,İngilizce
+is.,İsim
+isp.,İspanyolca
+işl.,İşleyen
+it.,İtalyanca
+jap.,Japonca
+jeol.,Jeoloji
+kim.,Kimya
+koor.,Koordinasyon
+kor.,Kolordu
+kora.,Koramiral
+korg.,Korgeneral
+kr.,Kuruş
+krş.,Karşılaştırınız
+kur.,Kurmay
+kur. bşk.,Kurmay Başkanı, Başkanlığı
+lat.,Latince
+ltd.,Limitet
+mac.,Macarca
+mah.,1. Mahalle, mahallesi 2. Mahkeme, mahkemesi
+man.,Mantık
+mat.,Matematik
+md.,Müdür, müdürlük, müdürlüğü
+mec.,Mecaz
+mim.,Mimarlık
+min.,Mineraloji
+müh.,Mühendis, mühendisi, mühendislik
+mür.,Müracaat
+müz.,Müzik
+no.,Numara
+nö.,Nöbetçi
+nö. sb.,Nöbetçi subayı
+okt.,Okutman
+onb.,Onbaşı
+opr.,Operatör
+or.,Ordu
+ora.,Oramiral
+ord.,Ordinaryüs
+org.,Orgeneral
+ort.,Ortaklık, ortakları, ortaklığı
+osm. t.,Osmanlı Türkçesi
+öl.,Ölüm tarihi
+ör.,Örnek
+öz.,Özel
+ped.,Pedagoji
+port.,Portekizce
+prof.,Profesör
+psikol.,Psikoloji
+rum.,Rumca
+rus.,Rusça
+s.,Sayfa
+sa.,Saat
+sb.,Subay
+sefd bşk.,Millî Savunma Bakanlığı Seferberlik Dairesi Başkanlığı
+sf.,Sıfat
+sl.,Slavca
+sn.,1. Sayın. 2. Saniye
+snt.,Santral
+sok.,Sokak
+sos.,Sosyoloji
+sp.,Spor
+srp.,Sırpça
+şb.,Şube
+t.,Türkçe
+t.c.,Türkiye Cumhuriyeti
+tar.,Tarih
+tb.,Tabur
+tek.,Teknik, teknoloji
+tel.,Telefon
+telg.,Telgraf
+tğm.,Teğmen
+tic.,Ticaret
+tiy.,Tiyatro
+tlks.,Teleks
+tls.,Telsiz
+top.,Topçu
+tug.,Tugay
+tuğa.,Tuğamiral
+tuğg.,Tuğgeneral
+tüm.,Tümen
+tüma.,Tümamiral
+tümg.,Tümgeneral
+uzm.,Uzman
+üçvş.,Üstçavuş
+ünl.,Ünlem
+ütğm.,Üsteğmen
+vb.,Ve başkası, ve başkaları, ve benzeri, ve benzerleri, ve bunun gibi
+vd.,Ve devamı, ve diğerleri
+vet.,Veteriner
