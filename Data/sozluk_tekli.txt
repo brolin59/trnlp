@@ -17074,7 +17074,7 @@ dembedem	zarf	0	0	Farsça dembedem
 demci	isim	0	0	0
 deme	isim	0	edebiyat	0
 demek	nsz	-r	0	0
-de	fiil	0	0	0
+de	fiil	UD(di)	0	0
 demet	isim	0	bitki bilimi;anatomi;fizik	Rumca
 demetleme	isim	0	0	0
 demetlemek	isim	0	0	0
@@ -26300,7 +26300,7 @@ gitgide	zarf	0	0	0
 gitme	isim	0	0	0
 gitmek	nsz	-der	0	0
 gitmek	yardımcı fiil	-der	0	0
-git	fiil	0	0	0
+git	fiil	YUM(gid)	0	0
 gittikçe	zarf	0	0	0
 giydirebilme	isim	0	0	0
 giydirebilmek	isim	0	0	0
@@ -52437,7 +52437,7 @@ sakkaroz	isim	0	kimya	Fransızca saccharose
 sakkarozölçer	isim	0	kimya	0
 saklama	isim	0	0	0
 saklamak	nsz	0	0	0
-sakla	fiil	0	0	0
+sakla	fiil	UD(saklı)	0	0
 saklambaç	isim	YUM(saklambac)	0	0
 saklanabil	fiil	0	0	0
 saklanabilme	isim	0	0	0
@@ -66183,7 +66183,7 @@ yemcilik	isim	YUM(yemciliğ)	0	0
 yeme	isim	0	0	0
 yemek	isim	YUM(yemeğ)	0	0
 yemek	nsz	YUM(yemeğ)	0	0
-ye	fiil	0	0	0
+ye	fiil	UD(yi)	0	0
 yemekaltı	isim	0	0	0
 yemekhane	isim	0	0	Türkçe yemek + Farsça ḫāne
 yemekli	sıfat	0	0	0
