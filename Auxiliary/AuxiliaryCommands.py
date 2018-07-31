@@ -16,6 +16,9 @@ Place, Suite 330, Boston, MA 02111-1307 USA
 
 */"""
 import sqlite3
+import os
+
+current_file = (os.path.abspath(os.path.dirname(__file__))[:-9]).replace('\\', '/')
 
 
 # Fonksiyonların süresini ölçmek için kullanıyorum
@@ -63,7 +66,7 @@ def print_list_item(_list: list):
 
 # Sozluğu yükler
 def tr_sozluk_yukle():
-    with sqlite3.connect('../Data/tr_NLP.sqlite') as vt:
+    with sqlite3.connect(current_file + 'Data/tr_NLP.sqlite') as vt:
         im = vt.cursor()
         im.execute("SELECT * FROM tr_sozluk")
         tr_sozluk = im.fetchall()
@@ -71,13 +74,13 @@ def tr_sozluk_yukle():
 
 
 # Kısaltmaların listesi (kısaltma,açılımı) şeklinde
-# def load_shortlist():
-#     with sqlite3.connect('../Data/tr_NLP.sqlite') as vt:
-#         im = vt.cursor()
-#         im.execute("SELECT * FROM tr_kisaltmalar")
-#         kisaltmalar = im.fetchall()
-#         kisaltmalar = [i[0] for i in kisaltmalar]
-#     return kisaltmalar
+def load_shortlist():
+    with sqlite3.connect(current_file + 'Data/tr_NLP.sqlite') as vt:
+        im = vt.cursor()
+        im.execute("SELECT * FROM tr_kisaltmalar")
+        kisaltmalar = im.fetchall()
+        kisaltmalar = [i[0] for i in kisaltmalar]
+    return kisaltmalar
 
 
 # Levenshtein Distance hesaplamasını yapar. İki kelimenin birbirine olan yakınlığını bulmak için hızlı bir algoritma.
