@@ -71,9 +71,7 @@ Yanlış yazılmış olsa da bir kelimeyi yanlış yazılmış haldeki kökü ve
 Tahmin edilen kök kısmı : "bzdolabı"
 Tahmin edilen ek kısmı : "dan"
 
-Yukarıdaki tahminleri yapabildiysek ve yakınlık algoritması ile "buzdolabı" köküne ulaştıysak ****Devamı gelecek
-
-
+Yukarıdaki tahminleri yapabildiysek ve yakınlık algoritması ile "buzdolabı" köküne ulaştıysak kural tabanlı bir ek ekleme algoritması ile devamında "ndan" şeklinde olması gerektiğini bulabiliriz. Böylece doğru yazımın "buzdolabından" olması gerektiği sonucuna varabiliriz. Bazı durumlarda birden fazla sonuç dönebilir.
 
 ### İletişim :
 esatmahmutbayol@gmail.com
