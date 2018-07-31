@@ -30,12 +30,12 @@ Place, Suite 330, Boston, MA 02111-1307 USA
 # Çok iyi Python bildiğimi söyleyemem. Bildiğim kadarı ile kafamdaki şablonu yazılama dökmeye çalışacağım.
 # Amacım bir kelimeyi kök/gövde ve eklerine doğru şekilde ayırabilmek olacak. Allah'ın izni ve yardımı ile yaparız
 # inşallah.
-# Her işe besmele ile başlanır diyerek koduma başlıyorum. Hayırlara vesile olur inşallah.
+# Her işe besmele ile başlanır diyerek kodlamaya başlıyorum. Hayırlara vesile olur inşallah.
 
 # ########## Bismillahirrahmanirrahim ##########
 
 from re import compile
-from Auxiliary.AuxiliaryCommands import tr_sozluk_yukle, lddistance, print_list_item, unrepeated_list
+from Auxiliary.AuxiliaryCommands import tr_sozluk_yukle, lddistance, unrepeated_list
 from Auxiliary.TurkishGrammer import to_lower, trmi_bsucontrol, trmi_ksucontrol, spellword
 from Auxiliary.Tr_Suffix_to_Vt import *
 from operator import itemgetter
@@ -85,6 +85,7 @@ fiil_ekler = [('fiil_catisi',),
               ('fiil_cekim_ekleri', 'fiil_ek_fiil_ekleri'),
               ('fiil_catisi', 'fiil_cekim_ekleri'),
               ('birlesik_fiil_ekleri', 'fiil_cekim_ekleri'),
+              ('x_fiil_ekleri', 'isim_cekim_ekleri'),
               ('birlesik_fiil_ekleri', 'fiil_cekim_ekleri', 'fiil_ek_fiil_ekleri')]
 # Eğer bulunan kelime kökü 'fiil' ise bu liste içerisindeki ekleri alabilir. Şu anda deneme amacı ile hazırladığımdan
 # liste dar olabilir fakat genişletilebilir.
@@ -261,14 +262,56 @@ class ClsEkBul:
         # Kelimenin ilk hecesini buluyoruz.
         search_in_dict = [x for x in sozluk if x[0].startswith(first_syllable)]
         # Sözlük içerisinde kelimenin ilk hecesi ile başlayan kelime ve özelliklerini bir listede topluyoruz.
+
+        if word.startswith('di'):
+            temp_stem_list.append(('di', ('de', 'fiil'), 0))
+        elif word.startswith('yi'):
+            temp_stem_list.append(('yi', ('ye', 'fiil'), 0))
+        # de- ve ye- fiilleri tek heceli olduğu için bir ayrıcalık yapmak zorunda kaldık.
+
+        mstem = ''
+        _mstem = ''
+        yor_bul = re.search('[ıiuü]yor', word)
+        if yor_bul:
+            x, y = yor_bul.span()
+            if x == 0:
+                yor_bul = re.search('[ıiuü]*yor', word[x:])
+                if yor_bul:
+                    x, y = yor_bul.span()
+                    mstem = word[:x]
+                    if yor_bul.group()[0] in ('ı', 'u'):
+                        _mstem = mstem + 'a'
+                        mstem = word[:x + 1]
+                    elif yor_bul.group()[0] in ('i', 'ü'):
+                        _mstem = mstem[:-1] + 'e'
+                        mstem = word[:x + 1]
+                    else:
+                        mstem = ''
+            else:
+                mstem = word[:x]
+                if yor_bul.group()[0] in ('ı', 'u'):
+                    _mstem = mstem + 'a'
+                    mstem = word[:x + 1]
+                elif yor_bul.group()[0] in ('i', 'ü'):
+                    _mstem = mstem[:-1] + 'e'
+                    mstem = word[:x + 1]
+                else:
+                    mstem = ''
+        # Ünlü Daralması kontrolü yapıyoruz.
+
         for stem in search_in_dict:
             # Oluşturduğumuz sözlük dosyasını tek tek deniyeceğiz. Yukarıda bu sebeple sadece kelimenin ilk
             # hecesinden oluşan sözlük satırlarını ayrı bir listeye aldık. Aksi halde gereksiz birçok kelimeyi
             # denememiz gerekecekti. Eğer yazım yanlışı yapıldı ise bu algoritmanın düzgün çalışması mümkün değil.
             # Bu sebeple ileride yanlış yazılan kelimeleri düzeltmek üzere birşeyler yazılabilir.
+
+            tlstem = to_lower(stem[0])
+            # Sözlükteki kelimeyi küçük harfe çeviriyoruz.
+            rpstem = replace_cap_letter(tlstem)
+            # Sözlükteki kelimenin içinde şapkalı harf var ise normale çeviriyoruz.
+
             if stem[1] in not_get_suffix:
-                _stem = replace_cap_letter(stem[0])
-                if word == to_lower(_stem):
+                if word == rpstem:
                     self.result.append(stem[0] + '(' + stem[1] + ')')
                     continue
                 else:
@@ -278,10 +321,9 @@ class ClsEkBul:
             # uyuşuyorsa olası sonuc listesine(sonuc) dahil edilir.
             # (Sözlük sıralaması açıklamaları için bkz. sozlugu_veritabanina_aktar.py)
 
-            tlstem = to_lower(stem[0])
-            # Sözlükteki kelimeyi küçük harfe çeviriyoruz.
-            rpstem = replace_cap_letter(tlstem)
-            # Sözlükteki kelimenin içinde şapkalı harf var ise normale çeviriyoruz.
+            if mstem and (stem[1] == 'fiil') and (_mstem == rpstem):
+                temp_stem_list.append((mstem, (_mstem, stem[1]), 0))
+            # Ünlü Daralması kontrolü yapıyoruz.
 
             if word == rpstem:
                 self.result.append(stem[0] + '(' + stem[1] + ')')
@@ -457,8 +499,6 @@ class ClsEkBul:
     def son_kontrol(self):
         klist = []
         for form in self.result:
-            # find_suffix_from_start fonksiyonu tarafından üretilmiş tüm olasılıkları tarıyoruz ve uygun olanları
-            # correct_form listesine ekliyoruz.
             form_list = form.split('+')
             if '-' in form_list[0]:
                 temp_stem = form_list[0]
@@ -466,12 +506,11 @@ class ClsEkBul:
                 stem_type = temp_stem[temp_stem.find('-') + 1: temp_stem.find(')')]
                 form_list[0] = cor_stem + '(' + stem_type + ')'
                 form = '+'.join(form_list)
-
             klist.append(form)
         return klist
 
 
 if __name__ == '__main__':
-    a = ClsEkBul('aldım')
+    a = ClsEkBul('yiyor')
     print(a.result)
     print(a.stems)
