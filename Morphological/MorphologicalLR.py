@@ -61,7 +61,7 @@ vt_table_name = ek_tipleri
 # Bazı konularda uzmanların dahi anlaşamadığını gördüğümde doğrusu çok şaşırdım. Bu yüzden bazı yerlerde tercih
 # yapmam gerekti. Bence sonuçlar yeterince tatmin edici.
 
-not_get_suffix = ('bağlaç', 'ünlem', 'sıfat', 'zarf', '0')
+not_get_suffix = ('bağlaç', 'ünlem', 'zarf', '0')
 # not_get_suffix demeti ek almayan kelime türlerini içerir. Bu türdeki kelimeler ek aldıklarında isim olurlar.
 # '0' zaten kimya sembollerini gösterdiği için ek almaları gibi bir durum olası değil.
 
@@ -83,6 +83,7 @@ fiil_ekler = [('fiil_catisi',),
               ('fiil_cekim_ekleri',),
               ('x_fiil_ekleri',),
               ('fiil_cekim_ekleri', 'fiil_ek_fiil_ekleri'),
+              ('fiil_cekim_ekleri', 'x_fiil_ekleri'),
               ('fiil_catisi', 'fiil_cekim_ekleri'),
               ('birlesik_fiil_ekleri', 'fiil_cekim_ekleri'),
               ('x_fiil_ekleri', 'isim_cekim_ekleri'),
@@ -91,6 +92,7 @@ fiil_ekler = [('fiil_catisi',),
 # liste dar olabilir fakat genişletilebilir.
 
 tur_dict = {'isim': 'isim_ekler',
+            'sıfat': 'isim_ekler',
             'edat': 'isim_ekler',
             'zamir': 'isim_ekler',
             'özel': 'isim_ekler',
@@ -260,7 +262,7 @@ class ClsEkBul:
         # Kelimenin içinde şapkalı harf var ise normale çeviriyoruz.
         first_syllable = spellword(word)[0]
         # Kelimenin ilk hecesini buluyoruz.
-        search_in_dict = [x for x in sozluk if x[0].startswith(first_syllable)]
+        search_in_dict = [x for x in sozluk if x[0][:len(first_syllable)] == first_syllable]
         # Sözlük içerisinde kelimenin ilk hecesi ile başlayan kelime ve özelliklerini bir listede topluyoruz.
 
         if word.startswith('di'):
@@ -511,6 +513,6 @@ class ClsEkBul:
 
 
 if __name__ == '__main__':
-    a = ClsEkBul('yiyor')
+    a = ClsEkBul('zekidir')
     print(a.result)
     print(a.stems)
