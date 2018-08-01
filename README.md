@@ -28,7 +28,7 @@ Eklere ayrılmış hali : ['oğul(isim)+um(2-1. tekil kişi){içe}+un(17-Tamlama
   
 ***Kelime ve kural*** tabanlı bir yapı oluşturduğumuz için çoğu zaman birden fazla sonuç dönecektir. Örneğin;
   
-```
+``` python
 from Morphological.MorphologicalLR import ClsEkBul as cb
 kelime = cb.('aldım')
 print('Kelime kök/gövdesi : ', kelime.stems)
