@@ -48,7 +48,13 @@ from Auxiliary.AuxiliaryCommands import print_list_item
 
 yazi = """
 Türkçe Tümcelerin Yüklem Odaklı Anlam Ve Dilbilgisi Çözümlemesi
-Çalışmamız tümcelerin anlamsal ve dilbilgisi çözümlemesini içermektedir. Tümcenin anlamsal ve dilbilgisi açısından çözümlenmesi Doğal Dil İşleme (DDİ)’nin ana konulardan biridir. Ayrıca yüklem, o tümcenin hangi öbeklerden oluşabileceği konusunda da belirleyicidir. örneğin, "büyümek'' yüklemi tümce içinde nesne almazken, "-de'' ekiyle biten dolaylı tümleç öbeğini alır. Örneğin "Ayşeyi büyüdü.'' tümcesi sorunluyken, "Sokakta büyüdü.'' tümcesi doğrudur.
+Çalışmamız tümcelerin anlamsal ve dilbilgisi çözümlemesini içermek-
+tedir. Tümcenin anlamsal ve dilbilgisi açısından çözümlenmesi Doğal 
+Dil İşleme (DDİ)’nin ana konulardan biridir. Ayrıca yüklem, o tüm-
+cenin hangi öbeklerden oluşabileceği konusunda da belirleyicidir. 
+örneğin, "büyümek'' yüklemi tümce içinde nesne almazken, "-de'' e-
+kiyle biten dolaylı tümleç öbeğini alır. Örneğin "Ayşeyi büyüdü.'' 
+tümcesi sorunluyken, "Sokakta büyüdü.'' tümcesi doğrudur.
 """
 yazi = ca(yazi)
 print_list_item(yazi)
@@ -56,12 +62,12 @@ print_list_item(yazi)
   
 Kodun çıktısı şu şekildedir:
   
-Türkçe Tümcelerin Yüklem Odaklı Anlam Ve Dilbilgisi Çözümlemesi:
+*Türkçe Tümcelerin Yüklem Odaklı Anlam Ve Dilbilgisi Çözümlemesi:
 Çalışmamız tümcelerin anlamsal ve dilbilgisi çözümlemesini içermektedir.
 Tümcenin anlamsal ve dilbilgisi açısından çözümlenmesi Doğal Dil İşleme (DDİ) 'nin ana konulardan biridir.
 Ayrıca yüklem, o tümcenin hangi öbeklerden oluşabileceği konusunda da belirleyicidir.
 örneğin, "büyümek" yüklemi tümce içinde nesne almazken, "-de" ekiyle biten dolaylı tümleç öbeğini alır.
-Örneğin "Ayşeyi büyüdü." tümcesi sorunluyken, "Sokakta büyüdü." tümcesi doğrudur.
+Örneğin "Ayşeyi büyüdü." tümcesi sorunluyken, "Sokakta büyüdü." tümcesi doğrudur.*
   
 Nihai amacım ***cümle analizi*** yapabilmek olacaktır.
   
