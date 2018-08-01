@@ -46,7 +46,6 @@ Kural tabanlı çalışan basit bir cümle bulma algoritmasıdır. Halen gelişt
   
 ``` python
 from Tokenization.SentenceTokenization import cumle_ayir as ca
-from Auxiliary.AuxiliaryCommands import print_list_item
 
 yazi = """
 Türkçe karakterler 'ş, ı, ö, ç, ğ, ü' kullanmadan yazılmış yazıları 
@@ -67,11 +66,11 @@ tümcesi sorunluyken, "Sokakta büyüdü.'' tümcesi doğrudur.
 URL: http://hdl.handle.net/11527/12366
 """
 yazi = ca(yazi)
-print_list_item(yazi)
+print(yazi)
 ```
   
 Listenin her bir öğesi bir satırı ifade eder. Kodun çıktısı şu şekildedir:
-  
+``` python
 *["Türkçe karakterler 'ş, ı, ö, ç, ğ, ü' kullanmadan yazılmış yazıları doğru Türkçe karakter karşılıkları ile değiştirmek için Doç. Dr. Deniz Yüret'in geliştirdiği altyapıyı kullanan ve Emre Sevinç tarafından Python koduna çevrilmiş https://github.com/emres/turkish-deasciifier adresindeki kod kullanılabilir.",  
 'Türkçe Tümcelerin Yüklem Odaklı Anlam Ve Dilbilgisi Çözümlemesi:',  
 'Çalışmamız tümcelerin anlamsal ve dilbilgisi çözümlemesini içermektedir.',  
@@ -81,6 +80,7 @@ Listenin her bir öğesi bir satırı ifade eder. Kodun çıktısı şu şekilde
 'Örneğin "Ayşeyi büyüdü." tümcesi sorunluyken, "Sokakta büyüdü." tümcesi doğrudur.',  
 'URL:',  
 'http://hdl.handle.net/11527/12366', 'Dönmez, İlknur']*  
+```
   
 Nihai amacım ***cümle analizi*** yapabilmek olacaktır.
   
