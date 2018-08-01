@@ -55,6 +55,8 @@ cenin hangi öbeklerden oluşabileceği konusunda da belirleyicidir.
 örneğin, "büyümek'' yüklemi tümce içinde nesne almazken, "-de'' e-
 kiyle biten dolaylı tümleç öbeğini alır. Örneğin "Ayşeyi büyüdü.'' 
 tümcesi sorunluyken, "Sokakta büyüdü.'' tümcesi doğrudur.
+URL: http://hdl.handle.net/11527/12366
+Dönmez, İlknur
 """
 yazi = ca(yazi)
 print_list_item(yazi)
@@ -67,7 +69,10 @@ Kodun çıktısı şu şekildedir:
 Tümcenin anlamsal ve dilbilgisi açısından çözümlenmesi Doğal Dil İşleme (DDİ) 'nin ana konulardan biridir.
 Ayrıca yüklem, o tümcenin hangi öbeklerden oluşabileceği konusunda da belirleyicidir.
 örneğin, "büyümek" yüklemi tümce içinde nesne almazken, "-de" ekiyle biten dolaylı tümleç öbeğini alır.
-Örneğin "Ayşeyi büyüdü." tümcesi sorunluyken, "Sokakta büyüdü." tümcesi doğrudur.*
+Örneğin "Ayşeyi büyüdü." tümcesi sorunluyken, "Sokakta büyüdü." tümcesi doğrudur.
+URL:
+http://hdl.handle.net/11527/12366
+Dönmez, İlknur*
   
 Nihai amacım ***cümle analizi*** yapabilmek olacaktır.
   
