@@ -49,6 +49,13 @@ from Tokenization.SentenceTokenization import cumle_ayir as ca
 from Auxiliary.AuxiliaryCommands import print_list_item
 
 yazi = """
+Türkçe karakterler 'ş, ı, ö, ç, ğ, ü' kullanmadan yazılmış yazıları 
+doğru Türkçe karakter karşılıkları ile değiştirmek için Doç. Dr. Deniz
+Yüret'in geliştirdiği altyapıyı kullanan ve Emre Sevinç tarafından 
+Python koduna çevrilmiş https://github.com/emres/turkish-deasciifier 
+adresindeki kod kullanılabilir. 
+
+
 Türkçe Tümcelerin Yüklem Odaklı Anlam Ve Dilbilgisi Çözümlemesi
 Çalışmamız tümcelerin anlamsal ve dilbilgisi çözümlemesini içermek-
 tedir. Tümcenin anlamsal ve dilbilgisi açısından çözümlenmesi Doğal 
@@ -58,7 +65,6 @@ cenin hangi öbeklerden oluşabileceği konusunda da belirleyicidir.
 kiyle biten dolaylı tümleç öbeğini alır. Örneğin "Ayşeyi büyüdü.'' 
 tümcesi sorunluyken, "Sokakta büyüdü.'' tümcesi doğrudur.
 URL: http://hdl.handle.net/11527/12366
-Dönmez, İlknur
 """
 yazi = ca(yazi)
 print_list_item(yazi)
@@ -66,15 +72,15 @@ print_list_item(yazi)
   
 Kodun çıktısı şu şekildedir:
   
-*Türkçe Tümcelerin Yüklem Odaklı Anlam Ve Dilbilgisi Çözümlemesi:  
-Çalışmamız tümcelerin anlamsal ve dilbilgisi çözümlemesini içermektedir.  
-Tümcenin anlamsal ve dilbilgisi açısından çözümlenmesi Doğal Dil İşleme (DDİ) 'nin ana konulardan biridir.  
-Ayrıca yüklem, o tümcenin hangi öbeklerden oluşabileceği konusunda da belirleyicidir.  
-örneğin, "büyümek" yüklemi tümce içinde nesne almazken, "-de" ekiyle biten dolaylı tümleç öbeğini alır.  
-Örneğin "Ayşeyi büyüdü." tümcesi sorunluyken, "Sokakta büyüdü." tümcesi doğrudur.  
-URL:  
-http://hdl.handle.net/11527/12366  
-Dönmez, İlknur*  
+*Türkçe karakterler 'ş, ı, ö, ç, ğ, ü' kullanmadan yazılmış yazıları doğru Türkçe karakter karşılıkları ile değiştirmek için Doç. Dr. Deniz Yüret'in geliştirdiği altyapıyı kullanan ve Emre Sevinç tarafından Python koduna çevrilmiş https://github.com/emres/turkish-deasciifier adresindeki kod kullanılabilir.
+Türkçe Tümcelerin Yüklem Odaklı Anlam Ve Dilbilgisi Çözümlemesi:
+Çalışmamız tümcelerin anlamsal ve dilbilgisi çözümlemesini içermektedir.
+Tümcenin anlamsal ve dilbilgisi açısından çözümlenmesi Doğal Dil İşleme (DDİ) 'nin ana konulardan biridir.
+Ayrıca yüklem, o tümcenin hangi öbeklerden oluşabileceği konusunda da belirleyicidir.
+örneğin, "büyümek" yüklemi tümce içinde nesne almazken, "-de" ekiyle biten dolaylı tümleç öbeğini alır.
+Örneğin "Ayşeyi büyüdü." tümcesi sorunluyken, "Sokakta büyüdü." tümcesi doğrudur.
+URL:
+http://hdl.handle.net/11527/12366*  
   
 Nihai amacım ***cümle analizi*** yapabilmek olacaktır.
   
