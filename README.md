@@ -42,7 +42,7 @@ Eklere ayrılmış hali : ['al(fiil)+dı(1-Bilinen Geçmiş Zaman){fçe}+m(26-1.
   
 Kural tabanlı çalışan basit bir cümle bulma algoritmasıdır. Halen geliştirme aşamasında olduğum için aklımdaki birkaç özelliği eksik şu anda. Yine de birçok dökümanda iş görür diye düşünüyorum. Örnek kodu ve sonucu aşağıdaki gibidir.
   
-```
+``` python
 from Tokenization.SentenceTokenization import cumle_ayir as ca
 from Auxiliary.AuxiliaryCommands import print_list_item
 
