@@ -16,7 +16,7 @@ bulabilirsiniz.
   
 ***Kelime kök/gövde ve eklerini*** bulmak için yazdığım algoritmanın örnek kullanımı şu şekildedir:
   
-```
+``` python
 from Morphological.MorphologicalLR import ClsEkBul as cb
 kelime = cb.('oğlumun')
 print('Kelime kök/gövdesi : ', kelime.stems)
