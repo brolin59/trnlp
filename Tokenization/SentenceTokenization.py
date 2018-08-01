@@ -25,7 +25,7 @@ shortlist = load_shortlist()
 
 # haric listesindeki düzenli ifadeler satır sonu olarak değerlendirilmez.
 haric = ('\d+\.', '\d+\.\d+', '\d+\.\d+\.\d+', '[A-ZÇĞİÖŞÜ]\.', '[XVI]+\.', '.*?w+?\.?\w+\.\w+.*', '.*@\w+\..*^[\']',
-         '\w?\.?\w?\.?\w\.\w\.', '\w?\.?\w?\.?\w\.\w\.\'\w+', '\d+:\d+:?\d+?', '\d+-\d+.', '\d+-\d+-\d+.')
+         '\w?\.?\w?\.?\w\.\w\.', '\w?\.?\w?\.?\w\.\w\.\'\w+', '\d+:\d+:?\d+?', '\d+-\d+.', '\d+-\d+-\d+.', 'https://.*')
 
 # Satır Sonu İfadeler
 eol_punch = ('...', '.', ':', '!', '?')
