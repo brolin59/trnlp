@@ -79,7 +79,7 @@ Listenin her bir öğesi bir satırı ifade eder. Kodun çıktısı şu şekilde
 'örneğin, "büyümek" yüklemi tümce içinde nesne almazken, "-de" ekiyle biten dolaylı tümleç öbeğini alır.',  
 'Örneğin "Ayşeyi büyüdü." tümcesi sorunluyken, "Sokakta büyüdü." tümcesi doğrudur.',  
 'URL:',  
-'http://hdl.handle.net/11527/12366', 'Dönmez, İlknur']  
+'http://hdl.handle.net/11527/12366']  
 ```
   
 Nihai amacım ***cümle analizi*** yapabilmek olacaktır.
