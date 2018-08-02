@@ -1,4 +1,4 @@
-# PYTHON TURKÇE DOĞAL DİL İŞLEME - TURKISH NLP
+# PYTHON TÜRKÇE DOĞAL DİL İŞLEME - TURKISH NLP
 ## TÜRKÇE İÇİN DOĞAL DİL İŞLEME ARAÇLARI
   
 Klasör yapısı ve kullanılabilecek tüm komutlar için [Türkçe Doğal Dil işleme Wiki sayfasını inceleyebilirsiniz.](https://github.com/brolin59/PHYTON-TURKCE-DOGAL-DIL-ISLEME---TURKISH-NLP/wiki)
