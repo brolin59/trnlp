@@ -22,7 +22,7 @@ bulabilirsiniz.
   
 ``` python
 from TurkishNLP import Ceb
-kelime = Ceb.('oğlumun')
+kelime = Ceb('oğlumun')
 print('Kelime kök/gövdesi : ', kelime.stems)
 print('Eklere ayrılmış hali : ', kelime.result)
   
@@ -34,7 +34,7 @@ Eklere ayrılmış hali : ['oğul(isim)+um(2-1. tekil kişi){içe}+un(17-Tamlama
   
 ``` python
 from TurkishNLP import Ceb
-kelime = Ceb.('aldım')
+kelime = Ceb('aldım')
 print('Kelime kök/gövdesi : ', kelime.stems)
 print('Eklere ayrılmış hali : ', kelime.result)
   
