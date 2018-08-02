@@ -115,17 +115,6 @@ suffix_shortname = {'isim_ek_fiil_ekleri': 'iefe',
 # Ekler ayrıldığında kullanılacak kısaltılmış isimlerin sözlüğünü tanımladık.
 
 
-def sesli_uyumu_kontrol(kelimecik):
-    # Büyük sesli uyumu ve küçük sesli uyumu kontrolü yapıyoruz.
-    bsu = trmi_bsucontrol(kelimecik)
-    ksu = trmi_ksucontrol(kelimecik)
-    if (bsu is True) and (ksu is True):
-        sonuc = True
-    else:
-        sonuc = False
-    return sonuc
-
-
 def correct_stem(stemlist: list):
     # Türkçe kelimeler sesli uyumuna uymak zorundadır. Fakat dilimize yabancı dilden girmiş bazı kelimeler
     # sesli uyumlarına uymazlar. Bu gibi sesli uyumuna uymayan kelime kök/gövdeleri olsa da bazı ekler dışında
@@ -161,24 +150,28 @@ def correct_stem(stemlist: list):
         # Eğer son sesli bulunamadıysa bu bir kelime değildir. Kelimeler sesli harf barındırmak zorundadır.
         # Algoritmamız zaten bu tarz bir kök döndürmez. Ben garanti olsun diye bu denetimi yapıyorum.
 
-        su_kontrol = True
+        ksu_kontrol = True
+        bsu_kontrol = True
         # Sesli uyumu kontrol değişkenini 'True' olarak tanımladık.
-        su_ara = son_sesli
+        ksu_ara = son_sesli
+        bsu_ara = ''
+
         for eki in lform[1:]:
             # Kökün arkasından eklenen tüm ekleri son sesliye ekleyerek sesli uyumunu kontrol edeceğiz.
             if eki not in bozan_ekler:
                 # Eğer ek bozan ekler içerisinde değilse ekleyip sesli uyumu kontrolü yapıyoruz.
-                su_ara = su_ara + eki
-                su_kontrol = sesli_uyumu_kontrol(su_ara)
-                if su_kontrol is False:
+                ksu_ara = ksu_ara + eki
+                bsu_ara = bsu_ara + eki
+                ksu_kontrol = trmi_ksucontrol(ksu_ara)
+                bsu_kontrol = trmi_bsucontrol(bsu_ara)
+                if (ksu_kontrol is False) or (bsu_kontrol is False):
                     break
             else:
                 # Eğer ek bozan ekler içerisinde ise bu ekten sonraki ekler bu ekin son seslisine uyacağından
                 # değişkenimizi sıfırlayıp son sesli harfi bozan ekin son seslisi olarak değiştiriyoruz.
                 son_sesli = son_sesli_bul(eki)
-                su_ara = son_sesli
-
-        if su_kontrol is False:
+                ksu_ara, bsu_ara = son_sesli, son_sesli
+        if (ksu_kontrol is False) or (bsu_kontrol is False):
             # Eğer sesli uyumu 'False' olarak döndüyse bu ek dizilimi yanlıştır diyoruz ve listeye eklemeden
             # döngüye devam ediyoruz.
             continue
@@ -201,36 +194,34 @@ class ClsEkBul:
     # dosyada bile toplayabilirim.
     # 28.07.2018 @staticmethod olarak yazdığım fonksiyonları class dışına aldım.
     def __init__(self, word):
-        self.result = []
-        self.word = word
-        # Kök ve eklerine ayıracağımız kelimemiz 'word' değişkeni ile class'a geliyor. Biz bunu class'ın her
-        # fonksiyonunda kullanabilmek için global değişken haline getirdik.
-
-        self.stem_list = self.find_stem()
-        # kelimenin olası köklerinin listesini 'stem_list' değişkenine atıyoruz.
-        # Örneğin 'masalarının' kelimesi için kök listesi şu şekilde geliyor;
-        # [('masal', 'isim', 6), ('masa', 'isim', 7), ('mas', 'isim', 8)]
-        # Burada liste içerisindeki her bir demet bir olası kökü ifade eder. Demetin birinci nesnesi kökü,
-        # ikinci nesnesi kökün türünü, üçüncü nesnesi Levenshtein distance'ı (İki kelime arasındaki uzaklığı
-        # hesaplayan bir algoritma) gösterir.
-
-        if self.stem_list:
-            self.kok_ek_bul()
+        if not word:
+            self.result = []
+            self.stems = []
         else:
-            if self.result:
-                pass
-            else:
-                self.result.append(word)
-        # Eğer kelimede bir yazım yanlışı yoksa yada sözlükte olmayan bir kelime değilse mutlaka kök sonucu
-        # dönecektir. Kök sonucu dönmediyse kelimeyi olduğu gibi sonuç listesine ekliyorum.
+            self.result = []
+            self.stems = []
+            self.word = word
+            # Kök ve eklerine ayıracağımız kelimemiz 'word' değişkeni ile class'a geliyor. Biz bunu class'ın her
+            # fonksiyonunda kullanabilmek için global değişken haline getirdik.
 
-        self.result = correct_stem(self.result)
-        self.result = self.son_kontrol()
-        self.result = unrepeated_list(self.result)
-        # Sonuç listemizi correct_stem fonksiyonu ile kontrol ederek tekrarsız liste haline getiriyoruz.
+            self.stem_list = self.find_stem()
+            # kelimenin olası köklerinin listesini 'stem_list' değişkenine atıyoruz.
+            # Örneğin 'masalarının' kelimesi için kök listesi şu şekilde geliyor;
+            # [('masal', 'isim', 6), ('masa', 'isim', 7), ('mas', 'isim', 8)]
+            # Burada liste içerisindeki her bir demet bir olası kökü ifade eder. Demetin birinci nesnesi kökü,
+            # ikinci nesnesi kökün türünü, üçüncü nesnesi Levenshtein distance'ı (İki kelime arasındaki uzaklığı
+            # hesaplayan bir algoritma) gösterir.
 
-        self.stems = unrepeated_list([j.split('+')[0] for j in self.result])
-        # Bulunan sonuçlardan kökleri ayırarak ayrı bir listede topluyoruz.
+            if self.stem_list:
+                self.kok_ek_bul()
+                # Eğer kelimede bir yazım yanlışı yoksa yada sözlükte olmayan bir kelime değilse mutlaka kök sonucu
+                # dönecektir. Kök sonucu dönmediyse kelimeyi olduğu gibi sonuç listesine ekliyorum.
+                self.result = correct_stem(self.result)
+                self.result = self.son_kontrol()
+                self.result = unrepeated_list(self.result)
+                # Sonuç listemizi correct_stem fonksiyonu ile kontrol ederek tekrarsız liste haline getiriyoruz.
+                self.stems = unrepeated_list([j.split('+')[0] for j in self.result])
+            # Bulunan sonuçlardan kökleri ayırarak ayrı bir listede topluyoruz.
 
     # ---- OLASI KÖKLERİ BULMA FONKSİYONU ----
     # ----------------------------------------
@@ -243,10 +234,26 @@ class ClsEkBul:
         # Kelimeyi küçük harfe çeviriyoruz.
         word = replace_cap_letter(word)
         # Kelimenin içinde şapkalı harf var ise normale çeviriyoruz.
-        first_syllable = spellword(word)[0]
+        first_syllable = spellword(word)
+        if first_syllable is False:
+            return []
+        else:
+            first_syllable = spellword(word)[0]
         # Kelimenin ilk hecesini buluyoruz.
         search_in_dict = [x for x in sozluk if x[0][:len(first_syllable)] == first_syllable]
         # Sözlük içerisinde kelimenin ilk hecesi ile başlayan kelime ve özelliklerini bir listede topluyoruz.
+        if not search_in_dict and first_syllable[-1] in 'bcdgğ':
+            yumusama_harfleri = {'b': 'p',
+                                 'c': 'ç',
+                                 'd': 't',
+                                 'g': 'k',
+                                 'ğ': 'k'}
+            first_syllable = first_syllable[:-1] + yumusama_harfleri[first_syllable[-1]]
+            search_in_dict = [x for x in sozluk if x[0][:len(first_syllable)] == first_syllable]
+            if not search_in_dict:
+                return []
+            else:
+                word = first_syllable + word[len(first_syllable):]
 
         if word.startswith('di'):
             temp_stem_list.append(('di', ('de', 'fiil'), 0))
@@ -297,6 +304,7 @@ class ClsEkBul:
 
             if stem[1] in not_get_suffix:
                 if word == rpstem:
+                    temp_stem_list.append((stem[0], stem[1], 0))
                     self.result.append(stem[0] + '(' + stem[1] + ')')
                     continue
                 else:
@@ -311,6 +319,7 @@ class ClsEkBul:
             # Ünlü Daralması kontrolü yapıyoruz.
 
             if word == rpstem:
+                temp_stem_list.append((stem[0], stem[1], 0))
                 self.result.append(stem[0] + '(' + stem[1] + ')')
             # Eğer kelime sözlükteki kelime ile aynı ise listemize ekliyoruz.
 
@@ -346,18 +355,21 @@ class ClsEkBul:
         return organized_list
 
     def kok_ek_bul(self):
+        search_this_list = []
         for stem_tupple in self.stem_list:
             if type(stem_tupple[1]) is tuple:
-                search_this_list = eval(tur_dict[stem_tupple[1][1]])
+                if stem_tupple[1][1] in tur_dict:
+                    search_this_list = eval(tur_dict[stem_tupple[1][1]])
             else:
-                search_this_list = eval(tur_dict[stem_tupple[1]])
+                if stem_tupple[1] in tur_dict:
+                    search_this_list = eval(tur_dict[stem_tupple[1]])
             # stem_tupple[1] kökün türünü belirtiyor. tur_dict sözlüğü bu kök türüne göre bakılması gereken listenin
             # adını döndürüyor. Bunu eval ile yazdığımızdan o sitring ile aynı isme sahip değişkeni çağırmış oluyoruz.
             # Örneğin;
             # stem_tupple[1] = 'isim' ise tur_dict[stem_tupple[1]] = 'isim_ekler' oluyor ve isim_ekler değişkenini
             # çağırmış oluyoruz.
-
-            self.search_this_list(stem_tupple, search_this_list)
+            if search_this_list:
+                self.search_this_list(stem_tupple, search_this_list)
             # Bulunan her bir kök adayını eklerini bulmak için SearchThisList fonksiyonuna gönderiyoruz.
 
     def search_this_list(self, stem_tupple, search_this_list):
@@ -496,6 +508,6 @@ class ClsEkBul:
 
 
 if __name__ == '__main__':
-    a = ClsEkBul('zêkidir')
+    a = ClsEkBul('grubu')
     print(a.result)
     print(a.stems)
