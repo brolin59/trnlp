@@ -31,8 +31,8 @@ Eklere ayrılmış hali : ['oğul(isim)+um(2-1. tekil kişi){içe}+un(17-Tamlama
 ***Kelime ve kural*** tabanlı bir yapı oluşturduğumuz için çoğu zaman birden fazla sonuç dönecektir. Örneğin;
   
 ``` python
-from Morphological.MorphologicalLR import ClsEkBul as cb
-kelime = cb.('aldım')
+from TurkishNLP import Ceb
+kelime = Ceb.('aldım')
 print('Kelime kök/gövdesi : ', kelime.stems)
 print('Eklere ayrılmış hali : ', kelime.result)
   
@@ -45,7 +45,7 @@ Eklere ayrılmış hali : ['al(fiil)+dı(1-Bilinen Geçmiş Zaman){fçe}+m(26-1.
 Kural tabanlı çalışan basit bir cümle bulma algoritmasıdır. Halen geliştirme aşamasında olduğum için aklımdaki birkaç özelliği eksik şu anda. Yine de birçok dökümanda iş görür diye düşünüyorum. Örnek kodu ve sonucu aşağıdaki gibidir.
   
 ``` python
-from Tokenization.SentenceTokenization import cumle_ayir as ca
+from TurkishNLP import cumle_ayir as ca
 
 yazi = """
 Türkçe karakterler 'ş, ı, ö, ç, ğ, ü' kullanmadan yazılmış yazıları 
