@@ -21,8 +21,8 @@ bulabilirsiniz.
 ***Kelime kök/gövde ve eklerini*** bulmak için yazdığım algoritmanın örnek kullanımı şu şekildedir:
   
 ``` python
-from Morphological.MorphologicalLR import ClsEkBul as cb
-kelime = cb.('oğlumun')
+from TurkishNLP import Ceb
+kelime = Ceb.('oğlumun')
 print('Kelime kök/gövdesi : ', kelime.stems)
 print('Eklere ayrılmış hali : ', kelime.result)
   
