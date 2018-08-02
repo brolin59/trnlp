@@ -223,7 +223,7 @@ ek_tipleri = ['isim_ek_fiil_ekleri', 'isim_cekim_ekleri', 'x_fiil_ekleri', 'fiil
 # dışı bırakılır ve veritabanına yazılır.
 if __name__ == '__main__':
     ek_max_per = {'isim_ek_fiil_ekleri': 2,
-                  'isim_cekim_ekleri': 5,
+                  'isim_cekim_ekleri': 6,
                   'x_fiil_ekleri': 2,
                   'fiil_cekim_ekleri': 2,
                   'fiil_ek_fiil_ekleri': 2,
