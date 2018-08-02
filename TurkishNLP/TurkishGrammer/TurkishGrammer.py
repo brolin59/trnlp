@@ -135,6 +135,7 @@ def trmi_ksucontrol(word):
     # • -yor, -ken , -ki, -leyin, -imtrak, -gil ekleri sesli uyumuna uymazlar.
     if not word:
         return True
+
     duz_sesliler = 'aâeêıîi'
     yuvarlak_sesliler = 'oôöuûü'
     duz_genis_dar_yuvarlak = 'aâeêuûü'
@@ -177,6 +178,9 @@ def trmi_bsucontrol(word):
     lower_word = to_lower(word)
     clr_word = clean_quiet.sub('', lower_word)
     lenght_vow = len(clr_word)
+
+    if not clr_word:
+        return True
 
     bsu = True
     if (clr_word[0] in kalin_unlu_harfler) and (lenght_vow > 1):
