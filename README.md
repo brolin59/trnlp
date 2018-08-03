@@ -11,7 +11,7 @@ It is enough to copy the TurkisNLP folder into the \Lib\site-packages\ directory
   
 I wanted to share with you a few codes that I wrote as ***hobby*** , although neither Python nor Turkish language is very good. In fact at first I was interested to learn a software language. After some research I decided to learn Python. My curiosity about natural language processing was when researching machine learning studies. I started a project like this because I thought that it would be useful to start a project while learning the software language. Actually, there are studies on this subject. As I have just mentioned, my intention is to improve myself. What if a couple of people touch a little with you ...
 I'm sure friends who are much better at this stuff can help me get those shares up to the next level.
-I started out as a hobby and wished that this would be useful ...
+I started out as a hobby and wished that this would be useful.
 
 ### MorphologicalLR.py:
   
