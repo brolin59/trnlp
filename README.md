@@ -3,7 +3,7 @@
   
 Klasör yapısı ve kullanılabilecek tüm komutlar için [Türkçe Doğal Dil işleme Wiki sayfasını inceleyebilirsiniz.](https://github.com/brolin59/PHYTON-TURKCE-DOGAL-DIL-ISLEME---TURKISH-NLP/wiki)
 
-You can check the [Turkish Natural Language Processing Wiki page](https://github.com/brolin59/PHYTON-TURKCE-DOGAL-DIL-ISLEME---TURKISH-NLP/wiki) for the folder structure and all the commands that can be used.
+> You can check the [Turkish Natural Language Processing Wiki page](https://github.com/brolin59/PHYTON-TURKCE-DOGAL-DIL-ISLEME---TURKISH-NLP/wiki) for the folder structure and all the commands that can be used.
 
 TurkisNLP klasörünü Python'un kurulu olduğu dizin içerisinde \Lib\site-packages\ dizinin içine kopyalamanız yeterlidir.
   
