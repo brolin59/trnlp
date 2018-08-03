@@ -116,12 +116,12 @@ It is obvious that your first problem will be the prediction of a root and appen
 
 Even if it is misspelled, if we can separate a word into a misspelled root and suffixes, we can reach the "right word" by introducing a correct sequence of suffixes with a root-based approach with a proximity algorithm after this step.
 
-For example, suppose that the word "fridge" is written as "from the fridge".
+For example, suppose that the word "bzdolabıdan" is written as "buzdolabından".
 
-* Estimated root part: "bzdolpa"
+* Estimated root part: "bzdolabı"
 * Estimated additional part: "dan"
 
-If we can make the above estimates and arrive at the root of the "refrigerator" with the affinity algorithm, we can find that it must be in the form of "after" with a rule-based addition algorithm. So we can come to the conclusion that the correct writing should be "from the fridge". In some cases more than one result may be returned.
+If we can make the above estimates and arrive at the root of the "buzdolabı" with the affinity algorithm, we can find that it must be in the form of "ndan" with a rule-based addition algorithm. So we can come to the conclusion that the correct writing should be "buzdolabından". In some cases more than one result may be returned.
 
 ### Contact :
 esatmahmutbayol@gmail.com
