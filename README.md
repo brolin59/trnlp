@@ -1,4 +1,134 @@
 # PYTHON TÜRKÇE DOĞAL DİL İŞLEME - TURKISH NLP
+
+## NATURAL LANGUAGE PROCESSING TOOLS FOR TURKISH
+
+(English translation made by google translate.)
+  
+For the folder structure and all the commands that can be used [Turkish Natural Language Processing Wiki page] (https://github.com/brolin59/PHYTON-TURKCE-DOGAL-DIL-ISLEME---TURKISH-NLP/wiki)
+
+> You can check the [Natural Language Processing Wiki page] (https://github.com/brolin59/PHYTON-TURKCE-DOGAL-DIL-ISLEME---TURKISH-NLP/wiki) for the folder structure and all the commands that can be used.
+
+It is enough to copy the TurkisNLP folder into the \Lib\site-packages\ directory in the directory where Python is installed.
+  
+I wanted to share with you a few codes that I wrote as ***hobby*** , although neither Python nor Turkish language is very good. In fact at first I was interested to learn a software language. After some research I decided to learn Python. My curiosity about natural language processing was when researching machine learning studies. I started a project like this because I thought that it would be useful to start a project while learning the software language. Actually, there are studies on this subject. As I have just mentioned, my intention is to improve myself. What if a couple of people touch a little with you ...
+I'm sure friends who are much better at this stuff can help me get those shares up to the next level.
+I started out as a hobby and wished that this would be useful ...
+
+### MorphologicalLR.py:
+  
+***MorphologicalLR dictionary and rule-based*** is an algorithm I have prepared to find the suffixes of running root / stem and lamb.
+I am still in the test phase ***misses can be mistakes***. We can still say we're at work.
+   
+I have not identified the construction inserts for the moment. Creating the dictionary was a bit of a hassle and took a lot of time. Still missing
+and the dictionary file is still in the works if it is wrong. The dictionary file is in **Data / tr_NLP.sqlite**
+you can find.
+  
+The example usage of the algorithm I wrote to find the word stem/body and its suffixes is as follows:
+
+``` python
+from TurkishNLP import Ceb
+kelime = Ceb('oğlumun')
+print('Kelime kök/gövdesi : ', kelime.stems)
+print('Eklere ayrılmış hali : ', kelime.result)
+  
+Kelime kök/gövdesi : ['oğul(isim)']
+Eklere ayrılmış hali : ['oğul(isim)+um(2-1. tekil kişi){içe}+un(17-Tamlama eki){içe}']
+```
+
+We will have more than one result often because we have built a structure with ***words and rules***. For example;
+
+``` python
+from TurkishNLP import Ceb
+kelime = Ceb('aldım')
+print('Kelime kök/gövdesi : ', kelime.stems)
+print('Eklere ayrılmış hali : ', kelime.result)
+  
+Kelime kök/gövdesi : ['al(isim)', 'al(fiil)']
+Eklere ayrılmış hali : ['al(fiil)+dı(1-Bilinen Geçmiş Zaman){fçe}+m(26-1. tekil kişi){fçe}', 'al(isim)+dı(2-Hikaye){iefe}+m(9-1. tekil kişi){iefe}']
+```
+
+### SentenceTokenization.py
+  
+It is a simple rule-based sentence matching algorithm. Now that I'm in the development phase, I'm missing a few features in my mind. Nevertheless, I think it will work in many dumps. The sample code and the result is as follows.
+
+``` python
+from TurkishNLP import cumle_ayir as ca
+
+yazi = """
+Türkçe karakterler 'ş, ı, ö, ç, ğ, ü' kullanmadan yazılmış yazıları 
+doğru Türkçe karakter karşılıkları ile değiştirmek için Doç. Dr. Deniz
+Yüret'in geliştirdiği altyapıyı kullanan ve Emre Sevinç tarafından 
+Python koduna çevrilmiş https://github.com/emres/turkish-deasciifier 
+adresindeki kod kullanılabilir. 
+
+
+Türkçe Tümcelerin Yüklem Odaklı Anlam Ve Dilbilgisi Çözümlemesi
+Çalışmamız tümcelerin anlamsal ve dilbilgisi çözümlemesini içermek-
+tedir. Tümcenin anlamsal ve dilbilgisi açısından çözümlenmesi Doğal 
+Dil İşleme (DDİ)’nin ana konulardan biridir. Ayrıca yüklem, o tüm-
+cenin hangi öbeklerden oluşabileceği konusunda da belirleyicidir. 
+örneğin, "büyümek'' yüklemi tümce içinde nesne almazken, "-de'' e-
+kiyle biten dolaylı tümleç öbeğini alır. Örneğin "Ayşeyi büyüdü.'' 
+tümcesi sorunluyken, "Sokakta büyüdü.'' tümcesi doğrudur.
+URL: http://hdl.handle.net/11527/12366
+"""
+yazi = ca(yazi)
+print(yazi)
+```
+
+Each item in the list represents a line. The output of the code is as follows
+
+``` python
+["Türkçe karakterler 'ş, ı, ö, ç, ğ, ü' kullanmadan yazılmış yazıları doğru Türkçe karakter karşılıkları ile değiştirmek için Doç. Dr. Deniz Yüret'in geliştirdiği altyapıyı kullanan ve Emre Sevinç tarafından Python koduna çevrilmiş https://github.com/emres/turkish-deasciifier adresindeki kod kullanılabilir.",  
+'Türkçe Tümcelerin Yüklem Odaklı Anlam Ve Dilbilgisi Çözümlemesi:',  
+'Çalışmamız tümcelerin anlamsal ve dilbilgisi çözümlemesini içermektedir.',  
+"Tümcenin anlamsal ve dilbilgisi açısından çözümlenmesi Doğal Dil İşleme (DDİ) 'nin ana konulardan biridir.",  
+'Ayrıca yüklem, o tümcenin hangi öbeklerden oluşabileceği konusunda da belirleyicidir.',  
+'örneğin, "büyümek" yüklemi tümce içinde nesne almazken, "-de" ekiyle biten dolaylı tümleç öbeğini alır.',  
+'Örneğin "Ayşeyi büyüdü." tümcesi sorunluyken, "Sokakta büyüdü." tümcesi doğrudur.',  
+'URL:',  
+'http://hdl.handle.net/11527/12366']  
+```
+My ultimate goal is to be able to do *** sentence analysis ***.
+  
+### Project Content:
+  
+- Dictionary preparation. (Contains the glossary_text.txt file dictionary information in the Data folder.)
+- Spelling algorithm (done in Auxiliary / SpellWord function available in TurkishGrammer.py).
+- English audio compliance check (done in Auxiliary / TurkishGrammer.py with audio compatibility functions)
+- Word based root / stem and attachment (Morphological / MorphologicalLR.py ClsEkBulk is available.)
+- Sentence separation. (I did something simple, but I have not posted it yet, so I'll share it after a few tests.) - Added.
+- Text statistic (I have a study on this part, I will post it after editing a bit.) - Added.
+- Finding misspelled words and correcting for correct spelling suggestions.
+- Sentence analysis and censorship of the items to be separated.
+
+### Ideas:
+  
+* The SentenceTokenization.py file I wrote for sentence separation works with rule-based and simple logic. I think that sentence analysis and sentence separation algorithm should work integrated. In other words, with sentence analysis, it is more logical to distinguish each of the sentences in a text. To simplify a complex sentence structure into multiple sentences.
+
+* Finding misspelled words:
+Situation Analysis:
+By examining a word in two parts as a stem / body and appendages, the misspelling can be at the root / stem attachment part. Yada may be wrong in both parts. In this case, it seems that we need to evaluate the root and supplements separately. In this case the following question arises:
+"How do we distinguish between the root and attachments of a misspelled belly?"
+The MorphologicalLR.py algorithm I wrote at this point is correct in a big way, provided that the pen is written correctly. I can not get a misspelled word into the root and its suffixes with the same algorithm. If we can not get a return on the result of this algorithm, we can just say that the word is misspelled.
+
+* Solution ideas for correcting misspelled words:
+It is obvious that your first problem will be the prediction of a root and appendages of a misspelled word. Perhaps machine learning can be done in this way with statistics. There is also basic knowledge about these two subjects. I can get help from more professional friends.
+
+Even if it is misspelled, if we can separate a word into a misspelled root and suffixes, we can reach the "right word" by introducing a correct sequence of suffixes with a root-based approach with a proximity algorithm after this step.
+
+For example, suppose that the word "fridge" is written as "from the fridge".
+
+* Estimated root part: "bzdolpa"
+* Estimated additional part: "dan"
+
+If we can make the above estimates and arrive at the root of the "refrigerator" with the affinity algorithm, we can find that it must be in the form of "after" with a rule-based addition algorithm. So we can come to the conclusion that the correct writing should be "from the fridge". In some cases more than one result may be returned.
+
+### Contact :
+esatmahmutbayol@gmail.com
+
+***
+
 ## TÜRKÇE İÇİN DOĞAL DİL İŞLEME ARAÇLARI
   
 Klasör yapısı ve kullanılabilecek tüm komutlar için [Türkçe Doğal Dil işleme Wiki sayfasını inceleyebilirsiniz.](https://github.com/brolin59/PHYTON-TURKCE-DOGAL-DIL-ISLEME---TURKISH-NLP/wiki)
