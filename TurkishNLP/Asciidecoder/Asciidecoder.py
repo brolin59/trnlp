@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import pickle
+import os
 
 
 class Deasciifier:
@@ -10,8 +11,9 @@ class Deasciifier:
     # print(my_deasciified_turkish_txt)
     # This system is based on the turkish-mode by Dr. Deniz Yüret
     # Python Code by Emre Sevinç
+    current_file = (os.path.abspath(os.path.dirname(__file__))).replace('\\', '/')
 
-    with open('ascii_to_str_dict.pkl', 'rb') as f:
+    with open(current_file + '/ascii_to_str_dict.pkl', 'rb') as f:
         turkish_pattern_table = pickle.load(f)
     del f
 
