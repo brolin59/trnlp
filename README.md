@@ -3,10 +3,8 @@
 ## NATURAL LANGUAGE PROCESSING TOOLS FOR TURKISH
 
 (English translation made by google translate.)
-  
-For the folder structure and all the commands that can be used [Turkish Natural Language Processing Wiki page] (https://github.com/brolin59/PHYTON-TURKCE-DOGAL-DIL-ISLEME---TURKISH-NLP/wiki)
 
-> You can check the [Natural Language Processing Wiki page] (https://github.com/brolin59/PHYTON-TURKCE-DOGAL-DIL-ISLEME---TURKISH-NLP/wiki) for the folder structure and all the commands that can be used.
+> You can check the [Natural Language Processing Wiki page](https://github.com/brolin59/PHYTON-TURKCE-DOGAL-DIL-ISLEME---TURKISH-NLP/wiki) for the folder structure and all the commands that can be used.
 
 It is enough to copy the TurkisNLP folder into the \Lib\site-packages\ directory in the directory where Python is installed.
   
