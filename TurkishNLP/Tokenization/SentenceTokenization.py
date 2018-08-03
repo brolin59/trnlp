@@ -25,7 +25,7 @@ shortlist = load_shortlist()
 
 # haric listesindeki düzenli ifadeler satır sonu olarak değerlendirilmez.
 haric = ('\d+\.', '\d+\.\d+', '\d+\.\d+\.\d+', '[A-ZÇĞİÖŞÜ]\.', '[XVI]+\.', '.*?w+?\.?\w+\.\w+.*', '.*@\w+\..*^[\']',
-         '\w?\.?\w?\.?\w\.\w\.', '\w?\.?\w?\.?\w\.\w\.\'\w+', '\d+:\d+:?\d+?', '\d+-\d+.', '\d+-\d+-\d+.')
+         '\w?\.?\w?\.?\w\.\w\.', '\w?\.?\w?\.?\w\.\w\.\'\w+', '\d+:\d+:?\d+?', '\d+-\d+.', '\d+-\d+-\d+.', 'https://.*')
 
 # Satır Sonu İfadeler
 eol_punch = ('...', '.', ':', '!', '?')
@@ -75,6 +75,7 @@ def baslik_bul(cmller):
     satirlar = []
     satir_ayir = cmller.split('\n')
     for satir in satir_ayir:
+        satir = satir.strip()
         if satir:
             satir_split = satir.split(' ')
         else:
@@ -100,7 +101,7 @@ def tire_kontrol(cml):
     genel_liste = []
     for i, satir in enumerate(cml):
         satir = satir.strip()
-        if (satir[-1] == '-') and (i < len_cml):
+        if satir and (satir[-1] == '-') and (i < len_cml):
             if cml[i + 1].strip()[0].isalpha():
                 gecici_liste.append(satir.strip()[:-1])
                 continue
@@ -128,6 +129,9 @@ def cumle_ayir(cumleler: str):
     kelimeler = [x.strip() for x in pr_tr_kontrol(cumleler) if (x is not None) and (x.strip() != '')]
     parca_listesi = []
     for parcalar in kelimeler:
+        parcalar = parcalar.strip()
+        if not parcalar:
+            continue
         if parcalar.startswith('{{B'):
             if parcalar.endswith(eol_punch):
                 baslik = parcalar[3:-3]
@@ -140,7 +144,7 @@ def cumle_ayir(cumleler: str):
             parca_listesi.extend(parcalar)
         else:
             parca_listesi.append(parcalar)
-
+    print(parca_listesi)
     cumlecik = []
     cumle = []
     for parcalar in parca_listesi:
@@ -160,4 +164,17 @@ def cumle_ayir(cumleler: str):
 
 
 if __name__ == '__main__':
+    yazi = """
+    Hiç olmazsa onu bugün göreyim. (Bağlaç), (CDU, Bli. N, ZT, Y)
+Fakat bu durum babamı daha çok yıprattı. (Bağlaç), (Ö, Bli. N, ZT, Y)
+Eyvah, şimdi işimiz daha zorlaştı. (Ünlem), (CDU, ZT, Ö, ZT, Y)
+Gidelim artık, haydi. (Ünlem), (Y, ZT, CDU)
+Hey! Seni bir daha burada görmeyeyim. (Seslenme), (CDU, Bli. N, ZT, DT, Y)
+Bana bir tane simit sarıver simitçi. (Seslenme), (DT, Bsiz. N, Y, CDU)
+Efendiler, bugün bayram günüdür. (Hitap), (CDU, Ö, Y)
+Sayın Başkanım, bugün sizi aramızda görmekten onur duyduk. (Hitap), (CDU, DT, Y)
+    """
+    de = cumle_ayir(yazi)
+    for i in de:
+        print(i)
     pass
