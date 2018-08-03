@@ -194,6 +194,7 @@ class ClsEkBul:
     # dosyada bile toplayabilirim.
     # 28.07.2018 @staticmethod olarak yazdığım fonksiyonları class dışına aldım.
     def __init__(self, word):
+        word = to_lower(word)
         if not word:
             self.result = []
             self.stems = []
@@ -230,9 +231,7 @@ class ClsEkBul:
         # Sözlük hakkındaki detaylar için bkz. Auxiliary/sozlugu_veritabanina_aktar.py
         temp_stem_list = []
         # Olası ekleri toplamak için temp_stem_list adında boş bir liste oluşturuyoruz.
-        word = to_lower(self.word)
-        # Kelimeyi küçük harfe çeviriyoruz.
-        word = replace_cap_letter(word)
+        word = replace_cap_letter(self.word)
         # Kelimenin içinde şapkalı harf var ise normale çeviriyoruz.
         first_syllable = spellword(word)
         if first_syllable is False:
@@ -508,6 +507,6 @@ class ClsEkBul:
 
 
 if __name__ == '__main__':
-    a = ClsEkBul('grubu')
+    a = ClsEkBul('CÜMLEDE')
     print(a.result)
     print(a.stems)
