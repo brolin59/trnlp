@@ -146,13 +146,17 @@ def wordtoten(word):
 
 # Gelen string(yazı) veriyi küçük harfe çevirir.
 def to_lower(word):
-    tolower_text = (word.replace('İ', 'i')).lower()
+    tolower_text = (word.replace('İ', 'i'))
+    tolower_text = (tolower_text.replace('I', 'ı'))
+    tolower_text = tolower_text.lower()
     return tolower_text
 
 
 # Gelen string(yazı) veriyi büyük harfe çevirir.
 def to_upper(word):
-    toupper_text = (word.replace('i', 'İ')).lower()
+    toupper_text = (word.replace('i', 'İ'))
+    toupper_text = (toupper_text.replace('ı', 'I'))
+    toupper_text = toupper_text.upper()
     return toupper_text
 
 
