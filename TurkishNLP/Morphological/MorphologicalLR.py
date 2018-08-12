@@ -188,7 +188,7 @@ class ClsEkBul:
             if (word != rpstem) and (word.startswith(rpstem)):
                 levenshtein_dist = lddistance(word, rpstem)
                 temp_stem_list.append((tlstem, stem[1], levenshtein_dist))
-                continue
+                # continue
 
             letter_harmony = re.findall('\((\w+)\)', stem[2])
             rp_letter_harmony = letter_harmony
@@ -373,7 +373,7 @@ class ClsEkBul:
 
 
 if __name__ == '__main__':
-    f = 'sınıflandırılmaktadır'
+    f = 'hakkını'
     e = ClsEkBul(f)
     print(e.result)
     print(e.stems)
