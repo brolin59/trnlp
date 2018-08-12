@@ -37,7 +37,7 @@ from operator import itemgetter
 
 vt_table_name = ek_tipleri
 
-not_get_suffix = ('bağlaç', 'ünlem', 'zarf', '0')
+not_get_suffix = ('bağlaç', 'ünlem', '0')
 # not_get_suffix demeti ek almayan kelime türlerini içerir. Bu türdeki kelimeler ek aldıklarında isim olurlar.
 # '0' zaten kimya sembollerini gösterdiği için ek almaları gibi bir durum olası değil.
 
@@ -65,7 +65,11 @@ fiil_ekler = [('fiil_catisi',),
               ('fiil_catisi', 'fiil_cekim_ekleri'),
               ('birlesik_fiil_ekleri', 'fiil_cekim_ekleri'),
               ('x_fiil_ekleri', 'isim_cekim_ekleri'),
-              ('fiil_catisi', 'birlesik_fiil_ekleri', 'fiil_cekim_ekleri')]
+              ('x_fiil_ekleri', 'isim_ek_fiil_ekleri'),
+              ('birlesik_fiil_ekleri', 'fiil_cekim_ekleri', 'fiil_ek_fiil_ekleri'),
+              ('birlesik_fiil_ekleri', 'x_fiil_ekleri', 'isim_cekim_ekleri'),
+              ('fiil_catisi', 'birlesik_fiil_ekleri', 'fiil_cekim_ekleri'),
+              ('birlesik_fiil_ekleri', 'x_fiil_ekleri', 'isim_cekim_ekleri', 'isim_ek_fiil_ekleri')]
 
 tur_dict = {'isim': 'isim_ekler',
             'sıfat': 'isim_ekler',
@@ -73,6 +77,7 @@ tur_dict = {'isim': 'isim_ekler',
             'zamir': 'isim_ekler',
             'özel': 'isim_ekler',
             'nsz': 'isim_ekler',
+            'zarf': 'isim_ekler',
             'fiil': 'fiil_ekler',
             'yardımcı fiil': 'fiil_ekler'}
 
@@ -88,17 +93,18 @@ suffix_shortname = {'isim_ek_fiil_ekleri': 'iefe',
 
 class ClsEkBul:
     def __init__(self, word):
+        word = to_lower(word)
+        word = replace_cap_letter(word)
         if not word or (word.isalpha is False):
             self.result = []
             self.stem_list = []
-        self.stem = []
-        word = to_lower(word)
-        word = replace_cap_letter(word)
+        self.stems = []
         self.word = word
         self.stem_list = self.find_stem()
+        # print(self.stem_list)
         self.result = self.find_suffix(word)
         if self.result:
-            self.stem = list(set([x[0] for x in self.result]))
+            self.stems = list(set([x[0] for x in self.result]))
         self.result = list(set(['+'.join(z) for z in self.result]))
 
     def find_stem(self):
@@ -367,7 +373,7 @@ class ClsEkBul:
 
 
 if __name__ == '__main__':
-    f = 'bakışlarım'
+    f = 'sınıflandırılmaktadır'
     e = ClsEkBul(f)
     print(e.result)
-    print(e.stem)
+    print(e.stems)
