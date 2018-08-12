@@ -88,8 +88,8 @@ def spellword(word: str):
     # Türkçenin hece yapısına göre hecelere ayrılır: band-rol, kont-rol, port-re, prog-ram, sant-ral, sürp-riz,
     # tund-ra, volf-ram vb.
     clean_word = re.sub(clean_quiet, '', word)
-    num_cut = [('10001', 3), ('01001', 3), ('0100', 4), ('1001', 2), ('1000', 2), ('0101', 2),
-               ('101', 1), ('010', 2), ('011', 2), ('110', 1), ('100', 3), ('0010', 4)]
+    num_cut = [('100001', 3), ('001000', 5), ('00101', 3), ('10001', 3), ('01001', 3), ('0100', 4), ('1001', 2),
+               ('1000', 2), ('0101', 2), ('101', 1), ('010', 2), ('011', 2), ('110', 1), ('100', 3), ('0010', 4)]
 
     syllable_list = []
     syllable = ""
@@ -319,4 +319,11 @@ def sessiz_uyumu(word):
 
 
 if __name__ == '__main__':
-    pass
+    print(spellword('enstrümanımı'))
+    # with open('C:/Users/bilgisayar/PycharmProjects/NLP/Yedek/sayilmis_kelimeler.txt', 'r', encoding='utf8') as fl:
+    #     lines = [(line.strip()).split('\t')[0] for line in fl if (line.strip()).split('\t')[1] != '1']
+    # del fl
+    # for i in lines:
+    #     hecele = spellword(i)
+    #     if hecele and (len(hecele) > 1) and (i[0] == 'o'):
+    #         print(i, '\t\t', hecele)
