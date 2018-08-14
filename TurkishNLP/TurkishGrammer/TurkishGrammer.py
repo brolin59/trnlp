@@ -72,50 +72,120 @@ def word_gram(word_list: list, n=2):
     return ngram_list
 
 
-# Türkçe heceleme algoritması. Heceleme sonucunda elde edilen hece sayısı, kelime içerisindeki sesli harf sayısına
-# eşit değilse False döndürür. Heceleme doğru şekilde tamamlandıysa heceleri bir liste içerisinde geri döndürür.
 def spellword(word: str):
-    """
-
-    :type word: str
-    """
-    # Kaynak TDK; Türkçede kelime içinde iki ünlü arasındaki ünsüz, kendinden sonraki ünlüyle hece kurar:
-    # a-ra-ba, bi-çi-mi-ne, in-sa-nın, ka-ra-ca vb. Kelime içinde yan yana gelen iki ünsüzden ilki kendinden
-    # önceki ünlüyle, ikincisi kendinden sonraki ünlüyle hece kurar: al-dı, bir-lik, sev-mek vb. Kelime içinde
-    # yan yana gelen üç ünsüz harften ilk ikisi kendinden önceki ünlüyle, üçüncüsü kendinden sonraki ünlüyle hece
-    #  kurar: alt-lık, Türk-çe, kork-mak vb. İlk heceden sonraki heceler ünsüzle başlar. Bitişik yazılan
-    # kelimelerde de bu kurala uyulur: ba-şöğ-ret-men, il-ko-kul, Ka-ra-os-ma-noğ-lu vb. Batı kökenli kelimeler,
-    # Türkçenin hece yapısına göre hecelere ayrılır: band-rol, kont-rol, port-re, prog-ram, sant-ral, sürp-riz,
-    # tund-ra, volf-ram vb.
-    clean_word = re.sub(clean_quiet, '', word)
-    num_cut = [('100001', 3), ('001000', 5), ('00101', 3), ('10001', 3), ('01001', 3), ('0100', 4), ('1001', 2),
-               ('1000', 2), ('0101', 2), ('101', 1), ('010', 2), ('011', 2), ('110', 1), ('100', 3), ('0010', 4)]
-
     syllable_list = []
+    # Bulduğumuz heceleri bu listede toplayacağız.
     syllable = ""
-    wton = wordtoten(word)
+    # Harfleri bir hece oluşturana kadar "syllable" değişkenine yazacağız.
+    gword = to_lower(word)
+    # "gword" değişkenine kelimemizin küçük harfe çevrilmiş halini atıyoruz.
+    tword = wordtoten(word)
+    # "tword" değişkenine kelimemizin sayılara çevrilmiş halini atıyoruz.
+    if tword.startswith('000') or tword.endswith('000'):
+        return False
 
-    for i in range(wton.count('1') + 1):
-        for start_wton, word_cut in num_cut:
-            if wton.count('1') == 1:
-                syllable_list.append(word)
-                word = ""
-                wton = ""
-            elif wton.startswith(start_wton):
-                syllable = syllable + word[:word_cut]
-                word = word[word_cut:]
-                wton = wton[word_cut:]
-                syllable_list.append(syllable)
-                syllable = ""
+    tword = tword + '.....'
+    len_vowel = tword.count('1')
+    counter = 0
+
+    for i, char in enumerate(tword):
+        if counter > 0:
+            counter -= 1
+            continue
+
+        if char == '.':
+            if syllable and syllable.count('1') == 1:
+                syllable_list.append(gword[:len(syllable)])
+            break
+        elif char == '0':
+            syllable = syllable + char
+            if (syllable) and (syllable == '000'):
                 break
-
-    if word:
-        syllable_list.append(word)
-    # print(incoming_word, " : ", "-".join(syllable_list))
-    if len(syllable_list) == len(clean_word):
+            continue
+        elif char == '1':
+            syllable = syllable + char
+            x = len(syllable)
+            if (tword[x:x + 2] == '01') or (tword[x:x + 2] == '10'):
+                syllable_list.append(gword[:x])
+                gword = gword[x:]
+                tword = tword[x:]
+                syllable = ''
+                continue
+            elif tword[x:x + 3] == '001':
+                syllable_list.append(gword[:x + 1])
+                gword = gword[x + 1:]
+                tword = tword[x + 1:]
+                syllable = ''
+                counter += 1
+                continue
+            elif tword[x:x + 3] == '00.':
+                syllable_list.append(gword[:x + 2])
+                del gword
+                break
+            elif tword[x:x + 4] == '0001':
+                syllable_list.append(gword[:x + 2])
+                gword = gword[x + 2:]
+                tword = tword[x + 2:]
+                syllable = ''
+                counter += 2
+                continue
+            elif tword[x:x + 5] == '00001':
+                syllable_list.append(gword[:x + 2])
+                gword = gword[x + 2:]
+                tword = tword[x + 2:]
+                syllable = ''
+                counter += 2
+                continue
+    if (''.join(syllable_list) == word) and (len_vowel == len(syllable_list)):
         return syllable_list
     else:
         return False
+
+
+# # Türkçe heceleme algoritması. Heceleme sonucunda elde edilen hece sayısı, kelime içerisindeki sesli harf sayısına
+# # eşit değilse False döndürür. Heceleme doğru şekilde tamamlandıysa heceleri bir liste içerisinde geri döndürür.
+# def spellword(word: str):
+#     """
+#
+#     :type word: str
+#     """
+#     # Kaynak TDK; Türkçede kelime içinde iki ünlü arasındaki ünsüz, kendinden sonraki ünlüyle hece kurar:
+#     # a-ra-ba, bi-çi-mi-ne, in-sa-nın, ka-ra-ca vb. Kelime içinde yan yana gelen iki ünsüzden ilki kendinden
+#     # önceki ünlüyle, ikincisi kendinden sonraki ünlüyle hece kurar: al-dı, bir-lik, sev-mek vb. Kelime içinde
+#     # yan yana gelen üç ünsüz harften ilk ikisi kendinden önceki ünlüyle, üçüncüsü kendinden sonraki ünlüyle hece
+#     #  kurar: alt-lık, Türk-çe, kork-mak vb. İlk heceden sonraki heceler ünsüzle başlar. Bitişik yazılan
+#     # kelimelerde de bu kurala uyulur: ba-şöğ-ret-men, il-ko-kul, Ka-ra-os-ma-noğ-lu vb. Batı kökenli kelimeler,
+#     # Türkçenin hece yapısına göre hecelere ayrılır: band-rol, kont-rol, port-re, prog-ram, sant-ral, sürp-riz,
+#     # tund-ra, volf-ram vb.
+#     clean_word = re.sub(clean_quiet, '', word)
+#     num_cut = [('100001', 3), ('001000', 5), ('00101', 3), ('10001', 3), ('01001', 3), ('0100', 4), ('1001', 2),
+#                ('1000', 2), ('0101', 2), ('101', 1), ('010', 2), ('011', 2), ('110', 1), ('100', 3), ('0010', 4)]
+#
+#     syllable_list = []
+#     syllable = ""
+#     wton = wordtoten(word)
+#
+#     for i in range(wton.count('1') + 1):
+#         for start_wton, word_cut in num_cut:
+#             if wton.count('1') == 1:
+#                 syllable_list.append(word)
+#                 word = ""
+#                 wton = ""
+#             elif wton.startswith(start_wton):
+#                 syllable = syllable + word[:word_cut]
+#                 word = word[word_cut:]
+#                 wton = wton[word_cut:]
+#                 syllable_list.append(syllable)
+#                 syllable = ""
+#                 break
+#
+#     if word:
+#         syllable_list.append(word)
+#     # print(incoming_word, " : ", "-".join(syllable_list))
+#     if len(syllable_list) == len(clean_word):
+#         return syllable_list
+#     else:
+#         return False
 
 
 # Küçük sesli uyumu kontrolü. True yada False döndürür.
@@ -319,7 +389,7 @@ def sessiz_uyumu(word):
 
 
 if __name__ == '__main__':
-    print(spellword('enstrümanımı'))
+    print(spellword('samsunspor'))
     # with open('C:/Users/bilgisayar/PycharmProjects/NLP/Yedek/sayilmis_kelimeler.txt', 'r', encoding='utf8') as fl:
     #     lines = [(line.strip()).split('\t')[0] for line in fl if (line.strip()).split('\t')[1] != '1']
     # del fl
