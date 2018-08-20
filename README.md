@@ -45,7 +45,7 @@ Eklere ayrılmış hali : ['al(fiil)+dı(1-Bilinen Geçmiş Zaman){fçe}+m(26-1.
 
 ### Parçalama(Tokenize) :
 
-```
+``` python
 import trnlp
 
 kelime = """Power point sunumunu print out yapıp hard copy’sini almış olalım. 
