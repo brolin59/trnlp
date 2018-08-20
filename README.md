@@ -22,10 +22,10 @@ bulabilirsiniz.
 ***Kelime kök/gövde ve eklerini*** bulmak için yazdığım algoritmanın örnek kullanımı şu şekildedir:
   
 ``` python
-from TurkishNLP import Ceb
-kelime = Ceb('oğlumun')
-print('Kelime kök/gövdesi : ', kelime.stems)
-print('Eklere ayrılmış hali : ', kelime.result)
+import trnlp
+kelime = 'oğlumun'
+print('Kelime kök/gövdesi : ', trnlp.find_stems(kelime))
+print('Eklere ayrılmış hali : ', trnlp.find_suffix(kelime))
   
 Kelime kök/gövdesi : ['oğul(isim)']
 Eklere ayrılmış hali : ['oğul(isim)+um(2-1. tekil kişi){içe}+un(17-Tamlama eki){içe}']
@@ -34,21 +34,19 @@ Eklere ayrılmış hali : ['oğul(isim)+um(2-1. tekil kişi){içe}+un(17-Tamlama
 ***Kelime ve kural*** tabanlı bir yapı oluşturduğumuz için çoğu zaman birden fazla sonuç dönecektir. Örneğin;
   
 ``` python
-from TurkishNLP import Ceb
+import trnlp
 kelime = Ceb('aldım')
-print('Kelime kök/gövdesi : ', kelime.stems)
-print('Eklere ayrılmış hali : ', kelime.result)
+print('Kelime kök/gövdesi : ', trnlp.find_stems(kelime))
+print('Eklere ayrılmış hali : ', trnlp.find_suffix(kelime))
   
 Kelime kök/gövdesi : ['al(isim)', 'al(fiil)']
 Eklere ayrılmış hali : ['al(fiil)+dı(1-Bilinen Geçmiş Zaman){fçe}+m(26-1. tekil kişi){fçe}', 'al(isim)+dı(2-Hikaye){iefe}+m(9-1. tekil kişi){iefe}']
 ```
   
-### SentenceTokenization.py
-  
-Kural tabanlı çalışan basit bir cümle bulma algoritmasıdır. Halen geliştirme aşamasında olduğum için aklımdaki birkaç özelliği eksik şu anda. Yine de birçok dökümanda iş görür diye düşünüyorum. Örnek kodu ve sonucu aşağıdaki gibidir.
+### İstatistik
   
 ``` python
-from TurkishNLP import cumle_ayir as ca
+import trnlp
 
 yazi = """
 Türkçe karakterler 'ş, ı, ö, ç, ğ, ü' kullanmadan yazılmış yazıları 
@@ -56,7 +54,6 @@ doğru Türkçe karakter karşılıkları ile değiştirmek için Doç. Dr. Deni
 Yüret'in geliştirdiği altyapıyı kullanan ve Emre Sevinç tarafından 
 Python koduna çevrilmiş https://github.com/emres/turkish-deasciifier 
 adresindeki kod kullanılabilir. 
-
 
 Türkçe Tümcelerin Yüklem Odaklı Anlam Ve Dilbilgisi Çözümlemesi
 Çalışmamız tümcelerin anlamsal ve dilbilgisi çözümlemesini içermek-
@@ -68,22 +65,35 @@ kiyle biten dolaylı tümleç öbeğini alır. Örneğin "Ayşeyi büyüdü.''
 tümcesi sorunluyken, "Sokakta büyüdü.'' tümcesi doğrudur.
 URL: http://hdl.handle.net/11527/12366
 """
-yazi = ca(yazi)
-print(yazi)
+print(trnlp.view_statistic(kelime))
 ```
-  
-Listenin her bir öğesi bir satırı ifade eder. Kodun çıktısı şu şekildedir:
-``` python
-["Türkçe karakterler 'ş, ı, ö, ç, ğ, ü' kullanmadan yazılmış yazıları doğru Türkçe karakter karşılıkları ile değiştirmek için Doç. Dr. Deniz Yüret'in geliştirdiği altyapıyı kullanan ve Emre Sevinç tarafından Python koduna çevrilmiş https://github.com/emres/turkish-deasciifier adresindeki kod kullanılabilir.",  
-'Türkçe Tümcelerin Yüklem Odaklı Anlam Ve Dilbilgisi Çözümlemesi:',  
-'Çalışmamız tümcelerin anlamsal ve dilbilgisi çözümlemesini içermektedir.',  
-"Tümcenin anlamsal ve dilbilgisi açısından çözümlenmesi Doğal Dil İşleme (DDİ) 'nin ana konulardan biridir.",  
-'Ayrıca yüklem, o tümcenin hangi öbeklerden oluşabileceği konusunda da belirleyicidir.',  
-'örneğin, "büyümek" yüklemi tümce içinde nesne almazken, "-de" ekiyle biten dolaylı tümleç öbeğini alır.',  
-'Örneğin "Ayşeyi büyüdü." tümcesi sorunluyken, "Sokakta büyüdü." tümcesi doğrudur.',  
-'URL:',  
-'http://hdl.handle.net/11527/12366']  
-```
+    Yazının İstatistiksel Bilgileri :
+    ------------------------------------------
+    Toplam Satır Sayısı .....................: 15
+    Toplam Boş Satır Sayısı .................: 1 / frq : %6.666666666666667 (Toplam Satır Sayısına Göre)
+    Toplam Yazılı Satır Sayısı ..............: 14 / frq : %93.33333333333333 (Toplam Satır Sayısına Göre)
+    ------------------------------------------
+    Toplam Kelime Sayısı ....................: 114
+    Tekrarsız Kelime Sayısı..................: 106
+    En Çok Tekrarlanan ilk 5 Kelime .........: [('Türkçe', 3, 2.6315789473684212), ('ve', 3, 2.6315789473684212), ('dilbilgisi', 2, 1.7543859649122806), ('anlamsal', 2, 1.7543859649122806), ('tümcesi', 2, 1.7543859649122806)]
+    ------------------------------------------
+    Tüm Karakterin Sayısı ...................: 878
+    Boşluk Karakteri Sayısı .................: 95 / frq : %10.82004555808656 (Tüm Karakterin Sayısına Göre)
+    Toplam Rakam Sayısı .....................: 10 / frq : %1.1389521640091116 (Tüm Karakterin Sayısına Göre)
+    Rakamların Listesi ......................: [('1', 3, 0.3416856492027335), ('6', 2, 0.22779043280182232), ('2', 2, 0.22779043280182232), ('3', 1, 0.11389521640091116), ('7', 1, 0.11389521640091116), ('5', 1, 0.11389521640091116)]
+    Özel Karakterlerin Sayısı ...............: 31 / frq : %3.530751708428246 (Tüm Karakterin Sayısına Göre)
+    Özel Karakterlerin Listesi...............: [(',', 9, 1.0250569476082005), ('.', 8, 0.9111617312072893), ('', 5, 0.5694760820045558), ("'", 5, 0.5694760820045558), ('-', 3, 0.3416856492027335), (':', 1, 0.11389521640091116)]
+    ------------------------------------------
+    Tüm Harflerin Sayısı ....................: 703 / frq : %80.06833712984054 (Tüm Karakterin Sayısına Göre)
+    Sesli Harflerin Sayısı ..................: 287 / frq : %40.82503556187767 (Tüm Harflerin Sayısına Göre)
+    Sesli Harflerin Listesi .................: [('e', 72, 8.200455580865604), ('i', 69, 7.85876993166287), ('a', 53, 6.0364464692482915), ('ü', 27, 3.075170842824601), ('ı', 20, 2.277904328018223), ('o', 15, 1.7084282460136675), ('u', 15, 1.7084282460136675), ('ö', 7, 0.7972665148063781), ('A', 3, 0.3416856492027335), ('İ', 2, 0.22779043280182232), ('O', 1, 0.11389521640091116), ('U', 1, 0.11389521640091116), ('Ö', 1, 0.11389521640091116), ('E', 1, 0.11389521640091116)]
+    Sessiz Harflerin Sayısı .................: 416 / frq : %59.17496443812233 (Tüm Harflerin Sayısına Göre)
+    Sessiz Harflerin Listesi ................: [('l', 56, 6.378132118451025), ('n', 50, 5.694760820045558), ('r', 41, 4.669703872437358), ('m', 33, 3.7585421412300684), ('k', 31, 3.530751708428246), ('d', 30, 3.416856492027335), ('t', 24, 2.733485193621868), ('s', 19, 2.164009111617312), ('y', 17, 1.9362186788154898), ('ç', 14, 1.5945330296127562), ('b', 14, 1.5945330296127562), ('c', 12, 1.366742596810934), ('ğ', 10, 1.1389521640091116), ('ş', 10, 1.1389521640091116), ('h', 8, 0.9111617312072893), ('z', 8, 0.9111617312072893), ('D', 8, 0.9111617312072893), ('g', 6, 0.683371298405467), ('v', 5, 0.5694760820045558), ('T', 5, 0.5694760820045558), ('p', 3, 0.3416856492027335), ('Ç', 2, 0.22779043280182232), ('Y', 2, 0.22779043280182232), ('S', 2, 0.22779043280182232), ('f', 2, 0.22779043280182232), ('V', 1, 0.11389521640091116), ('R', 1, 0.11389521640091116), ('P', 1, 0.11389521640091116), ('L', 1, 0.11389521640091116)]
+    ------------------------------------------
+    Büyük Harflerin Sayısı ..................: 32 / frq : %4.551920341394026 (Tüm Harflerin Sayısına Göre)
+    Büyük Harfle Başlayan Kelimelerin Sayısı : 26 / frq : %22.80701754385965 (Toplam Kelime Sayısına Göre)
+    Büyük Harfli ilk 5 Kelime ...............: [('Türkçe', 3, 11.538461538461538), ('Ayşeyi', 1, 3.8461538461538463), ('İşleme', 1, 3.8461538461538463), ('Tümcenin', 1, 3.8461538461538463), ('Çalışmamız', 1, 3.8461538461538463)]
+    Küçük Harflerin Sayısı ..................: 671 / frq : %95.44807965860598 (Tüm Harflerin Sayısına Göre)
   
 Nihai amacım ***cümle analizi*** yapabilmek olacaktır.
   
@@ -97,28 +107,6 @@ Nihai amacım ***cümle analizi*** yapabilmek olacaktır.
 - Yazı istatistiği (Bu kısımla da ilgili bir çalışmam var. Biraz düzenledikten sonra yayınlayacağım.) - Eklendi.
 - Yanlış yazılan kelimelerin bulunması ve doğru yazımına dair öneride bulunulması yada otomatik olarak düzeltilmesi.
 - Cümle analizi yapılması ve cümlenin öğelerine ayrılması.
-  
-### Fikirler :
-  
-* Cümle ayırma için yazdığım SentenceTokenization.py dosyası kural tabanlı ve basit bir mantık ile çalışır durumda. Cümle analizi ile cümle ayırma algoritmasının entegre çalışması gerektiğini düşünüyorum. Yani cümle analizi ile bir yazı metni içerisindeki yan cümleler de tespit edilerek her birinin ayrılması daha mantıklı geliyor. Bir nevi karmaşık cümle yapılarını birden fazla cümleler haline getirerek basitleştirmek diyebileriz.
-
-* Yanlış yazılan kelimelerin bulunması:
-Durum Analizi:
-Bir kelimeyi kök/gövde ve ekler olarak iki kısımda incelersek, yazım hatası kök/gövde yada ekler kısmında olabilir. Yada her iki kısımda da yazım yanlışı olabilir. Bu durumda yapmamız gereken kök ve ekler kısmını ayrı değerlendirmek gibi görünüyor. Bu durumda da şu soru akla geliyor: 
-"Peki yanlış yazılmış bir kelimenin kök ve ekler kısmını nasıl ayırt edeceğiz?"
-Şu anda yazmış olduğum MorphologicalLR.py algoritması büyük oranda doğru sonuç veriyor fakat kelimenin tam olarak doğru yazılması şartıyla. Yanlış yazılmış bir kelimeyi aynı algoritma ile kök ve eklerine ayıramam. Bu algoritma sonucunda bir geri dönüş alamazsak kelime yanlış yazılmış diyebiliriz sadece. 
-
-* Yanlış yazılan kelimelerin düzeltilmesi için çözüm fikirleri: 
-İlk sorunumuzun yanlış yazılmış bir kelimenin kök ve eklerinin tahmin edilmesi olacağı ortada. Belki makine öğrenmesi yada istatistik ile bu şekilde bir tahmin yapılabilir. Bu iki konu hakkında da temel düzeyde bilgim var. Daha profesyönel arkadaşlardan yardım alabilirim.
-
-Yanlış yazılmış olsa da bir kelimeyi yanlış yazılmış haldeki kökü ve eklerine ayırabilirsek bu aşamadan sonrasında yakınlık algoritması ile kökü, kural tabanlı bir yaklaşım ile ekleri doğru dizilime getirerek "doğru kelime"ye ulaşabiliriz.
-
-Örneğin "buzdolabından" kelimesinin "bzdolabıdan" şeklinde yazıldığını düşünelim.
-
-* Tahmin edilen kök kısmı : "bzdolabı"
-* Tahmin edilen ek kısmı : "dan"
-
-Yukarıdaki tahminleri yapabildiysek ve yakınlık algoritması ile "buzdolabı" köküne ulaştıysak kural tabanlı bir ek ekleme algoritması ile devamında "ndan" şeklinde olması gerektiğini bulabiliriz. Böylece doğru yazımın "buzdolabından" olması gerektiği sonucuna varabiliriz. Bazı durumlarda birden fazla sonuç dönebilir.
 
 ### İletişim :
 esatmahmutbayol@gmail.com
