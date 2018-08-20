@@ -27,8 +27,8 @@ kelime = 'oğlumun'
 print('Kelime kök/gövdesi : ', trnlp.find_stems(kelime))
 print('Eklere ayrılmış hali : ', trnlp.find_suffix(kelime))
   
-Kelime kök/gövdesi : ['oğul(isim)']
-Eklere ayrılmış hali : ['oğul(isim)+um(2-1. tekil kişi){içe}+un(17-Tamlama eki){içe}']
+>>> Kelime kök/gövdesi : ['oğul(isim)']
+>>> Eklere ayrılmış hali : ['oğul(isim)+um(2-1. tekil kişi){içe}+un(17-Tamlama eki){içe}']
 ```
   
 ***Kelime ve kural*** tabanlı bir yapı oluşturduğumuz için çoğu zaman birden fazla sonuç dönecektir. Örneğin;
@@ -39,8 +39,9 @@ kelime = Ceb('aldım')
 print('Kelime kök/gövdesi : ', trnlp.find_stems(kelime))
 print('Eklere ayrılmış hali : ', trnlp.find_suffix(kelime))
   
-Kelime kök/gövdesi : ['al(isim)', 'al(fiil)']
-Eklere ayrılmış hali : ['al(fiil)+dı(1-Bilinen Geçmiş Zaman){fçe}+m(26-1. tekil kişi){fçe}', 'al(isim)+dı(2-Hikaye){iefe}+m(9-1. tekil kişi){iefe}']
+>>> Kelime kök/gövdesi : ['al(isim)', 'al(fiil)']
+>>> Eklere ayrılmış hali : ['al(fiil)+dı(1-Bilinen Geçmiş Zaman){fçe}+m(26-1. tekil kişi){fçe}', 
+                            'al(isim)+dı(2-Hikaye){iefe}+m(9-1. tekil kişi){iefe}']
 ```
 
 ### Parçalama(Tokenize) :
@@ -53,11 +54,13 @@ O kadar strong process var ki outsource yapmak must oldu."""
 
 print(trnlp.token(kelime))
 
->>> ['Power', 'point', 'sunumunu', 'print', 'out', 'yapıp', 'hard', 'copy', '’', 'sini', 'almış', 'olalım', '.', '\\n', 'O', 'kadar', 'strong', 'process', 'var', 'ki', 'outsource', 'yapmak', 'must', 'oldu', '.']
+>>> ['Power', 'point', 'sunumunu', 'print', 'out', 'yapıp', 'hard', 'copy', '’', 'sini', 'almış', 'olalım', '.', '\\n', 'O', 
+    'kadar', 'strong', 'process', 'var', 'ki', 'outsource', 'yapmak', 'must', 'oldu', '.']
 
 print(trnlp.word_tokenize(kelime))
 
->>> ['Power', 'point', 'sunumunu', 'print', 'out', 'yapıp', 'hard', 'copy', 'sini', 'almış', 'olalım', 'O', 'kadar', 'strong', 'process', 'var', 'ki', 'outsource', 'yapmak', 'must', 'oldu']
+>>> ['Power', 'point', 'sunumunu', 'print', 'out', 'yapıp', 'hard', 'copy', 'sini', 'almış', 'olalım', 'O', 'kadar', 'strong', 
+    'process', 'var', 'ki', 'outsource', 'yapmak', 'must', 'oldu']
 
 print(trnlp.unknown_words(kelime))
 
