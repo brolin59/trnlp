@@ -69,6 +69,7 @@ print(trnlp.unknown_words(kelime))
 
 ### Türkçe Karakter Dönüşümü :
 
+``` python
 import trnlp
 
 kelime = """Sabahin erken saatlerinde gunes nasil da gozumu aliyor!"""
@@ -76,6 +77,7 @@ kelime = """Sabahin erken saatlerinde gunes nasil da gozumu aliyor!"""
 print(trnlp.deascii(kelime))
 
 >>> Sabahın erken saatlerinde güneş nasıl da gözümü alıyor!
+```
 
 ### İstatistik :
   
