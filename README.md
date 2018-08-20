@@ -66,7 +66,7 @@ tümcesi sorunluyken, "Sokakta büyüdü.'' tümcesi doğrudur.
 URL: http://hdl.handle.net/11527/12366
 """
 print(trnlp.view_statistic(kelime))
-```
+
     Yazının İstatistiksel Bilgileri :
     ------------------------------------------
     Toplam Satır Sayısı .....................: 15
@@ -94,7 +94,7 @@ print(trnlp.view_statistic(kelime))
     Büyük Harfle Başlayan Kelimelerin Sayısı : 26 / frq : %22.80701754385965 (Toplam Kelime Sayısına Göre)
     Büyük Harfli ilk 5 Kelime ...............: [('Türkçe', 3, 11.538461538461538), ('Ayşeyi', 1, 3.8461538461538463), ('İşleme', 1, 3.8461538461538463), ('Tümcenin', 1, 3.8461538461538463), ('Çalışmamız', 1, 3.8461538461538463)]
     Küçük Harflerin Sayısı ..................: 671 / frq : %95.44807965860598 (Tüm Harflerin Sayısına Göre)
-  
+ ```
 Nihai amacım ***cümle analizi*** yapabilmek olacaktır.
   
 ### Projenin İçeriği :
