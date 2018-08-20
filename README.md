@@ -67,6 +67,16 @@ print(trnlp.unknown_words(kelime))
 >>> ['Power', 'point', 'print', 'out', 'hard', 'copy', 'strong', 'process', 'outsource', 'must']
 ```
 
+### Türkçe Karakter Dönüşümü :
+
+import trnlp
+
+kelime = """Sabahin erken saatlerinde gunes nasil da gozumu aliyor!"""
+
+print(trnlp.deascii(kelime))
+
+>>> Sabahın erken saatlerinde güneş nasıl da gözümü alıyor!
+
 ### İstatistik :
   
 ``` python
