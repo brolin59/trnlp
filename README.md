@@ -67,6 +67,53 @@ print(trnlp.unknown_words(kelime))
 >>> ['Power', 'point', 'print', 'out', 'hard', 'copy', 'strong', 'process', 'outsource', 'must']
 ```
 
+### Cümle Bulma ve İşaretleme:
+
+Bu kısmı halen geliştirmekteyim. Şu andaki durumu şu şekilde;
+
+``` python
+import trnlp
+
+cumle = """Saçma ve Gereksiz Bir Yazı
+    Bakkaldan 5 TL'lik 2 çikola-
+    ta al. 12.02.2018 tarihinde saat tam 15:45'te yap-
+    malıyız bu işi. Tamam mı? Benimle esatmahmutbayol@gmail.com 
+    adresinden iletişime geçebilirsin. Yarışta 1. oldu. Doç. Dr. 
+    Esat Bayol'un(Böyle bir ünvanım yok!) yanından geliyorum.
+    12 p.m. mi yoksa 12 a.m. mi? 100 milyon insan gelmiş! www.deneme.com.tr 
+    adresinden sitemizi inceleyebilirsin. 24 Eylül 2018 Pazartesi günü ge-
+    lecekmiş."""
+
+trnlp.print_list_item(trnlp.sentence_token(cumle))
+
+>>> Saçma ve Gereksiz Bir Yazı
+>>> Bakkaldan 5 TL 'lik 2 çikolata al.
+>>> 12.02.2018 tarihinde saat tam 15:45 'te yapmalıyız bu işi.
+>>> Tamam mı?
+>>> Benimle esatmahmutbayol@gmail.com adresinden iletişime geçebilirsin.
+>>> Yarışta 1. oldu.
+>>> Doç. Dr. Esat Bayol'un (Böyle bir ünvanım yok!) yanından geliyorum.
+>>> 12 p.m. mi yoksa 12 a.m. mi?
+>>> 100 milyon insan gelmiş!
+>>> www.deneme.com.tr adresinden sitemizi inceleyebilirsin.
+>>> 24 Eylül 2018 Pazartesi günü gelecekmiş.
+
+trnlp.print_list_item(trnlp.sentence_token_wsign(cumle))
+
+>>> {AB}Saçma ve Gereksiz Bir Yazı{/AB}
+>>> {CÜMLE} Bakkaldan {PARA}5 TL{/PARA} 'lik {SAYI}2{/SAYI} çikolata al. {/CÜMLE}
+>>> {CÜMLE} {TARİH F1}12.02.2018{/TARİH F1} tarihinde saat tam {SAAT F2}15:45{/SAAT F2} 'te yapmalıyız bu işi. {/CÜMLE}
+>>> {CÜMLE} Tamam mı? {/CÜMLE}
+>>> {CÜMLE} Benimle {EPOSTA}esatmahmutbayol@gmail.com{/EPOSTA} adresinden iletişime geçebilirsin. {/CÜMLE}
+>>> {CÜMLE} Yarışta {INCI}1.{/INCI} oldu. {/CÜMLE}
+>>> {CÜMLE} {KISALTMA}Doç.{/KISALTMA} {KISALTMA}Dr.{/KISALTMA} Esat Bayol'un {AÇIKLAMA}(Böyle bir ünvanım yok!){/AÇIKLAMA} yanından geliyorum. {/CÜMLE}
+>>> {CÜMLE} {SAAT F4}12 p.m.{/SAAT F4} mi yoksa {SAAT F3}12 a.m.{/SAAT F3} mi? {/CÜMLE}
+>>> {CÜMLE} {SAYI}100{/SAYI} {SAYI}milyon{/SAYI} insan gelmiş! {/CÜMLE}
+>>> {CÜMLE} {WEB ADRES F2}www.deneme.com.tr{/WEB ADRES F2} adresinden sitemizi inceleyebilirsin. {/CÜMLE}
+>>> {CÜMLE} {TARİH F2}24 Eylül 2018{/TARİH F2} Pazartesi günü gelecekmiş. {/CÜMLE}
+>>> {CÜMLE}{/CÜMLE}
+```
+
 ### Türkçe Karakter Dönüşümü :
 
 ``` python
