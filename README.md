@@ -49,20 +49,20 @@ print('Eklere ayrılmış hali : ', trnlp.find_suffix(kelime))
 ``` python
 import trnlp
 
-kelime = """Power point sunumunu print out yapıp hard copy’sini almış olalım. 
+yazi = """Power point sunumunu print out yapıp hard copy’sini almış olalım. 
 O kadar strong process var ki outsource yapmak must oldu."""
 
-print(trnlp.token(kelime))
+print(trnlp.token(yazi))
 
 >>> ['Power', 'point', 'sunumunu', 'print', 'out', 'yapıp', 'hard', 'copy', '’', 'sini', 'almış', 'olalım', '.', '\\n', 'O', 
     'kadar', 'strong', 'process', 'var', 'ki', 'outsource', 'yapmak', 'must', 'oldu', '.']
 
-print(trnlp.word_tokenize(kelime))
+print(trnlp.word_tokenize(yazi))
 
 >>> ['Power', 'point', 'sunumunu', 'print', 'out', 'yapıp', 'hard', 'copy', 'sini', 'almış', 'olalım', 'O', 'kadar', 'strong', 
     'process', 'var', 'ki', 'outsource', 'yapmak', 'must', 'oldu']
 
-print(trnlp.unknown_words(kelime))
+print(trnlp.unknown_words(yazi))
 
 >>> ['Power', 'point', 'print', 'out', 'hard', 'copy', 'strong', 'process', 'outsource', 'must']
 ```
@@ -119,9 +119,9 @@ trnlp.print_list_item(trnlp.sentence_token_wsign(cumle))
 ``` python
 import trnlp
 
-kelime = """Sabahin erken saatlerinde gunes nasil da gozumu aliyor!"""
+yazi = """Sabahin erken saatlerinde gunes nasil da gozumu aliyor!"""
 
-print(trnlp.deascii(kelime))
+print(trnlp.deascii(yazi))
 
 >>> Sabahın erken saatlerinde güneş nasıl da gözümü alıyor!
 ```
@@ -148,7 +148,7 @@ kiyle biten dolaylı tümleç öbeğini alır. Örneğin "Ayşeyi büyüdü.''
 tümcesi sorunluyken, "Sokakta büyüdü.'' tümcesi doğrudur.
 URL: http://hdl.handle.net/11527/12366
 """
-print(trnlp.view_statistic(kelime))
+print(trnlp.view_statistic(yazi))
 
     Yazının İstatistiksel Bilgileri :
     ------------------------------------------
