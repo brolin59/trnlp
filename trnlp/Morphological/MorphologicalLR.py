@@ -46,7 +46,8 @@ dstem_temizleyici = re.compile('(\(.*?\))|({.*?})')
 isim_ekler = [('isim_cekim_ekleri',),
               ('isim_ek_fiil_ekleri',),
               ('yardimci_fiiller',),
-              ('isim_cekim_ekleri', 'isim_ek_fiil_ekleri')]
+              ('isim_cekim_ekleri', 'isim_ek_fiil_ekleri'),
+              ('isim_cekim_ekleri', 'isim_ek_fiil_ekleri', 'x_fiil_ekleri')]
 
 fiil_ekler = [('fiil_catisi',),
               ('birlesik_fiil_ekleri',),
