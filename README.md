@@ -40,8 +40,10 @@ print('Kelime kök/gövdesi : ', trnlp.find_stems(kelime))
 print('Eklere ayrılmış hali : ', trnlp.find_suffix(kelime))
   
 >>> Kelime kök/gövdesi : ['al(isim)', 'al(fiil)']
->>> Eklere ayrılmış hali : ['al(fiil)+dı(1-Bilinen Geçmiş Zaman){fçe}+m(26-1. tekil kişi){fçe}', 
-                            'al(isim)+dı(2-Hikaye){iefe}+m(9-1. tekil kişi){iefe}']
+>>> Eklere ayrılmış hali : ['al(sıfat)+dı(Hikaye){iefe-2}+m(1. Tekil Kişi){iefe-9}', 
+                            'al(isim)+dı(Hikaye){iefe-2}+m(1. Tekil Kişi){iefe-9}', 
+                            'al(fiil)+dı(Bilinen Geçmiş Zaman){fçe-1}+m(1. tekil kişi){fçe-24}']
+
 ```
 
 ### Parçalama(Tokenize) :
