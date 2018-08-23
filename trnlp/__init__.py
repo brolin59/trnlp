@@ -26,3 +26,13 @@ def unknown_words(str_grp: str):
 
 def view_statistic(str_grp: str):
     return Stat(str_grp).text_statistic()
+
+
+def ntow(number: str):
+    from trnlp.helpers import number_to_word
+    return number_to_word(number)
+
+
+def wton(word: str):
+    from trnlp.helpers import word_to_number
+    return word_to_number(word)

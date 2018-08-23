@@ -17,6 +17,7 @@ Place, Suite 330, Boston, MA 02111-1307 USA
 */"""
 import sqlite3
 import os
+import re
 
 current_file = (os.path.abspath(os.path.dirname(__file__))).replace('\\', '/')
 
@@ -199,3 +200,122 @@ def word_gram(word_list: list, n=2):
                 ngram_list.append(word_list[i:i + n])
 
     return ngram_list
+
+
+def number_to_word(number):
+    def three_digits_number(co, ii):
+        trk_number_3 = {0: '',
+                        1: 'bin',
+                        2: 'milyon',
+                        3: 'milyar',
+                        4: 'trilyon',
+                        5: 'katrilyon'}
+        _number_list = []
+
+        if (ii == 1) and (co == '001'):
+            return 'bin'
+
+        for i, _number in enumerate(co):
+            if _number == '0':
+                continue
+
+            if i == 0:
+                if _number == '1':
+                    _number_list.append('yüz')
+                else:
+                    _number_list = _number_list + [trk_numbers_0_9[_number], 'yüz']
+            elif i == 1:
+                _number_list.append(trk_numbers_10_90[_number])
+            elif i == 2:
+                _number_list.append(trk_numbers_0_9[_number])
+        return ''.join(_number_list) + trk_number_3[ii]
+
+    trk_numbers_0_9 = {'1': 'bir', '2': 'iki', '3': 'üç', '4': 'dört', '5': 'beş',
+                       '6': 'altı', '7': 'yedi', '8': 'sekiz', '9': 'dokuz', '0': ''}
+    trk_numbers_10_90 = {'1': 'on', '2': 'yirmi', '3': 'otuz', '4': 'kırk', '5': 'elli',
+                         '6': 'altmış', '7': 'yetmiş', '8': 'seksen', '9': 'doksan', '0': ''}
+
+    number = number.replace('.', '')
+    len_number = len(number)
+    if len_number % 3 == 0:
+        add_zero = 0
+    else:
+        add_zero = 3 - (len_number % 3)
+
+    number = ('0' * add_zero) + number
+    number_list = [number[i:i + 3] for i in range(0, len(number), 3)]
+    number_list.reverse()
+
+    ntow = ''
+    for s, part in enumerate(number_list):
+        if part == '000':
+            continue
+        ntow = three_digits_number(part, s) + ' ' + ntow
+
+    if not ntow:
+        return 'sıfır'
+    else:
+        return ntow
+
+
+def word_to_number(word):
+    def three_digits_number(co):
+        reco = [i for i in re.split(regexi, co) if i]
+        if reco:
+            reco.reverse()
+            reco = reco + ['']
+            yuzluk = '000'
+            for i, it in enumerate(reco):
+                if it == 'yüz':
+                    if reco[i + 1] in trk_numbers_0_9:
+                        yuzluk = trk_numbers_0_9[reco[i + 1]] + yuzluk[1:]
+                    else:
+                        yuzluk = '1' + yuzluk[1:]
+                    break
+                elif it in trk_numbers_10_90:
+                    yuzluk = yuzluk[0] + trk_numbers_10_90[it] + yuzluk[2]
+                elif it in trk_numbers_0_9:
+                    yuzluk = yuzluk[:2] + trk_numbers_0_9[it]
+        return yuzluk
+
+    if word.strip() == 'sıfır':
+        return '0'
+
+    trk_numbers_0_9 = {'bir': '1', 'iki': '2', 'üç': '3', 'dört': '4', 'beş': '5',
+                       'altı': '6', 'yedi': '7', 'sekiz': '8', 'dokuz': '9'}
+    trk_numbers_10_90 = {'on': '1', 'yirmi': '2', 'otuz': '3', 'kırk': '4', 'elli': '5',
+                         'altmış': '6', 'yetmiş': '7', 'seksen': '8', 'doksan': '9'}
+    cd = {'katrilyon': 18, 'trilyon': 15, 'milyar': 12, 'milyon': 9, 'bin': 6, 'yüz': 3}
+    number_digit = ['katrilyon', 'trilyon', 'milyar', 'milyon', 'bin']
+
+    regexi = '(yüz|doksan|seksen|yetmiş|altmış|elli|kırk|otuz|yirmi|on|dokuz|sekiz|yedi|altı|beş|dört|üç|iki|bir)'
+
+    _word = word.replace(' ', '')
+    liste = []
+    uzunluk = 0
+    for part in number_digit:
+        repart = re.search(part, _word)
+        if repart:
+            x, y = repart.span()
+            _uzunluk = cd[_word[x:y]]
+            if _uzunluk > uzunluk:
+                uzunluk = _uzunluk
+            liste.append((_word[:x], _word[x:y]))
+            _word = _word[y:]
+
+    if _word:
+        liste.append(_word)
+
+    sayi = '0' * uzunluk
+
+    for part in liste:
+        if type(part) is tuple:
+            if part == ('', 'bin'):
+                sayi = sayi[:-cd[part[1]]] + '001' + sayi[3 - cd[part[1]]:]
+                continue
+            sayi = sayi[:-cd[part[1]]] + three_digits_number(part[0]) + sayi[3 - cd[part[1]]:]
+        elif type(part) is str:
+            sayi = sayi[:-3] + three_digits_number(part)
+    sayi = sayi.lstrip('0')
+
+    return sayi
