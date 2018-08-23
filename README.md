@@ -178,6 +178,25 @@ print(trnlp.view_statistic(yazi))
     Büyük Harfli ilk 5 Kelime ...............: [('Türkçe', 3, 11.538461538461538), ('Ayşeyi', 1, 3.8461538461538463), ('İşleme', 1, 3.8461538461538463), ('Tümcenin', 1, 3.8461538461538463), ('Çalışmamız', 1, 3.8461538461538463)]
     Küçük Harflerin Sayısı ..................: 671 / frq : %95.44807965860598 (Tüm Harflerin Sayısına Göre)
  ```
+ 
+ ### Sayıyı Yazıya ya da Yazıyı Sayıya Dönüştürme :
+ 
+ ``` python
+import trnlp
+
+sayi = '1001587'
+
+sayidan_yaziya_cevrilmis = trnlp.ntow(sayi)
+print(sayidan_yaziya_cevrilmis)
+
+>>> birmilyon bin beşyüzseksenyedi 
+
+yazidan_sayiya_cevrilmis = trnlp.wton(sayidan_yaziya_cevrilmis)
+print(yazidan_sayiya_cevrilmis)
+
+>>> 1001587
+ ```
+ 
 Nihai amacım ***cümle analizi*** yapabilmek olacaktır.
   
 ### Projenin İçeriği :
