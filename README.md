@@ -53,6 +53,7 @@ import trnlp
 
 yazi = """Power point sunumunu print out yapıp hard copy’sini almış olalım. 
 O kadar strong process var ki outsource yapmak must oldu."""
+# Bu cümleyi kuran arkadaşın maksadını hala anlayabilmiş değilim!
 
 print(trnlp.token(yazi))
 
