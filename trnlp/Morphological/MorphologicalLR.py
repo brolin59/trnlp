@@ -160,6 +160,18 @@ class ClsEkBul:
                     mstem = ''
 
         for stem in search_in_dict:
+            if (stem[2] == 'AKR') and (word.startswith(stem[0])):
+                larler_dict = {'mler': ('+m(1. Tekil Kişi İyelik Eki){içe-2}', '+ler(Çokluk Eki){içe-1}'),
+                               'mlar': ('+m(1. Tekil Kişi İyelik Eki){içe-2}', '+lar(Çokluk Eki){içe-1}'),
+                               'nler': ('+n(2. Tekil Kişi İyelik Eki){içe-2}', '+ler(Çokluk Eki){içe-1}'),
+                               'nlar': ('+n(2. Tekil Kişi İyelik Eki){içe-2}', '+lar(Çokluk Eki){içe-1}')}
+                larler_liste = ('mler', 'nler', 'mlar', 'nlar')
+                sonrasi = word[len(stem[0]):]
+                for larlerek in larler_liste:
+                    if sonrasi.startswith(larlerek):
+                        suff = word[len(stem[0]) + 4:]
+                        temp_stem_list.append((stem[0] + '(isim)' + larler_dict[larlerek][0] +
+                                               larler_dict[larlerek][1], suff, 0))
 
             tlstem = to_lower(stem[0])
 
@@ -204,8 +216,14 @@ class ClsEkBul:
             return []
 
         for stem in mstem_list:
+            w_list = []
 
-            if type(stem[1]) is tuple:
+            if (type(stem[0]) is str) and ('+' in stem[0]):
+                str_list = stem[0].split('+')
+                for i in str_list:
+                    w_list.append(i)
+                w_list.append(stem[1])
+            elif type(stem[1]) is tuple:
                 suffix = word[len(stem[0]):]
                 if suffix:
                     w_list = [stem[0] + '{' + stem[1][0] + '}' + '(' + stem[1][1] + ')', suffix]
@@ -218,8 +236,8 @@ class ClsEkBul:
                 else:
                     w_list = [stem[0] + '(' + stem[1] + ')']
 
-            w_g_list.append(w_list)
-
+            if w_list:
+                w_g_list.append(w_list)
         return w_g_list
 
     def find_suffix(self, word):
@@ -240,6 +258,9 @@ class ClsEkBul:
             else:
                 genel.append(mstem)
                 continue
+
+            if not suffix:
+                genel.append(mstem)
 
             _stem = mstem[0]
             stem = dstem_temizleyici.sub('', _stem)
@@ -362,6 +383,5 @@ class ClsEkBul:
 
         return genel_liste
 
-
-if __name__ == '__main__':
-    pass
+    if __name__ == '__main__':
+        pass
