@@ -59,6 +59,7 @@ fiil_ekler = [('fiil_catisi',),
               ('birlesik_fiil_ekleri', 'fiil_cekim_ekleri'),
               ('x_fiil_ekleri', 'isim_cekim_ekleri'),
               ('x_fiil_ekleri', 'isim_ek_fiil_ekleri'),
+              ('fiil_cekim_ekleri', 'fiil_ek_fiil_ekleri', 'x_fiil_ekleri'),
               ('birlesik_fiil_ekleri', 'fiil_cekim_ekleri', 'fiil_ek_fiil_ekleri'),
               ('birlesik_fiil_ekleri', 'x_fiil_ekleri', 'isim_cekim_ekleri'),
               ('fiil_catisi', 'birlesik_fiil_ekleri', 'fiil_cekim_ekleri'),
@@ -161,17 +162,16 @@ class ClsEkBul:
 
         for stem in search_in_dict:
             if (stem[2] == 'AKR') and (word.startswith(stem[0])):
-                larler_dict = {'mler': ('+m(1. Tekil Kişi İyelik Eki){içe-2}', '+ler(Çokluk Eki){içe-1}'),
-                               'mlar': ('+m(1. Tekil Kişi İyelik Eki){içe-2}', '+lar(Çokluk Eki){içe-1}'),
-                               'nler': ('+n(2. Tekil Kişi İyelik Eki){içe-2}', '+ler(Çokluk Eki){içe-1}'),
-                               'nlar': ('+n(2. Tekil Kişi İyelik Eki){içe-2}', '+lar(Çokluk Eki){içe-1}')}
+                larler_dict = {'mler': '+m(1. Tekil Kişi İyelik Eki){içe-2}',
+                               'mlar': '+m(1. Tekil Kişi İyelik Eki){içe-2}',
+                               'nler': '+n(2. Tekil Kişi İyelik Eki){içe-2}',
+                               'nlar': '+n(2. Tekil Kişi İyelik Eki){içe-2}'}
                 larler_liste = ('mler', 'nler', 'mlar', 'nlar')
                 sonrasi = word[len(stem[0]):]
                 for larlerek in larler_liste:
                     if sonrasi.startswith(larlerek):
-                        suff = word[len(stem[0]) + 4:]
-                        temp_stem_list.append((stem[0] + '(isim)' + larler_dict[larlerek][0] +
-                                               larler_dict[larlerek][1], suff, 0))
+                        suff = word[len(stem[0]) + 1:]
+                        temp_stem_list.append((stem[0] + '(isim)' + larler_dict[larlerek], suff, 0))
 
             tlstem = to_lower(stem[0])
 
@@ -380,7 +380,6 @@ class ClsEkBul:
 
                 if kalan_liste:
                     temp_list = kalan_liste
-
         return genel_liste
 
     if __name__ == '__main__':
