@@ -117,6 +117,37 @@ trnlp.print_list_item(trnlp.sentence_token_wsign(cumle))
 >>> {CÜMLE}{/CÜMLE}
 ```
 
+### Heceleme :
+
+``` python
+import trnlp
+
+trnlp.spellword('deneme')
+
+>>> ['de', 'ne', 'me']
+
+Bazı deneme sonuçlarını inceleyebilirsiniz :
+
+Kelime :  araba   Heceler :  ['a', 'ra', 'ba']
+Kelime :  biçimine   Heceler :  ['bi', 'çi', 'mi', 'ne']
+Kelime :  insanın   Heceler :  ['in', 'sa', 'nın']
+Kelime :  karaca   Heceler :  ['ka', 'ra', 'ca']
+Kelime :  aldı   Heceler :  ['al', 'dı']
+Kelime :  birlik   Heceler :  ['bir', 'lik']
+Kelime :  sevmek   Heceler :  ['sev', 'mek']
+Kelime :  altlık   Heceler :  ['alt', 'lık']
+Kelime :  türkçe   Heceler :  ['türk', 'çe']
+Kelime :  korkmak   Heceler :  ['kork', 'mak']
+Kelime :  bandrol   Heceler :  ['band', 'rol']
+Kelime :  kontrol   Heceler :  ['kont', 'rol']
+Kelime :  sürpriz   Heceler :  ['sürp', 'riz']
+Kelime :  program   Heceler :  ['prog', 'ram']
+Kelime :  başöğretmen   Heceler :  ['ba', 'şöğ', 'ret', 'men']
+Kelime :  ilkokul   Heceler :  ['il', 'ko', 'kul']
+Kelime :  karaosmanoğlu   Heceler :  ['ka', 'ra', 'os', 'ma', 'noğ', 'lu']
+Kelime :  krampları   Heceler :  ['kramp', 'la', 'rı']
+```
+
 ### Türkçe Karakter Dönüşümü :
 
 ``` python
