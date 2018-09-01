@@ -82,7 +82,7 @@ def spellword(word: str):
         elif char == '1':
             syllable = syllable + char
             x = len(syllable)
-            if (tword[x:x + 2] == '01') or (tword[x:x + 2] == '10'):
+            if (tword[x:x + 2] == '01') or (tword[x:x + 2] == '10') or (tword[x:x + 2] == '1.'):
                 syllable_list.append(gword[:x])
                 gword = gword[x:]
                 tword = tword[x:]
