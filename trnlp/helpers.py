@@ -260,11 +260,11 @@ def number_to_word(number):
 
 def word_to_number(word):
     def three_digits_number(co):
+        yuzluk = '000'
         reco = [i for i in re.split(regexi, co) if i]
         if reco:
             reco.reverse()
             reco = reco + ['']
-            yuzluk = '000'
             for i, it in enumerate(reco):
                 if it == 'yüz':
                     if reco[i + 1] in trk_numbers_0_9:
@@ -319,3 +319,9 @@ def word_to_number(word):
     sayi = sayi.lstrip('0')
 
     return sayi
+
+
+def sirala(liste: list):
+    harfler = "abcçdefgğhıijklmnoöprsştuüvyz"
+    cevrim = {i: harfler.index(i) for i in harfler}
+    return sorted(liste, key=lambda x: cevrim.get(x[0]))
