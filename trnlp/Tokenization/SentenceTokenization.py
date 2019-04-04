@@ -18,6 +18,7 @@ Place, Suite 330, Boston, MA 02111-1307 USA
 import re
 from trnlp.helpers import *
 from trnlp import Ceb
+from trnlp.word_processing import to_lower
 
 # ('([:|B|8|;][=|-]*[\)|D])', 'EMOJİ GÜLEN'),
 # ('([:|B|8|;][=|-]*[\(])', 'EMOJİ SOMURTAN'),
