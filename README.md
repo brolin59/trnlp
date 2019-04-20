@@ -2,6 +2,8 @@
 
 ## TÜRKÇE İÇİN DOĞAL DİL İŞLEME ARAÇLARI
   
+## ÖNEMLİ : trnlp_old.rar dosyasını indirerek kullanmaya devam edebilirsiniz. İşlerimin yoğunluğundan dolayı projeye yeterli vakti ayıramadığım için bir süre ekleme yada düzeltme yapılmayacaktır. Mevcut halinde kodlar düzenlenmemiş olup birçok eksiği ve hatası vardır. Bundan sonraki süreçte her bir özellik ayrı repo olarak yayınlanacak ve geliştirilme süreci tamamlandıktan sonra tüm özellikler bir araya toplarak paket haline getirilecektir.
+
 Klasör yapısı ve kullanılabilecek tüm komutlar için [Türkçe Doğal Dil işleme Wiki sayfasını inceleyebilirsiniz.](https://github.com/brolin59/PHYTON-TURKCE-DOGAL-DIL-ISLEME---TURKISH-NLP/wiki)
 
 trnlp klasörünü Python'un kurulu olduğu dizin içerisinde \Lib\site-packages\ dizinin içine kopyalamanız yeterlidir.
