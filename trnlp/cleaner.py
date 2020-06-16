@@ -20,9 +20,29 @@ Copyright (c) 2016-2020, Esat Mahmut Bayol
 
 The full license is in the file LICENSE.txt, distributed with this software.
 """
-from .deasciifier.Asciidecoder import *
-from .file_prossesing import *
-from .tokenization import *
-from .morphology import *
-from .constant import *
-from .helper import *
+
+from re import compile
+
+# Sessiz harfleri temizler.
+CLEAN_QUITE = compile('[^aâeêıîioôöuûü]')
+
+# Ekin eklentilerini temizler.
+DSTEM_CLEANER = compile('(\\[.*?\\])|(\\(.*?\\))|({.*?})|(\\|.*?\\|)|(\\+)|(_)')
+
+
+def clean_quites(word) -> str:
+    """
+    Ünsüz harfleri temizler ve sadece ünlü harfler kalır.
+    :param word: str
+    :return: str
+    """
+    return CLEAN_QUITE.sub('', word)
+
+
+def clean_adds(word) -> str:
+    """
+    Bulunan eklerdeki yan açıklamaları, + ve - işaretlerini temizler.
+    :param word: str
+    :return: str
+    """
+    return DSTEM_CLEANER.sub('', word)
