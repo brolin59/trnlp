@@ -11,7 +11,7 @@ Eminim bu konularda bilgisi benden çok daha iyi olan arkadaşlar bu paylaşıml
 Hobi olarak başladığım bu işin faydalı olması dileği ile...
 
 * Kelime kök ve gövdesi bulma (Base, stem)
-* Kelime ve kural tabanlı morfolojik analiz (Lemmatization)
+* Kelime ve kural tabanlı morfolojik analiz (Lemmatization) - Yapım aşamasında
 * Yanlış yada Ascii karakterler kullanılarak yazılan kelimeler için öneri listesi (Spelling Corrector)
 * Metin parçalama ve sayma işlemleri (Tokenization)
 
