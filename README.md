@@ -75,6 +75,7 @@ print(obj.get_stem_type)
 - Kelime bazlı kök/gövde ve eklerin bulunması +
 - Cümle ayırma. +
 - Yanlış yazılan kelimelerin bulunması ve doğru yazımına dair öneride bulunulması yada otomatik olarak düzeltilmesi. (Yapım aşamasında. Kısa sürede eklenecek.)
+- Paket oluşturma. (Düzeltmeler yapıldıktan sonra yapılacak.)
 - Cümle analizi yapılması ve cümlenin öğelerine ayrılması.
 
 ### İletişim :
