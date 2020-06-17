@@ -7,7 +7,7 @@ Klasör yapısı ve kullanılabilecek tüm komutlar için [Türkçe Doğal Dil i
 ### İletişim :
 trnlp2020@gmail.com
 
-***trnlp klasörünü Python'un kurulu olduğu dizin içerisinde \Lib\site-packages\ dizininin içine kopyalamanız yeterlidir.*** Kısa süre içerisinde paket haline gitirlecektir.
+***trnlp klasörünü Python'un kurulu olduğu dizin içerisinde \Lib\site-packages\ dizininin içine kopyalamanız yeterlidir.*** Kısa süre içerisinde paket haline gitirilecektir.
 
 Ne Python ne de Türkçe dilbigim çok iyi olmamasına rağmen ***hobi*** olarak yazdığım birkaç kodu sizlerle paylaşmak istedim. ***Kod ve dilbilgisi kuralları ile ilgili yaptığım yanlışlar için öneri ve uyarılarınızı bekliyorum.*** İlk başta ilgim bir yazılım dili öğrenmek üzerineydi. Biraz araştırmadan sonra Python öğrenmeye karar verdim. Doğal dil işleme konusuna merakım ise makine öğrenmesi çalışmalarını araştırırken oluştu. Yazılım dili öğrenirken bir projeye başlamanın faydalı olacağı fikrini benimsediğim için böyle bir projeye başladım. Bu konuda yapılmış iyi çalışmalar var. Az önce de belirttiğim gibi benim niyetim kendimi geliştirmek. Yanında az da olsa birkaç kişiye faydam dokunursa ne ala...
 
