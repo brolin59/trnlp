@@ -11,8 +11,8 @@ Eminim bu konularda bilgisi benden çok daha iyi olan arkadaşlar bu paylaşıml
 Hobi olarak başladığım bu işin faydalı olması dileği ile...
 
 * Kelime kök ve gövdesi bulma (Base, stem)
-* Kelime ve kural tabanlı morfolojik analiz (Lemmatization) - Yapım aşamasında
-* Yanlış yada Ascii karakterler kullanılarak yazılan kelimeler için öneri listesi (Spelling Corrector)
+* Kelime ve kural tabanlı morfolojik analiz (Lemmatization)
+* Yanlış yada Ascii karakterler kullanılarak yazılan kelimeler için öneri listesi (Spelling Corrector) - Yapım aşamasında
 * Metin parçalama ve sayma işlemleri (Tokenization)
 
 trnlp her işlem için bir sözlüğe ihtiyaç duyar. trnlp'yi indirdiğinizde bu sözlüklerde beraberinde gelmiş olacaktır. Şu an için sözlüklerde bir değişiklik yapma ya da sözlüğe ekleme yapma özelliği bulunmamaktadır. Tüm sözlükler .pickle dosyası olarak kaydedilmiş ve erişime açıktır. Gelecek versiyonda sözlüğe veri ekleme özelliğini de eklemeyi düşünüyorum. Yine de gerekli sözlük formatına bağlı kalmak kaydı ile manuel değişiklikler yapılabilir.
