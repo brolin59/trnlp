@@ -75,11 +75,12 @@ print(obj.get_stem_type)
 
 ### Projenin İçeriği :
   
-- Sözlük hazırlanması. +
-- Heceleme algoritması +
-- Türkçe ses uyumları kontrolü +
-- Kelime bazlı kök/gövde ve eklerin bulunması +
-- Cümle ayırma. +
+- Sözlük hazırlanması. + YAPILDI (Testler sırasında düzenlemeler yapılacak)
+- Heceleme algoritması + YAPILDI
+- Türkçe ses uyumları kontrolü + YAPILDI
+- Kelime bazlı kök/gövde ve eklerin bulunması + YAPILDI (Testler sırasında düzenlemeler yapılacak)
+- Cümle ayırma. + YAPILDI (Testler sırasında düzenlemeler yapılacak)
 - Yanlış yazılan kelimelerin bulunması ve doğru yazımına dair öneride bulunulması yada otomatik olarak düzeltilmesi. (Yapım aşamasında. Kısa sürede eklenecek.)
+- Eklerin ve ek kontrollerinin düzeltilmesi.
 - Paket oluşturma. (Düzeltmeler yapıldıktan sonra yapılacak.)
 - Cümle analizi yapılması ve cümlenin öğelerine ayrılması.
