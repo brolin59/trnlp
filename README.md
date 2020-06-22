@@ -16,62 +16,18 @@ Lisans olarak GNU Genel Kamu Lisansı v3.0 kullanmayı tercih ettim. Yani kısac
 Eminim bu konularda bilgisi benden çok daha iyi olan arkadaşlar bu paylaşımları bir üst seviyeye çıkarmamda bana yardımcı olabilirler. 
 Hobi olarak başladığım bu işin faydalı olması dileği ile...
 
-* Kelime kök ve gövdesi bulma (Base, stem)
-* Kelime ve kural tabanlı morfolojik analiz (Lemmatization)
-* Yanlış yada Ascii karakterler kullanılarak yazılan kelimeler için öneri listesi (Spelling Corrector) - Yapım aşamasında
-* Metin parçalama ve sayma işlemleri (Tokenization)
+* [Kelime kök ve gövdesi bulma (Base, stem)](https://github.com/brolin59/PYTHON-TURKCE-DOGAL-DIL-ISLEME-TURKISH-NLP/wiki/2.-Morfolojik-Analiz)
+* [Kelime ve kural tabanlı morfolojik analiz (Lemmatization)](https://github.com/brolin59/PYTHON-TURKCE-DOGAL-DIL-ISLEME-TURKISH-NLP/wiki/2.-Morfolojik-Analiz)
+* [Yanlış yada Ascii karakterler kullanılarak yazılan kelimeler için öneri listesi (Spelling Corrector) - Yapım aşamasında](https://github.com/brolin59/PYTHON-TURKCE-DOGAL-DIL-ISLEME-TURKISH-NLP/wiki/5.-Kelime-Kontrol%C3%BC)
+* [Metin parçalama ve sayma işlemleri (Tokenization)](https://github.com/brolin59/PYTHON-TURKCE-DOGAL-DIL-ISLEME-TURKISH-NLP/wiki/3.-Par%C3%A7alama-(Tokenization))
+* [Faydalı olabilecek ek fonksiyonlar.(levenshtein_distance, number_to_word, word_to_number vb.)](https://github.com/brolin59/PYTHON-TURKCE-DOGAL-DIL-ISLEME-TURKISH-NLP/wiki/4.-Ek-Fonksiyonlar)
+
 
 trnlp her işlem için bir sözlüğe ihtiyaç duyar. trnlp'yi indirdiğinizde bu sözlüklerde beraberinde gelmiş olacaktır. Şu an için sözlüklerde bir değişiklik yapma ya da sözlüğe ekleme yapma özelliği bulunmamaktadır. Tüm sözlükler .pickle dosyası olarak kaydedilmiş ve erişime açıktır. Gelecek versiyonda sözlüğe veri ekleme özelliğini de eklemeyi düşünüyorum. Yine de gerekli sözlük formatına bağlı kalmak kaydı ile manuel değişiklikler yapılabilir.
 
 Her bölüm için ayrıntılı anlatımlar ilgili wiki sayfasında mevcuttur.
 
 Benim bilgisayarımda (İntel i5-2450M işlemci 4GB Bellek) kelime uzunluklarına bağlı olarak 1 saniyede yapılabilen analiz sayısı 2250 ile 3000 arasında değişmektedir.
-  
-***Kelime kök/gövde ve eklerini*** bulmak için yazdığım algoritmanın örnek kullanımı şu şekildedir:
-
-``` python
-from trnlp import TrnlpWord
-
-obj = TrnlpWord()
-obj.setword("arkadaşlar")
-print(obj)
-
->> "arka(isim,sıfat)+daş{İi}[4_26]+lar{Çe}[1_1]"
-
-obj.setword("Muvaffakiyetsizleştiricileştiriveremeyebileceklerimizdenmişsiniz")
-print(obj)
-
->> muvaffakiyet(isim)+siz{İi}[4_4]+leş{İf}[5_5]+tir{Ff}[6_11]+ici{Fi}[7_3]+leş{İf}[5_5]+tir{Ff}[6_11]+iver{BfVer}[3_4]+eme{Ytsz}[3_19]+yebil{BfBil}[3_1]+ecek{Fs}[8_9]+ler{Çe}[1_1]+imiz{İe1ç}[1_4]+den{HeUzk}[1_23]+miş{EfGçMiş}[1_38]+siniz{EfKe2ç}[1_50]
-
-```
-
-``` python
-from trnlp import TrnlpWord
-
-obj = TrnlpWord()
-obj.setword("arkadaşlar")
-print(obj.get_base)
-
->> "arka"
-
-print(obj.get_base_type)
-
->> "isim,sıfat"
-```
-
-``` python
-from trnlp import TrnlpWord
-
-obj = TrnlpWord()
-obj.setword("arkadaşlar")
-print(obj.get_stem)
-
->> "arkadaş"
-
-print(obj.get_stem_type)
-
->> "isim"
-```
 
 ### Projenin İçeriği :
   
