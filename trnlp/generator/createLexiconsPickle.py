@@ -64,11 +64,10 @@ Ses Olayları :
 7. Ünsüz Türemesi (Ünsüz İkizleşmesi): hak-ı > hakkı - UZTUR
 """
 
-from helper import package_path, repc, to_lower, capital_tr
-from generator.createSuffixPickle import create_suffix_pickle
-from cleaner import *
-from finder import *
-import pickle
+from trnlp.generator.createSuffixPickle import create_suffix_pickle
+from trnlp.controler import *
+from trnlp.finder import *
+from trnlp.helper import *
 import os
 import re
 
@@ -76,14 +75,6 @@ __all__ = ['create_pickles']
 
 gen_dict = {}
 find_in_dict = {}
-
-# ch = {(5, 1) : (5, 10),
-#       (5, 2) : (5, 8),
-#       (5, 4) : (5, 12),
-#       (5, 13): (5, 15),
-#       (5, 14): (5, 16),
-#       (6, 1) : (6, 13),
-#       (6, 12): (6, 14)}
 
 
 def load_gen_lexicon(lpath):
@@ -93,52 +84,14 @@ def load_gen_lexicon(lpath):
 
 
 def save_gen_lexicon(spath):
-    with open(spath, 'wb') as handle:
-        pickle.dump(gen_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    compressed_pickle(spath, gen_dict)
 
 
 def delete_pickle(lpath):
+    delete_file_list = ['gen_tr_lex.pbz2', 'prop_tr_lex.pbz2', 'short_tr_lex.pbz2']
     file_list = os.listdir(lpath)
-    [os.unlink('{}{}'.format(lpath, fileName)) for fileName in file_list if fileName.endswith(".pickle")]
+    [os.unlink('{}{}'.format(lpath, fileName)) for fileName in file_list if fileName in delete_file_list]
     print('.lexicons/ klasöründeki *.pickle dosyaları silindi!')
-
-
-def uzyum(string: str):
-    yum = {'ç': 'c', 'p': 'b', 't': 'd', 'k': 'ğ', 'g': 'ğ'}
-    if string.endswith('nk'):
-        return string[:-1] + 'g'
-    else:
-        return string[:-1] + yum[string[-1]]
-
-
-def uztur(string: str):
-    return string + string[-1]
-
-
-def udus(string: str):
-    return string[:-2] + string[-1]
-
-
-def udar(string: str):
-    udardict = {'e' : 'i',
-                'üe': 'ü',
-                'ua': 'u',
-                'ee': 'i',
-                'aa': 'ı',
-                'öe': 'ü',
-                'ıa': 'ı',
-                'oa': 'u',
-                'ie': 'i',
-                'ae': 'i',
-                'âa': 'ı',
-                'oe': 'ü',
-                'ue': 'ü'}
-    clean = clean_quites(string)
-    return string[:-1] + udardict[clean[-2:]]
-
-
-def uzdus(string: str):
-    return string[:-1]
 
 
 def find_etymon(etm):
@@ -146,30 +99,6 @@ def find_etymon(etm):
         return 'Türkçe'
     else:
         return etm
-
-
-def acoustic_phenomenon(word, wordprop):
-    if 'UZYUM' in wordprop:
-        if 'UDUS' in wordprop:
-            return [(uzyum(udus(word)), wordprop)]
-        elif 'UZTUR' in wordprop:
-            return [(uztur(uzyum(word)), wordprop)]
-        elif 'UZDUS' in wordprop:
-            uzyum_prop = [x for x in wordprop if x != 'UZDUS']
-            uzdus_prop = [x for x in wordprop if x != 'UZYUM']
-            return [(uzyum(word), uzyum_prop), (uzdus(word), uzdus_prop)]
-        else:
-            return [(uzyum(word), wordprop)]
-    elif ('UDAR-YOR' in wordprop) or ('UDAR' in wordprop):
-        return [(udar(word), wordprop)]
-    elif 'UZTUR' in wordprop:
-        return [(uztur(word), wordprop)]
-    elif 'UZDUS' in wordprop:
-        return [(uzdus(word), wordprop)]
-    elif 'UDUS' in wordprop:
-        return [(udus(word), wordprop)]
-    elif 'UD' in wordprop:
-        return [(uzdus(word), wordprop)]
 
 
 def arr_line(line):
@@ -275,11 +204,11 @@ def create_files(lex):
 def create_pickles():
     p = package_path()
 
-    delete_pickle(p + 'lexicons/')
+    delete_pickle(p + 'data/')
 
-    lexicons = ((p + 'data/ana_sozluk.txt', p + 'lexicons/gen_tr_lex.pickle'),
-                (p + 'data/ozel_sozluk.txt', p + 'lexicons/prop_tr_lex.pickle'),
-                (p + 'data/kisaltma_sozluk.txt', p + 'lexicons/short_tr_lex.pickle'))
+    lexicons = ((p + 'data/ana_sozluk.txt', p + 'data/gen_tr_lex'),
+                (p + 'data/ozel_sozluk.txt', p + 'data/prop_tr_lex'),
+                (p + 'data/kisaltma_sozluk.txt', p + 'data/short_tr_lex'))
 
     for lpath, spath in lexicons:
         trlexicon = load_gen_lexicon(lpath)

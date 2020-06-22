@@ -21,15 +21,14 @@ Copyright (c) 2016-2020, Esat Mahmut Bayol
 The full license is in the file LICENSE.txt, distributed with this software.
 """
 
-from helper import vowel_harmony, package_path
-from controler import ssc
+from trnlp.helper import *
+from trnlp.controler import ssc
 from itertools import product
-from data.suffix_tables import *
-import pickle
+from trnlp.data.suffix_tables import *
 import os
 import re
 
-save_folder_path = package_path() + 'suffixes/'
+save_folder_path = package_path() + 'data/'
 
 
 def delete_folder():
@@ -121,8 +120,7 @@ def save_to_file(table_str, dicter):
         table_str = 'infNoun'
     elif table_str == 'fce':
         table_str = 'infVerb'
-    with open(save_folder_path + table_str + '.pickle', 'wb') as handle:
-        pickle.dump(dicter, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    compressed_pickle(save_folder_path + table_str, dicter)
 
 
 def create_suffix_pickle():
