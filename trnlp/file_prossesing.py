@@ -20,8 +20,8 @@ Copyright (c) 2016-2020, Esat Mahmut Bayol
 
 The full license is in the file LICENSE.txt, distributed with this software.
 """
-from .helper import to_lower, n_gram
-from .tokenization import word_token
+from trnlp.helper import to_lower, n_gram
+from trnlp.tokenization import word_token
 from collections import Counter
 import shutil
 import os

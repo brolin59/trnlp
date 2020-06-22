@@ -20,9 +20,11 @@ Copyright (c) 2016-2020, Esat Mahmut Bayol
 
 The full license is in the file LICENSE.txt, distributed with this software.
 """
-from .deasciifier.Asciidecoder import *
-from .file_prossesing import *
-from .tokenization import *
-from .morphology import *
-from .constant import *
-from .helper import *
+
+from trnlp.deasciifier.Asciidecoder import *
+from trnlp.spelling_corrector import *
+from trnlp.file_prossesing import *
+from trnlp.tokenization import *
+from trnlp.morphology import *
+from trnlp.constant import *
+from trnlp.helper import *

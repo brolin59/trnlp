@@ -2,28 +2,28 @@
 # -*- coding: utf-8 -*-
 
 """
-This file is part of TRNLP_PR.
+This file is part of trnlp.
 
-TRNLP_PR is free software: you can redistribute it and/or modify
+trnlp is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-TRNLP_PR is distributed in the hope that it will be useful,
+trnlp is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with TRNLP_PR.  If not, see <https://www.gnu.org/licenses/>.
+along with trnlp.  If not, see <https://www.gnu.org/licenses/>.
 Copyright (c) 2016-2020, Esat Mahmut Bayol
 
 The full license is in the file LICENSE.txt, distributed with this software.
 """
 
-from .helper import package_path, to_lower, isCap
-from .constant import stopwords
-from .token_data.data import *
+from trnlp.helper import package_path, to_lower, isCap
+from trnlp.constant import stopwords
+from trnlp.token_data.data import *
 from pickle import load
 import collections
 import re
@@ -37,6 +37,7 @@ __all__ = ['TrnlpToken',
 
 def _decode(string: str) -> str:
     """
+    Bu fonksiyon unidecode kütüphanesinden alınmış ve türkçe için özelleştirilmiştir.
     Türkçe için genişletilmiş Ascii çevirici.
     :param string: unicode string
     :return: Tr Ascii string
@@ -215,7 +216,7 @@ class TrnlpToken:
         self.__span_token()
 
     def __load_dict(self) -> None:
-        with open(package_path() + 'token_data/shortlist.pickle', 'rb') as handle:
+        with open(package_path() + 'data/shortlist.pickle', 'rb') as handle:
             self.__shortList = load(handle)
 
     def __arr_text(self) -> None:

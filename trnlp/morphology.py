@@ -21,10 +21,9 @@ Copyright (c) 2016-2020, Esat Mahmut Bayol
 The full license is in the file LICENSE.txt, distributed with this software.
 """
 
-from .data.suffix_tables import *
-from .controler import *
-from .helper import *
-import pickle
+from trnlp.data.suffix_tables import *
+from trnlp.controler import *
+from trnlp.helper import *
 
 __all__ = ['BaseFinder',
            'Derivational',
@@ -103,14 +102,11 @@ class BaseFinder:
     @classmethod
     def __load_lexicons(cls):
         if not cls._mainDict:
-            with open(package_path() + 'lexicons/gen_tr_lex.pickle', 'rb') as handle:
-                cls._mainDict = pickle.load(handle)
+            cls._mainDict = decompress_pickle(package_path() + 'data/gen_tr_lex.pbz2')
         if not cls._pronDict:
-            with open(package_path() + 'lexicons/prop_tr_lex.pickle', 'rb') as handle:
-                cls._pronDict = pickle.load(handle)
+            cls._pronDict = decompress_pickle(package_path() + 'data/prop_tr_lex.pbz2')
         if not cls._abbrDict:
-            with open(package_path() + 'lexicons/short_tr_lex.pickle', 'rb') as handle:
-                cls._abbrDict = pickle.load(handle)
+            cls._abbrDict = decompress_pickle(package_path() + 'data/short_tr_lex.pbz2')
 
     def setword(self, string_word: str):
         self._orgWord = change_punch(string_word.strip())
@@ -136,6 +132,7 @@ class BaseFinder:
             return self.__find_in_lexicon()
         else:
             self.__useMain = True
+            return self.__find_in_lexicon()
 
     def __find_in_lexicon(self) -> list:
         """
@@ -158,6 +155,15 @@ class BaseFinder:
                 [result.append((a2, residual)) for a2 in self._pronDict[pword]]
             if self.useabbr and (pword in self._abbrDict):
                 [result.append((a2, residual)) for a2 in self._abbrDict[pword]]
+            if word_to_number(pword):
+                result.append(({'base'        : pword,
+                                'verifiedBase': pword,
+                                'baseType'    : ['isim'],
+                                'baseProp'    : [''],
+                                'etymon'      : 'Türkçe',
+                                'event'       : 0,
+                                'currentType' : ['isim'],
+                                'purview'     : '0'}, residual))
         elif isCap(self._orgWord):
             if self.usepron:
                 [result.append((a2, None))
@@ -168,10 +174,28 @@ class BaseFinder:
             if self.useabbr:
                 [result.append((a2, None))
                  for a1 in splited_string if a1 in self._abbrDict for a2 in self._abbrDict[a1]]
+            if word_to_number(self._word):
+                result.append(({'base'        : self._word,
+                                'verifiedBase': self._word,
+                                'baseType'    : ['isim'],
+                                'baseProp'    : [''],
+                                'etymon'      : 'Türkçe',
+                                'event'       : 0,
+                                'currentType' : ['isim'],
+                                'purview'     : '0'}, None))
         else:
             if self.__useMain:
                 [result.append((a2, None))
                  for a1 in splited_string if a1 in self._mainDict for a2 in self._mainDict[a1]]
+            if word_to_number(self._word):
+                result.append(({'base'        : self._word,
+                                'verifiedBase': self._word,
+                                'baseType'    : ['isim'],
+                                'baseProp'    : [''],
+                                'etymon'      : 'Türkçe',
+                                'event'       : 0,
+                                'currentType' : ['isim'],
+                                'purview'     : '0'}, None))
             if self.usepron:
                 [result.append((a2, None))
                  for a1 in splited_string if a1 in self._pronDict for a2 in self._pronDict[a1]]
@@ -220,11 +244,9 @@ class Derivational(BaseFinder):
     @classmethod
     def __load_daf_dict(cls):
         if not cls._dafVerbDict:
-            with open(package_path() + 'suffixes/dafVerb.pickle', 'rb') as handle:
-                cls._dafVerbDict = pickle.load(handle)
+            cls._dafVerbDict = decompress_pickle(package_path() + 'data/dafVerb.pbz2')
         if not cls._dafNounDict:
-            with open(package_path() + 'suffixes/dafNoun.pickle', 'rb') as handle:
-                cls._dafNounDict = pickle.load(handle)
+            cls._dafNounDict = decompress_pickle(package_path() + 'data/dafNoun.pbz2')
 
     def _dfn(self, abc: str) -> list:
         """
@@ -311,11 +333,9 @@ class Inflections(Derivational):
     @classmethod
     def __load_inf_dict(cls) -> None:
         if not cls._infNounDict:
-            with open(package_path() + 'suffixes/' + 'infNoun.pickle', 'rb') as handle:
-                cls._infNounDict = pickle.load(handle)
+            cls._infNounDict = decompress_pickle(package_path() + 'data/infNoun.pbz2')
         if not cls._infVerbDict:
-            with open(package_path() + 'suffixes/' + 'infVerb.pickle', 'rb') as handle:
-                cls._infVerbDict = pickle.load(handle)
+            cls._infVerbDict = decompress_pickle(package_path() + 'data/infVerb.pbz2')
 
     @staticmethod
     def _current_type(table_no: int, row_no: int) -> str:
@@ -529,9 +549,39 @@ class TrnlpWord(Inflections):
         self.__getStemType = stem_type
 
     def _arr_infs(self) -> list:
+        def nv_counter(arg):
+            vcounter = 0
+            ncounter = 0
+            for i in range(len(arg['suffixPlace'])):
+                a1, a2 = arg['suffixPlace'][i]
+                st = arg['suffixTypes'][i]
+                if a1 in {1, 4, 5}:
+                    if st.startswith('Ef'):
+                        ncounter += 1
+                    else:
+                        ncounter += 2
+                else:
+                    if a1 == 2:
+                        vcounter += 2
+                    else:
+                        vcounter += 1
+            return vcounter, ncounter
+
         temp1 = [x for x in self.__inf if 'kısaltma' in x['baseType']]
         temp2 = [x for x in self.__inf if 'özel' in x['baseType']]
         temp3 = [x for x in self.__inf if ('özel' not in x['baseType']) and ('kısaltma' not in x['baseType'])]
+        if temp1:
+            temp1.sort(key=lambda x: len(x['suffixes']))
+        if temp2:
+            temp2.sort(key=lambda x: len(x['suffixes']))
+        if temp3:
+            if "fiil" in temp3[0]['baseType']:
+                temp3.sort(key=lambda x: nv_counter(x)[0])
+            else:
+                temp3.sort(key=lambda x: nv_counter(x)[1])
+            temp3.reverse()
+            temp3.sort(key=lambda x: len(x['suffixes']))
+
         if "." in self._orgWord:
             result = temp1 + temp3 + temp2
         elif "'" in self._orgWord:
@@ -540,6 +590,7 @@ class TrnlpWord(Inflections):
             result = temp2 + temp3 + temp1
         else:
             result = temp3 + temp2 + temp1
+
         return result
 
     def _find_stem(self) -> tuple:
@@ -614,29 +665,52 @@ class TrnlpWord(Inflections):
 
     def is_plural(self) -> float:
         if not self.__inf:
-            return False
+            return 0
         isplu = 0
-        counter = 0
         for x in self.__inf:
             if 'TPL' in x['baseProp']:
                 isplu += 1
-                counter += 1
                 continue
             for _prop in x['suffixProp']:
                 if 13 in _prop:
                     isplu += 1
-                    counter += 1
                     break
-            if ('özel' in x['baseType']) or ('kısaltma' in x['baseType']):
-                continue
-            else:
-                counter += 1
-        if counter == 0:
-            return 0
-        return isplu / counter
+        return isplu / len(self.__inf)
 
     def spelling(self) -> list:
         return syllabification(re.sub(r"\W", "", self._orgWord))
+
+    def correct_form(self, arg=None):
+        if arg is None:
+            bdict = self.__morphology
+        else:
+            bdict = arg
+
+        if not bdict:
+            return ""
+
+        if 'özel' in bdict['baseType']:
+            if bdict['suffixes']:
+                appl = bdict['verifiedBase']
+                for i in range(len(bdict['suffixes'])):
+                    if ("Ye-" in bdict['suffixTypes'][i]) or (bdict['suffixPlace'][i][0] > 2):
+                        appl = appl + bdict['suffixes'][i]
+                    else:
+                        appl = appl + "'" + "".join(bdict['suffixes'][i:])
+                        break
+                return appl
+            else:
+                return bdict['verifiedBase']
+        elif 'kısaltma' in bdict['baseType']:
+            if 'SN' in bdict['baseProp']:
+                return "{}{}".format(bdict['verifiedBase'], ''.join(bdict['suffixes']))
+            else:
+                return "{}'{}".format(bdict['verifiedBase'], ''.join(bdict['suffixes']))
+        else:
+            if bdict['event'] == 0:
+                return "{}{}".format(bdict['verifiedBase'], ''.join(bdict['suffixes']))
+            else:
+                return "{}{}".format(bdict['base'], ''.join(bdict['suffixes']))
 
 
 if __name__ == '__main__':

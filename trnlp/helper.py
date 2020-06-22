@@ -20,10 +20,11 @@ Copyright (c) 2016-2020, Esat Mahmut Bayol
 
 The full license is in the file LICENSE.txt, distributed with this software.
 """
-
+from trnlp.constant import allVowels, frontVowels, backVowels, roundedVowels, unroundedVowels, harmonyRule
+from trnlp.cleaner import clean_quites
 import itertools
-from .constant import allVowels, frontVowels, backVowels, roundedVowels, unroundedVowels, harmonyRule
-from .cleaner import clean_quites
+import pickle
+import bz2
 import re
 
 
@@ -160,7 +161,7 @@ def syllabification(word: str) -> list:
 
     len_spell = tenword.count('1')
 
-    if len_spell == 1:
+    if (len_spell == 1) or (tenword == '0'):
         return [word]
 
     for i in range(tenword.count('1')):
@@ -517,5 +518,27 @@ def debug(func):
     return wrapper_debug
 
 
+def unrepeated_list(l: list) -> list:
+    temp = []
+    for x in l:
+        if x not in temp:
+            temp.append(x)
+    return temp
+
+
+def compressed_pickle(title, data):
+    with bz2.BZ2File(title + ".pbz2", "w") as f:
+        pickle.dump(data, f, protocol=pickle.HIGHEST_PROTOCOL)
+
+
+def decompress_pickle(file):
+    data = bz2.BZ2File(file, "rb")
+    data = pickle.load(data)
+    return data
+
+
 if __name__ == '__main__':
-    pass
+    with open(package_path() + 'data/freq_dict.pickle', 'rb') as handle:
+        lexicon = pickle.load(handle)
+
+    compressed_pickle("freq_dict", lexicon)

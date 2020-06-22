@@ -22,7 +22,7 @@ The full license is in the file LICENSE.txt, distributed with this software
 """
 
 from re import findall
-from .constant import allVowels
+from trnlp.constant import allVowels
 
 
 def rfind_parenthesize(x: str):

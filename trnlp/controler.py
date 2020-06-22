@@ -21,18 +21,19 @@ Copyright (c) 2016-2020, Esat Mahmut Bayol
 The full license is in the file LICENSE.txt, distributed with this software.
 """
 
-from .finder import first_vowel, last_vowel
-from .helper import vowel_harmony, word_to_number
-from .data.suffix_tables import *
+from trnlp.finder import first_vowel, last_vowel
+from trnlp.helper import vowel_harmony, word_to_number, wordtoten
+from trnlp.data.suffix_tables import *
 from itertools import product
-from .constant import *
-from .cleaner import *
+from trnlp.constant import *
+from trnlp.cleaner import *
 import re
 
 __all__ = ['bsc',
            'ssc',
            'abbr_control',
-           'general_control']
+           'general_control',
+           'acoustic_phenomenon']
 
 
 def sfx_vowel_harmony(suffix: str, sfx_prop: tuple) -> bool:
@@ -93,12 +94,13 @@ def abbr_control(cabbr):
     return abbrs
 
 
-def letter_harmony(base: str, first_sfx: str, first_sfx_prop: tuple, base_prop: list) -> bool:
+def letter_harmony(base: str, first_sfx: str, first_sfx_prop: tuple, suffix_place: tuple) -> bool:
     """
     Kök ile ilk ek arasındaki ses olaylarını kontrol eder.
     :param base: Kelime kökü
     :param first_sfx: ilk ek
     :param first_sfx_prop: İlk ekin özellik listesi
+    :param suffix_place: İlk tablodaki yeri
     :return: True ya da False döndürür
     """
     if 0 in first_sfx_prop:
@@ -107,6 +109,18 @@ def letter_harmony(base: str, first_sfx: str, first_sfx_prop: tuple, base_prop: 
     elif 1 in first_sfx_prop:
         if base[-1] not in allVowels:
             return False
+
+    if suffix_place == (6, 9):
+        if (base[-1] not in allVowels) and (base[-1] not in {'r', 'l'}):
+            return False
+    elif suffix_place == (6, 8):
+        if (base[-1] not in allVowels) and (base[-1] != 'r'):
+            return False
+    elif suffix_place == (6, 10):
+        if (base not in ('ye', 'de')) and (base[-1] in allVowels):
+            wtbase = wordtoten(base)
+            if wtbase.count("1") == 1:
+                return False
 
     if 4 in first_sfx_prop:
         if (base[-1] in fortis) and (first_sfx[0] in prefix_lenis):
@@ -311,7 +325,7 @@ def bsc(arg: dict) -> bool:
         if not word_to_number(ver_base):
             return False
 
-    if not letter_harmony(base, suffix, suffix_prop, base_prop):
+    if not letter_harmony(base, suffix, suffix_prop, suffix_place):
         # print('letter_harmony  - False')
         return False
 
@@ -362,6 +376,13 @@ def ssc_prop_control(suffix_list, suffix_place, suffix_prop):
 
         if fs_place == ss_place:
             return False
+
+        if ss_place == (6, 9):
+            if (f_s[-1] not in allVowels) and (f_s[-1] not in {'r', 'l'}):
+                return False
+        elif ss_place == (6, 8):
+            if (f_s[-1] not in allVowels) and (f_s[-1] != 'r'):
+                return False
 
         if (fs_place in {(2, 67), (2, 68)}) and (ss_place in {(2, 44), (2, 46), (2, 48), (2, 53)}):
             f_s = 'yor'
@@ -481,8 +502,10 @@ def ssc(infdaf: dict, id_status=2) -> bool:
         # print('SS KONTROL  - True')
         return True
 
-    olz_count = infdaf['suffixTypes'].count('Olz')
-    ytsz_count = infdaf['suffixTypes'].count('Ytsz')
+    suffix_types = infdaf['suffixTypes']
+
+    olz_count = suffix_types.count('Olz')
+    ytsz_count = suffix_types.count('Ytsz')
 
     # if olz_count > 1:
     #     # print('olz_count > 1  - False')
@@ -493,6 +516,14 @@ def ssc(infdaf: dict, id_status=2) -> bool:
         return False
 
     suffix_place = infdaf['suffixPlace']
+
+    if ((5, 2) in suffix_place):
+        if olz_count > 0:
+            if suffix_types.index('Olz') < suffix_place.index((5, 2)):
+                return False
+        elif ytsz_count > 0:
+            if suffix_types.index('Ytsz') < suffix_place.index((5, 2)):
+                return False
 
     if not elimination(suffix_place):
         # print('not elimination  - False')
@@ -559,10 +590,81 @@ def elimination(suffix_place: list) -> bool:
     return True
 
 
+def uzyum(string: str):
+    yum = {'ç': 'c', 'p': 'b', 't': 'd', 'k': 'ğ', 'g': 'ğ'}
+    if string.endswith('nk'):
+        return string[:-1] + 'g'
+    else:
+        return string[:-1] + yum[string[-1]]
+
+
+def uztur(string: str):
+    return string + string[-1]
+
+
+def udus(string: str):
+    return string[:-2] + string[-1]
+
+
+def udar(string: str):
+    udardict = {'e' : 'i',
+                'üe': 'ü',
+                'ua': 'u',
+                'ee': 'i',
+                'aa': 'ı',
+                'öe': 'ü',
+                'ıa': 'ı',
+                'oa': 'u',
+                'ie': 'i',
+                'ae': 'i',
+                'âa': 'ı',
+                'oe': 'ü',
+                'ue': 'ü'}
+    clean = clean_quites(string)
+    return string[:-1] + udardict[clean[-2:]]
+
+
+def uzdus(string: str):
+    return string[:-1]
+
+
+def acoustic_phenomenon(word, wordprop):
+    if 'UZYUM' in wordprop:
+        if 'UDUS' in wordprop:
+            return [(uzyum(udus(word)), wordprop)]
+        elif 'UZTUR' in wordprop:
+            return [(uztur(uzyum(word)), wordprop)]
+        elif 'UZDUS' in wordprop:
+            uzyum_prop = [x for x in wordprop if x != 'UZDUS']
+            uzdus_prop = [x for x in wordprop if x != 'UZYUM']
+            return [(uzyum(word), uzyum_prop), (uzdus(word), uzdus_prop)]
+        else:
+            return [(uzyum(word), wordprop)]
+    elif ('UDAR-YOR' in wordprop) or ('UDAR' in wordprop):
+        return [(udar(word), wordprop)]
+    elif 'UZTUR' in wordprop:
+        return [(uztur(word), wordprop)]
+    elif 'UZDUS' in wordprop:
+        return [(uzdus(word), wordprop)]
+    elif 'UDUS' in wordprop:
+        return [(udus(word), wordprop)]
+    elif 'UD' in wordprop:
+        return [(uzdus(word), wordprop)]
+
+
 def general_control(arg):
     result = []
+
+    if 'bağlaç' in arg['baseType']:
+        return result
+
     places = arg['suffixPlace']
     in_corrector = [xi for xi in places if xi in corrector_tuple]
+
+    if arg['event'] == 0:
+        acoustic = acoustic_phenomenon(arg['base'], arg['baseProp'])
+    else:
+        acoustic = [(arg['base'], arg['baseProp'])]
 
     if in_corrector:
         suffixes = []
@@ -600,6 +702,17 @@ def general_control(arg):
             if bsc(ctemp) and ssc(ctemp):
                 ctemp['word'] = ctemp['base'] + ''.join(ctemp['suffixes'])
                 result.append(ctemp)
+        if (not result) and (acoustic):
+            for base, base_prop in acoustic:
+                for sfx in pro_suffixes:
+                    ctemp = dict(arg)
+                    ctemp['base'] = base
+                    ctemp['baseProp'] = base_prop
+                    ctemp['event'] = 1
+                    ctemp['suffixes'] = sfx
+                    if bsc(ctemp) and ssc(ctemp):
+                        ctemp['word'] = ctemp['base'] + ''.join(ctemp['suffixes'])
+                        result.append(ctemp)
     else:
         if bsc(arg) and ssc(arg):
             result.append(arg)
@@ -607,8 +720,4 @@ def general_control(arg):
 
 
 if __name__ == '__main__':
-    general_control(
-            {'base'    : 'cm', 'verifiedBase': 'cm', 'baseType': ['kısaltma'], 'baseProp': ['HK'],
-             'purview' : 'Santimetre', 'etymon': 'cm', 'event': 0, 'currentType': ['kısaltma'], 'orgWord': "cm'ye",
-             'word'    : 'cmye', 'suffixes': [], 'suffixPlace': [], 'suffixTypes': [], 'suffixProp': [],
-             'residual': 'ye'})
+    pass
