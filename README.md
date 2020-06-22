@@ -18,7 +18,7 @@ Hobi olarak başladığım bu işin faydalı olması dileği ile...
 
 * [Kelime kök ve gövdesi bulma (Base, stem)](https://github.com/brolin59/PYTHON-TURKCE-DOGAL-DIL-ISLEME-TURKISH-NLP/wiki/2.-Morfolojik-Analiz)
 * [Kelime ve kural tabanlı morfolojik analiz (Lemmatization)](https://github.com/brolin59/PYTHON-TURKCE-DOGAL-DIL-ISLEME-TURKISH-NLP/wiki/2.-Morfolojik-Analiz)
-* [Yanlış yada Ascii karakterler kullanılarak yazılan kelimeler için öneri listesi (Spelling Corrector) - Yapım aşamasında](https://github.com/brolin59/PYTHON-TURKCE-DOGAL-DIL-ISLEME-TURKISH-NLP/wiki/5.-Kelime-Kontrol%C3%BC)
+* [Yanlış yada Ascii karakterler kullanılarak yazılan kelimeler için öneri listesi (Spelling Corrector)](https://github.com/brolin59/PYTHON-TURKCE-DOGAL-DIL-ISLEME-TURKISH-NLP/wiki/5.-Kelime-Kontrol%C3%BC)
 * [Metin parçalama ve sayma işlemleri (Tokenization)](https://github.com/brolin59/PYTHON-TURKCE-DOGAL-DIL-ISLEME-TURKISH-NLP/wiki/3.-Par%C3%A7alama-(Tokenization))
 * [Faydalı olabilecek ek fonksiyonlar.(levenshtein_distance, number_to_word, word_to_number vb.)](https://github.com/brolin59/PYTHON-TURKCE-DOGAL-DIL-ISLEME-TURKISH-NLP/wiki/4.-Ek-Fonksiyonlar)
 
@@ -36,7 +36,7 @@ Benim bilgisayarımda (İntel i5-2450M işlemci 4GB Bellek) kelime uzunlukların
 - Türkçe ses uyumları kontrolü + YAPILDI
 - Kelime bazlı kök/gövde ve eklerin bulunması + YAPILDI (Testler sırasında düzenlemeler yapılacak)
 - Cümle ayırma. + YAPILDI (Testler sırasında düzenlemeler yapılacak)
-- Yanlış yazılan kelimelerin bulunması ve doğru yazımına dair öneride bulunulması yada otomatik olarak düzeltilmesi. (Yapım aşamasında. Kısa sürede eklenecek.)
+- Yanlış yazılan kelimelerin bulunması ve doğru yazımına dair öneride bulunulması yada otomatik olarak düzeltilmesi. YAPILDI (Testler sırasında düzenlemeler yapılacak)
 - Eklerin ve ek kontrollerinin düzeltilmesi.
 - Paket oluşturma. (Düzeltmeler yapıldıktan sonra yapılacak.)
 - Cümle analizi yapılması ve cümlenin öğelerine ayrılması.
