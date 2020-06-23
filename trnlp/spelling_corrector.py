@@ -168,9 +168,6 @@ class SpellingCorrector:
         if not self.__word_list:
             return [[self.__org_word]]
 
-        if "iter" not in kwargs:
-            kwargs["iter"] = 1
-
         if "all" not in kwargs:
             kwargs["all"] = False
 
@@ -191,12 +188,6 @@ class SpellingCorrector:
         for word in _wordlist:
             self.__org_word = word
             temp = self.__manipulate(word, **kwargs)
-
-            if kwargs["iter"] > 1:
-                may_dict = dict(kwargs)
-                for i in range(1, kwargs["iter"]):
-                    for may in temp:
-                        temp = temp + [(a1, a2 + may[1]) for a1, a2 in self.__manipulate(**may_dict)]
 
             if temp:
                 temp.sort(key=lambda x: self.__freq(x))
