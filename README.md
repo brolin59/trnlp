@@ -9,7 +9,7 @@ trnlp2020@gmail.com
 
 ### Kurulum :
 
-pip install trnlp
+```$ pip install trnlp```
 
 yada,
 
