@@ -35,6 +35,7 @@ class SpellingCorrector:
     _obj_ = TrnlpWord()
 
     def __init__(self):
+        self.__user_freq_dict = {}
         self.__org_word = ""
         self.__word_list = ""
         self.__load_inf_dict()
@@ -82,7 +83,7 @@ class SpellingCorrector:
         if word[-1] not in allVowels:
             result.append(a1)
 
-        return [''.join(x) for x in product(*result) if ''.join(x) in self.__freq_dict]
+        return [''.join(x) for x in product(*result)]
 
     def deasciifier(self, word: str) -> list:
         ascii_list = []
@@ -129,12 +130,12 @@ class SpellingCorrector:
     def __known(self, words: list) -> list:
         known_list = []
         for w in words:
-            if w in self.__freq_dict:
+            if w in self.__user_freq_dict:
                 known_list.append(w)
         return known_list
 
     def __freq(self, x1):
-        f1 = self.__freq_dict[x1[0]]
+        f1 = self.__user_freq_dict[x1[0]]
         if x1[1] <= 0:
             return f1 * 2
         else:
@@ -145,20 +146,26 @@ class SpellingCorrector:
 
         for key, value in kwargs.items():
             if (key == "deasciifier") and (value is True):
-                [result.add((x, 0.1)) for x in self.__known(self.deasciifier(word))]
+                [result.add((x, 0.1))
+                 for x in self.__known(self.deasciifier(word))]
             elif (key == "unrepeater") and (value is True):
                 [result.add((x, (len(self.__org_word) - len(x))))
                  for x in self.__known(self.unrepeater(word))]
             elif (key == "transposes") and (value is True):
-                [result.add((x, 2)) for x in self.__known(self.transposes(word))]
+                [result.add((x, 2))
+                 for x in self.__known(self.transposes(word))]
             elif (key == "inserts") and (value is True):
-                [result.add((x, 0.5)) for x in self.__known(self.inserts(word))]
+                [result.add((x, 0.5))
+                 for x in self.__known(self.inserts(word))]
             elif (key == "replaces") and (value is True):
-                [result.add((x, 2)) for x in self.__known(self.replaces(word))]
+                [result.add((x, 2))
+                 for x in self.__known(self.replaces(word))]
             elif (key == "deletes") and (value is True):
-                [result.add((x, 1)) for x in self.__known(self.deletes(word))]
+                [result.add((x, 1))
+                 for x in self.__known(self.deletes(word))]
             elif (key == "vowelizero") and (value is True) and (self.__iteration is False):
-                [result.add((x, (len(x) - len(self.__org_word)))) for x in self.vowelizero(word)]
+                [result.add((x, (len(x) - len(self.__org_word))))
+                 for x in self.__known(self.vowelizero(word))]
 
         return list(result)
 
@@ -167,6 +174,11 @@ class SpellingCorrector:
 
         if not self.__word_list:
             return [[self.__org_word]]
+
+        if "freq" not in kwargs:
+            self.__user_freq_dict = self.__freq_dict
+        else:
+            self.__user_freq_dict = kwargs["freq"]
 
         if "all" not in kwargs:
             kwargs["all"] = False
@@ -199,13 +211,15 @@ class SpellingCorrector:
                 for may in self._obj_.get_inf:
                     inf_temp.append((self._obj_.correct_form(may),))
 
-            if inf_temp:
+            try:
+                temp = inf_temp[:1] + temp + inf_temp[1:]
+            except IndexError:
                 temp = inf_temp + temp
-            temp = unrepeated_list([x[0] for x in temp])
 
             if not temp:
                 result.append([word])
             else:
+                temp = unrepeated_list([x[0] for x in temp])
                 result.append(temp)
 
         return result
