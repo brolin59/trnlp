@@ -13,6 +13,7 @@ setup(
         long_description=long_description,
         long_description_content_type='text/markdown',
         url='https://github.com/brolin59/PYTHON-TURKCE-DOGAL-DIL-ISLEME-TURKISH-NLP',
+        download_url = 'https://github.com/brolin59/trnlp/archive/0.2.1a0.tar.gz',
         author='Esat Mahmut Bayol',
         author_email='trnlp2020@gmail.com',
         license='GNU General Public License v3 (GPLv3)',
