@@ -8,7 +8,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
         name='trnlp',
-        version='0.2.1a0',
+        version='0.2.2a1',
         description='Türkçe doğal dil işleme araçları',
         long_description=long_description,
         long_description_content_type='text/markdown',
