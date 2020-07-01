@@ -8,12 +8,12 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
         name='trnlp',
-        version='0.2.2a1',
+        version='0.2.3a0',
         description='Türkçe doğal dil işleme araçları',
         long_description=long_description,
         long_description_content_type='text/markdown',
         url='https://github.com/brolin59/trnlp',
-        download_url='https://github.com/brolin59/trnlp/archive/0.2.2a1.tar.gz',
+        download_url='https://github.com/brolin59/trnlp/archive/0.2.3a0.tar.gz',
         author='Esat Mahmut Bayol',
         author_email='trnlp2020@gmail.com',
         license='GNU General Public License v3 (GPLv3)',
