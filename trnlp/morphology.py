@@ -69,6 +69,7 @@ class BaseFinder:
         self.__usePron = True  # Kök aramada özel isimler sözlüğü kullanılsın mı?
         self.__useAbbr = False  # Kök aramada kısaltmalar sözlüğü kullanılsın mı?
         self._orgWord = ""  # Girilen kelimenin orjinal hali
+        self._sorting = dict()
         self._word = ""  # Girilen kelimenin işlem görmüş hali
         self.__load_lexicons()
 
@@ -109,6 +110,9 @@ class BaseFinder:
             cls._abbrDict = decompress_pickle(package_path() + 'data/short_tr_lex.pbz2')
 
     def setword(self, string_word: str):
+        self._orgWord = ""
+        self._word = ""
+        self.__load_lexicons()
         self._orgWord = change_punch(string_word.strip())
         self._word = repa(repc(to_lower(string_word.strip())))
 
@@ -129,36 +133,41 @@ class BaseFinder:
         :return: Liste içerisinde sözlük(dict) olarak döndürür.
         """
         if any((self.__useMain, self.__useAbbr, self.__usePron)):
-            return self.__find_in_lexicon()
+            return self._find_in_lexicon()
         else:
             self.__useMain = True
-            return self.__find_in_lexicon()
+            return self._find_in_lexicon()
 
-    def __find_in_lexicon(self) -> list:
+    def _find_in_lexicon(self) -> list:
         """
         Parçalanmış kelime listesindeki her bir kelimeyi genel sözlük(cls._mainDict) içerisinde arar.
         :return: Sözlük içerisinde bulunan sonuçları liste halinde döndürür.
         """
+
         org = to_lower(self._orgWord)
         splited_string = self._splitter(self._word)
         result = []
+        sorting = dict()
 
         if "." in self._orgWord:
             pword = re.sub(r"\W", "", org[:org.rfind(".")])
             residual = org[org.rfind(".") + 1:]
             if self.useabbr and (pword in self._abbrDict):
-                [result.append((a2, residual)) for a2 in self._abbrDict[pword]]
+                for a2 in self._abbrDict[pword]:
+                    result.append((a2, residual))
         elif "'" in self._orgWord:
             pword = re.sub(r"\W", "", org[:org.rfind("'")])
             residual = org[org.rfind("'") + 1:]
             if residual and self.usepron and (pword in self._pronDict):
-                [result.append((a2, residual)) for a2 in self._pronDict[pword]]
+                for a2 in self._pronDict[pword]:
+                    result.append((a2, residual))
             if self.useabbr and (pword in self._abbrDict):
-                [result.append((a2, residual)) for a2 in self._abbrDict[pword]]
+                for a2 in self._abbrDict[pword]:
+                    result.append((a2, residual))
             if word_to_number(pword):
                 result.append(({'base'        : pword,
                                 'verifiedBase': pword,
-                                'baseType'    : ['isim'],
+                                'baseType'    : ['isim,sayı'],
                                 'baseProp'    : [''],
                                 'etymon'      : 'Türkçe',
                                 'event'       : 0,
@@ -166,18 +175,24 @@ class BaseFinder:
                                 'purview'     : '0'}, residual))
         elif isCap(self._orgWord):
             if self.usepron:
-                [result.append((a2, None))
-                 for a1 in splited_string if a1 in self._pronDict for a2 in self._pronDict[a1]]
+                for a1 in splited_string:
+                    if a1 in self._pronDict:
+                        for a2 in self._pronDict[a1]:
+                            result.append((a2, None))
             if self.__useMain:
-                [result.append((a2, None))
-                 for a1 in splited_string if a1 in self._mainDict for a2 in self._mainDict[a1]]
+                for a1 in splited_string:
+                    if a1 in self._mainDict:
+                        for a2 in self._mainDict[a1]:
+                            result.append((a2, None))
             if self.useabbr:
-                [result.append((a2, None))
-                 for a1 in splited_string if a1 in self._abbrDict for a2 in self._abbrDict[a1]]
+                for a1 in splited_string:
+                    if a1 in self._abbrDict:
+                        for a2 in self._abbrDict[a1]:
+                            result.append((a2, None))
             if word_to_number(self._word):
                 result.append(({'base'        : self._word,
                                 'verifiedBase': self._word,
-                                'baseType'    : ['isim'],
+                                'baseType'    : ['isim,sayı'],
                                 'baseProp'    : [''],
                                 'etymon'      : 'Türkçe',
                                 'event'       : 0,
@@ -185,25 +200,51 @@ class BaseFinder:
                                 'purview'     : '0'}, None))
         else:
             if self.__useMain:
-                [result.append((a2, None))
-                 for a1 in splited_string if a1 in self._mainDict for a2 in self._mainDict[a1]]
+                for a1 in splited_string:
+                    if a1 in self._mainDict:
+                        for a2 in self._mainDict[a1]:
+                            result.append((a2, None))
             if word_to_number(self._word):
                 result.append(({'base'        : self._word,
                                 'verifiedBase': self._word,
-                                'baseType'    : ['isim'],
+                                'baseType'    : ['isim,sayı'],
                                 'baseProp'    : [''],
                                 'etymon'      : 'Türkçe',
                                 'event'       : 0,
                                 'currentType' : ['isim'],
                                 'purview'     : '0'}, None))
             if self.usepron:
-                [result.append((a2, None))
-                 for a1 in splited_string if a1 in self._pronDict for a2 in self._pronDict[a1]]
+                for a1 in splited_string:
+                    if a1 in self._pronDict:
+                        for a2 in self._pronDict[a1]:
+                            result.append((a2, None))
             if self.useabbr:
-                [result.append((a2, None))
-                 for a1 in splited_string if a1 in self._abbrDict for a2 in self._abbrDict[a1]]
+                for a1 in splited_string:
+                    if a1 in self._abbrDict:
+                        for a2 in self._abbrDict[a1]:
+                            result.append((a2, None))
 
-        return [self.__update_dict(a1) for a1 in result]
+        result = [self.__update_dict(a1) for a1 in result]
+        result = unrepeated_list(result)
+
+        if result:
+            counter = 0
+            for a1 in result:
+                counter += 1
+                factor = 1
+
+                if any(char in self._orgWord for char in ["â", "û", "î"]):
+                    if any(char in a1['verifiedBase'] for char in ["â", "û", "î"]):
+                        factor = 0.01
+
+                adding = (a1['verifiedBase'], ",".join(a1['baseType']))
+
+                if adding not in sorting:
+                    sorting[adding] = counter * factor
+
+            self._sorting = sorting
+
+        return result
 
     def __update_dict(self, tpl: tuple) -> dict:
         """
@@ -550,22 +591,7 @@ class TrnlpWord(Inflections):
 
     def _arr_infs(self) -> list:
         def nv_counter(arg):
-            vcounter = 0
-            ncounter = 0
-            for i in range(len(arg['suffixPlace'])):
-                a1, a2 = arg['suffixPlace'][i]
-                st = arg['suffixTypes'][i]
-                if a1 in {1, 4, 5}:
-                    if st.startswith('Ef'):
-                        ncounter += 1
-                    else:
-                        ncounter += 2
-                else:
-                    if a1 == 2:
-                        vcounter += 2
-                    else:
-                        vcounter += 1
-            return vcounter, ncounter
+            return self._sorting[(arg['verifiedBase'], ",".join(arg['baseType']))]
 
         temp1 = [x for x in self.__inf if 'kısaltma' in x['baseType']]
         temp2 = [x for x in self.__inf if 'özel' in x['baseType']]
@@ -575,12 +601,7 @@ class TrnlpWord(Inflections):
         if temp2:
             temp2.sort(key=lambda x: len(x['suffixes']))
         if temp3:
-            if "fiil" in temp3[0]['baseType']:
-                temp3.sort(key=lambda x: nv_counter(x)[0])
-            else:
-                temp3.sort(key=lambda x: nv_counter(x)[1])
-            temp3.reverse()
-            temp3.sort(key=lambda x: len(x['suffixes']))
+            temp3.sort(key=lambda x: nv_counter(x))
 
         if "." in self._orgWord:
             result = temp1 + temp3 + temp2

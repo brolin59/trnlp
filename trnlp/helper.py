@@ -342,94 +342,80 @@ def number_to_word(number: str) -> str:
         return ntow
 
 
-def word_to_number(number_string: str) -> str:
-    """
-    Yazıyla yazılmış olan sayıyı sayıya dönüştürür.
-    :param number_string: Dönüştürülece yazı string şeklinde
-    :return: Sayıya döndürülmüş yazı string şeklinde
-    """
+def word_to_number(string_number: str) -> str:
+    def three_digits():
+        td = None
+        if a2 in {"B", "O", "Y"}:
+            td = a1_list[0]
+        elif a2 in {"OB", "YB", "YO", "YOB"}:
+            td = sum(a1_list)
+        elif a2 == "BY":
+            td = a1_list[0] * a1_list[1]
+        elif a2 == "BYO":
+            td = (a1_list[0] * a1_list[1]) + a1_list[2]
+        elif a2 == "BYOB":
+            td = (a1_list[0] * a1_list[1]) + a1_list[2] + a1_list[3]
+        return td
 
-    def three_digits_number(co):
-        yuzluk = '000'
-        reco = [i for i in re.split(regexi, co) if i]
-        if reco:
-            reco.reverse()
-            reco = reco + ['']
-            for i, it in enumerate(reco):
-                if it == 'yüz':
-                    if reco[i + 1] in trk_numbers_0_9:
-                        yuzluk = trk_numbers_0_9[reco[i + 1]] + yuzluk[1:]
-                    else:
-                        yuzluk = '1' + yuzluk[1:]
-                    break
-                elif it in trk_numbers_10_90:
-                    yuzluk = yuzluk[0] + trk_numbers_10_90[it] + yuzluk[2]
-                elif it in trk_numbers_0_9:
-                    yuzluk = yuzluk[:2] + trk_numbers_0_9[it]
-        return yuzluk
+    units_digits = {"bir": 1, "iki": 2, "üç": 3, "dört": 4, "beş": 5, "altı": 6, "yedi": 7, "sekiz": 8, "dokuz": 9}
+    tenth = {"on"    : 10, "yirmi": 20, "otuz": 30, "kırk": 40, "elli": 50,
+             "altmış": 60, "yetmiş": 70, "seksen": 80, "doksan": 90}
+    t_sep = {"bin": 3, "milyon": 6, "milyar": 9, "trilyon": 12, "katrilyon": 15}
 
-    if number_string.strip() == 'sıfır':
-        return '0'
+    ns = string_number.replace(" ", "")
+    ns = ns.strip()
 
-    if 'virgül' in number_string:
-        splt_word = number_string.split('virgül')
+    if ns == "sıfır":
+        return "0"
+
+    if 'virgül' in ns:
+        splt_word = ns.split('virgül')
         fp = word_to_number(splt_word[0])
         sp = word_to_number(splt_word[1])
         return fp + ',' + sp
 
-    trk_numbers_0_9 = {'bir'  : '1',
-                       'iki'  : '2',
-                       'üç'   : '3',
-                       'dört' : '4',
-                       'beş'  : '5',
-                       'altı' : '6',
-                       'yedi' : '7',
-                       'sekiz': '8',
-                       'dokuz': '9'}
+    a1 = ""
+    a2 = ""
+    a1_list = []
+    result = []
+    for char in ns:
+        a1 = a1 + char
+        if a1 in units_digits:
+            a1_list.append(units_digits[a1])
+            a2 = a2 + "B"
+            a1 = ""
+        elif a1 in tenth:
+            a1_list.append(tenth[a1])
+            a2 = a2 + "O"
+            a1 = ""
+        elif a1 == "yüz":
+            a1_list.append(100)
+            a2 = a2 + "Y"
+            a1 = ""
+        elif a1 in t_sep:
+            uclu = int("1" + t_sep[a1] * "0")
+            grs = three_digits()
 
-    trk_numbers_10_90 = {'on'    : '1',
-                         'yirmi' : '2',
-                         'otuz'  : '3',
-                         'kırk'  : '4',
-                         'elli'  : '5',
-                         'altmış': '6',
-                         'yetmiş': '7',
-                         'seksen': '8',
-                         'doksan': '9'}
+            if grs is None:
+                result.append(uclu)
+            else:
+                result.append(grs * uclu)
 
-    cd = {'katrilyon': 18, 'trilyon': 15, 'milyar': 12, 'milyon': 9, 'bin': 6, 'yüz': 3}
-    number_digit = ['katrilyon', 'trilyon', 'milyar', 'milyon', 'bin']
-    regexi = '(yüz|doksan|seksen|yetmiş|altmış|elli|kırk|otuz|yirmi|on|dokuz|sekiz|yedi|altı|beş|dört|üç|iki|bir)'
+            a1 = ""
+            a2 = ""
+            a1_list = []
 
-    _word = number_string.replace(' ', '')
-    liste = []
-    uzunluk = 0
-    for part in number_digit:
-        repart = re.search(part, _word)
-        if repart:
-            x, y = repart.span()
-            _uzunluk = cd[_word[x:y]]
-            if _uzunluk > uzunluk:
-                uzunluk = _uzunluk
-            liste.append((_word[:x], _word[x:y]))
-            _word = _word[y:]
+    if a1:
+        return ""
 
-    if _word:
-        liste.append(_word)
+    if a1_list:
+        grs = three_digits()
+        result.append(grs)
 
-    sayi = '0' * uzunluk
-
-    for part in liste:
-        if type(part) is tuple:
-            if part == ('', 'bin'):
-                sayi = sayi[:-cd[part[1]]] + '001' + sayi[3 - cd[part[1]]:]
-                continue
-            sayi = sayi[:-cd[part[1]]] + three_digits_number(part[0]) + sayi[3 - cd[part[1]]:]
-        elif type(part) is str:
-            sayi = sayi[:-3] + three_digits_number(part)
-    sayi = sayi.lstrip('0')
-
-    return sayi
+    try:
+        return str(sum(result))
+    except TypeError:
+        return ""
 
 
 def nth_replace(string, old, new, n=1) -> str:
@@ -538,7 +524,4 @@ def decompress_pickle(file):
 
 
 if __name__ == '__main__':
-    with open(package_path() + 'data/freq_dict.pickle', 'rb') as handle:
-        lexicon = pickle.load(handle)
-
-    compressed_pickle("freq_dict", lexicon)
+    pass

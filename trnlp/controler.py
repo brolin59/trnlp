@@ -22,7 +22,7 @@ The full license is in the file LICENSE.txt, distributed with this software.
 """
 
 from trnlp.finder import first_vowel, last_vowel
-from trnlp.helper import vowel_harmony, word_to_number, wordtoten
+from trnlp.helper import vowel_harmony, word_to_number
 from trnlp.data.suffix_tables import *
 from itertools import product
 from trnlp.constant import *
@@ -42,6 +42,7 @@ def sfx_vowel_harmony(suffix: str, sfx_prop: tuple) -> bool:
     :param sfx_prop : Sesli uyumunun kontrol edileceği ekin özellik dizisi
     :return: 'True' ya da 'False' döndürür
     """
+
     if (7 in sfx_prop) or (vowel_harmony(suffix)):
         return True
     return False
@@ -53,6 +54,7 @@ def regex_solver(sfx_regex: str, sfx_prop: tuple) -> list:
     :param sfx_prop : Ek tablosundaki ekin özellikler dizisi
     :return: Tüm ihtimalleri liste olarak döndürür
     """
+
     b = list(re.finditer(r"\w|\[(\w+)\]", sfx_regex))
     result = []
     for match in b:
@@ -66,20 +68,17 @@ def regex_solver(sfx_regex: str, sfx_prop: tuple) -> list:
 def abbr_control(cabbr):
     copy_dict = dict(cabbr)
     abbr_prop = cabbr['baseProp']
-    # print('desc', cabbr['desc'], cabbr)
     abbr_base_split = cabbr['desc'].split(';')
     abbrs = []
+
     if ('HK' in abbr_prop) or ('SN' in abbr_prop) or ('IHB' in abbr_prop):
-        # print('abbr1 - ',abbr_base_split)
         for abbr_base in abbr_base_split:
             copy_dict['base'] = abbr_base
             if bsc(copy_dict) and ssc(copy_dict):
                 cabbr['desc'] = abbr_base
                 abbrs.append(cabbr)
     elif 'HB' in abbr_prop:
-        # print('abbr - HB')
         if 'KG' in abbr_prop:
-            # print('abbr - KG')
             if bsc(cabbr) and ssc(cabbr):
                 abbrs.append(cabbr)
         else:
@@ -103,24 +102,13 @@ def letter_harmony(base: str, first_sfx: str, first_sfx_prop: tuple, suffix_plac
     :param suffix_place: İlk tablodaki yeri
     :return: True ya da False döndürür
     """
+
     if 0 in first_sfx_prop:
         if base[-1] in allVowels:
             return False
     elif 1 in first_sfx_prop:
         if base[-1] not in allVowels:
             return False
-
-    if suffix_place == (6, 9):
-        if (base[-1] not in allVowels) and (base[-1] not in {'r', 'l'}):
-            return False
-    elif suffix_place == (6, 8):
-        if (base[-1] not in allVowels) and (base[-1] != 'r'):
-            return False
-    elif suffix_place == (6, 10):
-        if (base not in ('ye', 'de')) and (base[-1] in allVowels):
-            wtbase = wordtoten(base)
-            if wtbase.count("1") == 1:
-                return False
 
     if 4 in first_sfx_prop:
         if (base[-1] in fortis) and (first_sfx[0] in prefix_lenis):
@@ -186,6 +174,7 @@ def base_gz_control(first_sfx_place: tuple, morph_prop: list, first_sfx: str) ->
     :param first_sfx: ilk ek
     :return: True ya da False döndürür
     """
+
     if first_sfx_place in ((2, 7), (2, 8)):
         if ('GZ[r]' in morph_prop) and (first_sfx != 'r'):
             return False
@@ -210,6 +199,7 @@ def base_utur_control(first_sfx_place: tuple, base_prop: list, first_sfx: str) -
     :param first_sfx: ilk ek
     :return: True ya da False döndürür
     """
+
     if first_sfx_place == (4, 21):
         if ('UTUR[i]' in base_prop) and (first_sfx[0] != 'i'):
             return False
@@ -230,6 +220,7 @@ def base_ch_control(base_prop: tuple, first_sfx: str, suffix_place: tuple) -> bo
     :param suffix_place: eklerin tablo ve sütun değeri
     :return: True ya da False döndürür
     """
+
     if 'UZTUR' in base_prop:
         if first_sfx[0] not in allVowels:
             return False
@@ -262,7 +253,7 @@ def base_control(base_prop: list, first_sfx: str, suffix_place: tuple) -> bool:
     :param suffix_place: eklerin tablo ve sütun değeri
     :return: True ya da False döndürür
     """
-    # print(base_prop)
+
     if base_prop == ['0']:
         return True
     if 'UZTUR' in base_prop:
@@ -295,14 +286,12 @@ def bsc(arg: dict) -> bool:
     :param arg: Kök ek sözlüğü
     :return: True ya da False döndürür
     """
-    # print('-' * 15)
-    # print('Kök-Ek Kontrolü :')
-    # print('Kök:', arg['base'], '- Kök Durumu:', arg['event'], 'Ekler:', arg['suffixes'])
+
     suffixes = arg['suffixes']
 
     if not suffixes:
-        # print('Hiç ek almamış!')
-        # print('BS KONTROL  - True')
+        if arg["event"] == 1:
+            return False
         return True
     else:
         suffix = suffixes[0]
@@ -310,8 +299,6 @@ def bsc(arg: dict) -> bool:
     base_type = arg['baseType']
 
     if base_type == ['bağlaç']:
-        # print('Kökü bağlaç!')
-        # print('BS KONTROL  - False')
         return False
 
     base = arg['base']
@@ -326,40 +313,21 @@ def bsc(arg: dict) -> bool:
             return False
 
     if not letter_harmony(base, suffix, suffix_prop, suffix_place):
-        # print('letter_harmony  - False')
         return False
-
-    # print('letter_harmony  - OK')
 
     if not base_uyz_control(base, suffix, suffix_place, base_prop, suffix_prop, base_event, ver_base):
-        # print('base_uyz_control  - False')
         return False
-
-    # print('base_uyz_control  - OK')
-
-    # if 'özel' in base_type:
-    #     # print('Kökü özel isim!')
-    #     # print('BS KONTROL  - True')
-    #     return True
 
     if base_event == 0:
         if not base_control(base_prop, suffix, suffix_place):
-            # print('base_control  - False')
             return False
     else:
         if not base_ch_control(base_prop, suffix, suffix_place):
-            # print('base_ch_control  - False')
             return False
-
-    # print('base_control-base_ch_control  - OK')
 
     if 'fiil' in base_type:
         if not base_gz_control(suffix_place, base_prop, suffix):
-            # print('base_gz_control  - False')
             return False
-        # print('base_gz_control  - OK')
-
-    # print('BS KONTROL  - True')
 
     return True
 
@@ -377,56 +345,40 @@ def ssc_prop_control(suffix_list, suffix_place, suffix_prop):
         if fs_place == ss_place:
             return False
 
-        if ss_place == (6, 9):
-            if (f_s[-1] not in allVowels) and (f_s[-1] not in {'r', 'l'}):
-                return False
-        elif ss_place == (6, 8):
-            if (f_s[-1] not in allVowels) and (f_s[-1] != 'r'):
-                return False
-
         if (fs_place in {(2, 67), (2, 68)}) and (ss_place in {(2, 44), (2, 46), (2, 48), (2, 53)}):
             f_s = 'yor'
 
         if 0 in ss_prop:
             if f_s[-1] in allVowels:
-                # print('if 0 in ss_prop  - False')
                 return False
         elif 1 in ss_prop:
             if f_s[-1] not in allVowels:
-                # print('elif 1 in ss_prop  - False')
                 return False
 
         fs_prop = suffix_prop[sfxIndex - 1]
 
         if 9 in fs_prop:
             if fs_place[0] != ss_place[0]:
-                # print('if 9 in fs_prop  - False')
                 return False
 
         if 8 in fs_prop:
             if ss_place != (2, 4):
-                # print('if 8 in fs_prop  - False')
                 return False
 
         if 4 in ss_prop:
             if (f_s[-1] in fortis) and (s_s[0] in prefix_lenis):
-                # print('if 4 in ss_prop  - False')
                 return False
             if (s_s[0] not in prefix_lenis) and (f_s[-1] not in fortis):
-                # print('if 4 in ss_prop  - False')
                 return False
 
         if 5 in fs_prop:
             if (s_s[0] in allVowels) and (f_s[-1] not in 'bcdgğ'):
-                # print('if 5 in fs_prop  - False')
                 return False
             elif (f_s[-1] in 'bcdgğ') and (s_s[0] not in allVowels):
-                # print('if 5 in fs_prop  - False')
                 return False
 
         if 10 in fs_prop:
             if ss_place == (2, 4):
-                # print('if 10 in fs_prop  - False')
                 return False
     return True
 
@@ -468,38 +420,28 @@ def ssc(infdaf: dict, id_status=2) -> bool:
     :param id_status: ek türetme için gelen 0, yapım eki için gelenler 1, son hali için gelenler 2
     :return: True ya da False döndürür
     """
+
     suffix_list = infdaf['suffixes']
-    # print('-' * 15)
-    # print('Ek-Ek Kontrolü:')
     if not suffix_list:
-        # print('Hiç ek almamış!')
-        # print('SS KONTROL  - True')
         return True
 
     suffix_prop = infdaf['suffixProp']
 
     if id_status == 0:
         if 9 in suffix_prop[-1]:
-            # print('id=0 - 9 in  - False')
             return False
     elif id_status == 1:
         if 9 in suffix_prop[-1]:
-            # print('id=1 - 9 in  - False')
             return False
     elif id_status == 2:
         if (8 in suffix_prop[-1]) or (9 in suffix_prop[-1]):
-            # print('id=2 - 8 or 9 in  - False')
             return False
         if (5 in suffix_prop[-1]) and (suffix_list[-1][-1] in 'bcdğ'):
-            # print('id=2 - 5 in  - False')
             return False
         if 11 in suffix_prop[-1]:
-            # print('id=2 - 11 in  - False')
             return False
 
     if len(suffix_list) < 2:
-        # print('len(suffix_list) < 2')
-        # print('SS KONTROL  - True')
         return True
 
     suffix_types = infdaf['suffixTypes']
@@ -507,17 +449,12 @@ def ssc(infdaf: dict, id_status=2) -> bool:
     olz_count = suffix_types.count('Olz')
     ytsz_count = suffix_types.count('Ytsz')
 
-    # if olz_count > 1:
-    #     # print('olz_count > 1  - False')
-    #     return False
-
     if olz_count + ytsz_count > 2:
-        # print('olz_count + ytsz_count > 2  - False')
         return False
 
     suffix_place = infdaf['suffixPlace']
 
-    if ((5, 2) in suffix_place):
+    if (5, 2) in suffix_place:
         if olz_count > 0:
             if suffix_types.index('Olz') < suffix_place.index((5, 2)):
                 return False
@@ -526,11 +463,9 @@ def ssc(infdaf: dict, id_status=2) -> bool:
                 return False
 
     if not elimination(suffix_place):
-        # print('not elimination  - False')
         return False
 
     if not ssc_prop_control(suffix_list, suffix_place, suffix_prop):
-        # print('ssc_prop_control  - False')
         return False
 
     if id_status != 0:
@@ -541,14 +476,10 @@ def ssc(infdaf: dict, id_status=2) -> bool:
             base = infdaf['base']
 
         if not ssc7_control(base, base_prop, suffix_prop, suffix_list):
-            # print('ssc7_control  - False')
             return False
     else:
         if not ssc7_control('', ['UYZ'], suffix_prop, suffix_list):
-            # print('ssc7_control  - False')
             return False
-
-    # print('SS KONTROL  - True')
 
     return True
 
@@ -559,30 +490,29 @@ def elimination(suffix_place: list) -> bool:
     :param suffix_place: Eklerin tablo, satır listesi
     :return: True ya da False döndürür
     """
-    exclude = [[(7, 1), (5, 3)],
+
+    exclude = [[(4, 2), (5, 3)],
+               [(4, 3), (5, 3)],
+               [(4, 5), (4, 17)],
                [(5, 2), (8, 12)],
                [(5, 2), (6, 7)],
-               [(6, 3), (6, 9)],
-               [(6, 6), (6, 9)],
-               [(4, 2), (5, 3)],
-               [(7, 3), (5, 3)],
-               [(7, 15), (5, 3)],
-               [(6, 2), (6, 9)],
-               [(4, 5), (4, 17)],
                [(5, 3), (8, 6)],
-               [(5, 3), (6, 8)],
-               [(6, 4), (8, 6)],
-               [(6, 4), (6, 8)],
-               [(5, 5), (6, 8)],
-               [(5, 5), (6, 9)],
-               [(8, 2), (5, 2)],
-               [(5, 5), (7, 13)],
-               [(4, 3), (5, 3)],
-               [(6, 4), (7, 13)],
                [(5, 3), (7, 13)],
                [(5, 3), (7, 12)],
+               [(5, 5), (6, 8)],
+               [(5, 5), (6, 9)],
+               [(5, 5), (7, 13)],
                [(5, 6), (7, 12)],
-               ]
+               [(6, 2), (6, 9)],
+               [(6, 3), (6, 9)],
+               [(6, 4), (8, 6)],
+               [(6, 4), (7, 13)],
+               [(6, 6), (6, 9)],
+               [(6, 14), (8, 6)],
+               [(7, 1), (5, 3)],
+               [(7, 3), (5, 3)],
+               [(7, 15), (5, 3)],
+               [(8, 2), (5, 2)]]
 
     suffix_place = [suffix_place[i - 2:i] for i in range(2, len(suffix_place) + 1)]
     if any(x in suffix_place for x in exclude):
@@ -694,7 +624,6 @@ def general_control(arg):
         arg['suffixProp'] = suffix_prop
 
         pro_suffixes = [list(x) for x in product(*suffixes)]
-        # print(pro_suffixes)
 
         for sfx in pro_suffixes:
             ctemp = dict(arg)
