@@ -46,3 +46,35 @@ Benim bilgisayarımda (İntel i5-2450M işlemci 4GB Bellek) kelime uzunlukların
 - Eklerin ve ek kontrollerinin düzeltilmesi.
 - Paket oluşturma. + YAPILDI (Testler sırasında düzenlemeler yapılacak)
 - Cümle analizi yapılması ve cümlenin öğelerine ayrılması.
+
+### Sıkça Sorulan Sorular :
+
+* Morfolojik analizde aradığım sonuç tüm analizler içerisinde olmasına rağmen tek sonuç istediğimde farklı çözüm yapıyor. Bunun sebebi nedir?
+
+Türkçe'nin yapısından dolayı bir kelime için, ek almış yada almamış olsun, birden fazla çözümleme yapılabilmektedir. Örneğin "kanat" kelimesini değerlendirirsek;
+
+```python
+from trnlp import TrnlpWord
+
+obj = TrnlpWord()
+obj.setword("kanat")
+
+for analiz in obj.get_inf:
+    print(writeable(analiz))
+        
+>> kanat(isim)
+   Kanat(özel)
+   kan(isim)+a{İf}[5_17]+t{Ff}[6_8]
+   
+print(obj)
+
+>> kan(isim)+a{İf}[5_17]+t{Ff}[6_8]
+   
+```
+
+Üç çözüm de doğrudur. "print(obj)" dediğimizde tek sonuç döndürmesini hedeflediğimiz için aralarından bir tanesini seçmek zorundayız. trnlp belirli kriterler çerçevesinde bir seçim yaparak tek sonucu döndürür. Sizin elde etmek istediğiniz sonuç "kanat(isim)" olsa da trnlp "kan(isim)+a{İf}[5_17]+t{Ff}[6_8]" sonucunu döndürecek ve kelimenin kökünü "kan", kök türünü "isim", gövdesini "kanat" ve gövde türünü "fiil" olarak döndürecektir. 
+
+* Kriterlerimizi tam tersine çevirsek ve önceliği fiillere değil de isimlere versek olmaz mı?
+
+Bu durumda yukarıda bahsettiğim sonucun tersi yaşanacağından yine çözüm sağlanamayacaktır. Bu sefer de "kanat-" fiilini bulmak isteyen bir kişi için yanlış sonuç dönmüş olacaktır. Bunun tek çözümü cümle analizi yapabilmek ve kelimeyi cümle içerisindeki görevine göre tahlil etmek olacaktır.
+
