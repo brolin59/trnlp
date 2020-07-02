@@ -63,8 +63,8 @@ for analiz in obj.get_inf:
     print(writeable(analiz))
         
 >> kanat(isim)
-   Kanat(özel)
-   kan(isim)+a{İf}[5_17]+t{Ff}[6_8]
+   Kanat(özel) # TDK'ya göre erkek ismi
+   kan(isim)+a{İf}[5_17]+t{Ff}[6_8] # -a isimden fiil yapma eki bir süreliğine eklerden çıkarıldı. Şu anda analiz sonucu "kana(fiil)+t{Ff}[6_8]" şeklinde dönecektir.
    
 print(obj)
 
