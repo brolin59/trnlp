@@ -18,12 +18,12 @@ yada,
 
 ***trnlp klasörünü Python'un kurulu olduğu dizin içerisinde \Lib\site-packages\ dizininin içine kopyalamanız yeterlidir.***
 
-Ne Python ne de Türkçe dilbigim çok iyi olmamasına rağmen ***hobi*** olarak yazdığım birkaç kodu sizlerle paylaşmak istedim. ***Kod ve dilbilgisi kuralları ile ilgili yaptığım yanlışlar için öneri ve uyarılarınızı bekliyorum.*** İlk başta ilgim bir yazılım dili öğrenmek üzerineydi. Biraz araştırmadan sonra Python öğrenmeye karar verdim. Doğal dil işleme konusuna merakım ise makine öğrenmesi çalışmalarını araştırırken oluştu. Yazılım dili öğrenirken bir projeye başlamanın faydalı olacağı fikrini benimsediğim için böyle bir projeye başladım. Bu konuda yapılmış iyi çalışmalar var. Az önce de belirttiğim gibi benim niyetim kendimi geliştirmek. Yanında az da olsa birkaç kişiye faydam dokunursa ne ala...
+***Kod ve dilbilgisi kuralları ile ilgili yaptığım yanlışlar için öneri ve uyarılarınızı bekliyorum.*** 
 
-Lisans olarak GNU Genel Kamu Lisansı v3.0 kullanmayı tercih ettim. Yani kısaca Lisans ve telif hakkı bildirimi yapılması, kodda yapılan değişikliklerin belgelendirilmesi, kaynak kodunun açık ve kullanılabilir olması ve aynı lisans altında yayınlanması şartları ile her şekilde kullanımı serbesttir ve yazılım ile ilgili hiçbir garanti verilmez. Gerekli tüm bilgiler zaten LICENSE.txt dosyasında ayrıntılı bir şekilde yazılmıştır.
+trnlp GNU Genel Kamu Lisansı v3.0 ile lisanslanmıştır. Yani kısaca Lisans ve telif hakkı bildirimi yapılması, kodda yapılan değişikliklerin belgelendirilmesi, kaynak kodunun açık ve kullanılabilir olması ve aynı lisans altında yayınlanması şartları ile her şekilde kullanımı serbesttir ve yazılım ile ilgili hiçbir garanti verilmez. Gerekli tüm bilgiler zaten LICENSE.txt dosyasında ayrıntılı bir şekilde yazılmıştır.
 
 Eminim bu konularda bilgisi benden çok daha iyi olan arkadaşlar bu paylaşımları bir üst seviyeye çıkarmamda bana yardımcı olabilirler. 
-Hobi olarak başladığım bu işin faydalı olması dileği ile...
+Hobi olarak başladığım bu projenin faydalı olması dileği ile...
 
 * [Kelime kök ve gövdesi bulma (Base, stem)](https://github.com/brolin59/PYTHON-TURKCE-DOGAL-DIL-ISLEME-TURKISH-NLP/wiki/2.-Morfolojik-Analiz)
 * [Kelime ve kural tabanlı morfolojik analiz (Lemmatization)](https://github.com/brolin59/PYTHON-TURKCE-DOGAL-DIL-ISLEME-TURKISH-NLP/wiki/2.-Morfolojik-Analiz)
