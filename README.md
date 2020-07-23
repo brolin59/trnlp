@@ -37,17 +37,17 @@ Her bölüm için ayrıntılı anlatımlar ilgili wiki sayfasında mevcuttur.
 
 Benim bilgisayarımda (İntel i5-2450M işlemci 4GB Bellek) kelime uzunluklarına bağlı olarak 1 saniyede yapılabilen analiz sayısı 2250 ile 3000 arasında değişmektedir.
 
-### Projenin İçeriği :
+### Proje İlerlemesi:
   
-- Sözlük hazırlanması. + YAPILDI (Testler sırasında düzenlemeler yapılacak)
-- Heceleme algoritması + YAPILDI
-- Türkçe ses uyumları kontrolü + YAPILDI
-- Kelime bazlı kök/gövde ve eklerin bulunması + YAPILDI (Testler sırasında düzenlemeler yapılacak)
-- Cümle ayırma. + YAPILDI (Testler sırasında düzenlemeler yapılacak)
-- Yanlış yazılan kelimelerin bulunması ve doğru yazımına dair öneride bulunulması ya da otomatik olarak düzeltilmesi. YAPILDI (Testler sırasında düzenlemeler yapılacak)
-- Eklerin ve ek kontrollerinin düzeltilmesi.
-- Paket oluşturma. + YAPILDI (Testler sırasında düzenlemeler yapılacak)
-- Cümle analizi yapılması ve cümlenin öğelerine ayrılması.
+- [x] Sözlük hazırlanması (Testler sırasında düzenlemeler yapılacak)
+- [x] Heceleme algoritması.
+- [x] Türkçe ses uyumları kontrolü.
+- [x] Kelime bazlı kök/gövde ve eklerin bulunması (Testler sırasında düzenlemeler yapılacak).
+- [x] Cümle ayırma. (Testler sırasında düzenlemeler yapılacak).
+- [x] Yanlış yazılan kelimelerin bulunması ve doğru yazımına dair öneride bulunulması ya da otomatik olarak düzeltilmesi (Testler sırasında düzenlemeler yapılacak).
+- [ ] Eklerin ve ek kontrollerinin düzeltilmesi.
+- [x] Paket oluşturma (Testler sırasında düzenlemeler yapılacak).
+- [ ] Cümle analizi yapılması ve cümlenin öğelerine ayrılması.
 
 ### Sıkça Sorulan Sorular :
 
@@ -74,7 +74,7 @@ print(obj)
    
 ```
 
-Üç çözüm de doğrudur. "print(obj)" dediğimizde tek sonuç döndürmesini hedeflediğimiz için aralarından bir tanesini seçmek zorundayız. trnlp belirli kriterler çerçevesinde bir seçim yaparak tek sonucu döndürür. Sizin elde etmek istediğiniz sonuç "kanat(isim)" olsa da trnlp "kan(isim)+a{İf}[5_17]+t{Ff}[6_8]" sonucunu döndürecek ve kelimenin kökünü "kan", kök türünü "isim", gövdesini "kanat" ve gövde türünü "fiil" olarak döndürecektir. 
+Üç çözüm de doğrudur. "print(obj)" dediğimizde tek sonuç döndürmesini hedeflediğimiz için aralarından bir tanesini seçmek zorundayız. trnlp belirli kriterler çerçevesinde bir seçim yaparak tek sonucu döndürür. Sizin elde etmek istediğiniz sonuç `"kanat(isim)"` olsa da trnlp `kan(isim)+a{İf}[5_17]+t{Ff}[6_8]` sonucunu döndürecek ve kelimenin kökünü `"kan"`, kök türünü `"isim"`, gövdesini `"kanat"` ve gövde türünü `"fiil"` olarak döndürecektir. 
 
 * Kriterlerimizi tam tersine çevirsek ve önceliği fiillere değil de isimlere versek olmaz mı?
 
