@@ -6,9 +6,6 @@ Klasör yapısı ve kullanılabilecek tüm komutlar için [Türkçe Doğal Dil i
 ### İletişim :
 trnlp2020@gmail.com
 
-### Proje Sponsoru:
-[Patreon](https://www.patreon.com/trnlp)
-
 ### Kurulum :
 
 ```$ pip install trnlp```
