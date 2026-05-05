@@ -22,7 +22,7 @@ The full license is in the file LICENSE.txt, distributed with this software.
 """
 
 from trnlp.data.suffix_tables import *
-from functools import lru_cache
+# from functools import lru_cache
 from trnlp.controler import *
 from trnlp.helper import *
 
@@ -424,7 +424,7 @@ class Inflections(Derivational):
         else:
             return None
 
-    @lru_cache(maxsize=10000)
+    # @lru_cache(maxsize=10000)
     def _inflection_lr(self, base_list=None) -> list:
         """
         Soldan sağa kelimeye eklenmiş olan olası çekim eklerini arar.
